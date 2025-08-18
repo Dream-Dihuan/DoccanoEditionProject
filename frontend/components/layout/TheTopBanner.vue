@@ -1,39 +1,48 @@
 <template>
   <section>
-    <v-parallax :src="require(`~/assets/vbanner.jpg`)" height="400" dark>
-      <v-layout wrap align-center justify-center class="white--text">
-        <v-flex text-right class="mr-5">
-          <img src="~/assets/icon.png" alt="doccano" height="200" />
-        </v-flex>
-        <v-flex>
-          <h1 class="mb-2 display-1 text-xs-center">
-            {{ $t('home.mainTitle') }}
-          </h1>
-          <div class="mt-4">
-            <v-btn large outlined color="white" href="https://github.com/doccano/doccano">
-              <v-icon left>
-                {{ mdiGithub }}
-              </v-icon>
-              GitHub dihuan v2
-            </v-btn>
-            <v-btn class="blue lighten-2 ml-5" dark large :href="localePath('/auth')">
-              {{ $t('home.getStarted') }}
-            </v-btn>
-          </div>
-        </v-flex>
-      </v-layout>
+    <v-parallax :src="require(`~/assets/vbanner.jpg`)" height="600" dark>
+      <v-container class="fill-height">
+        <v-row class="justify-center align-center">
+          <v-col cols="12" md="6" class="text-center text-md-left">
+            <h1 class="display-3 font-weight-bold white--text mb-4">
+              {{ $t('home.mainTitle') }}
+            </h1>
+            <p class="headline white--text mb-6">
+              {{ $t('home.subtitle') || 'Professional text annotation tool for teams and enterprises' }}
+            </p>
+            <div class="d-flex flex-column flex-md-row justify-center justify-md-start">
+              <v-btn x-large color="primary" class="mb-4 mb-md-0 mr-md-4 white--text" :href="localePath('/auth')">
+                <v-icon left dark>
+                  {{ mdiAccountArrowRight }}
+                </v-icon>
+                {{ $t('home.getStarted') }}
+              </v-btn>
+              <v-btn x-large outlined color="white" class="ml-md-4" dark href="https://github.com/doccano/doccano">
+                <v-icon left>
+                  {{ mdiGithub }}
+                </v-icon>
+                GitHub
+              </v-btn>
+            </div>
+          </v-col>
+          <v-col cols="12" md="6" class="d-none d-md-block text-center">
+            <v-img :src="require('~/assets/icon.png')" alt="doccano" max-width="300" class="mx-auto" />
+          </v-col>
+        </v-row>
+      </v-container>
     </v-parallax>
   </section>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { mdiGithub } from '@mdi/js'
+import { mdiGithub, mdiAccountArrowRight } from '@mdi/js'
 
 export default Vue.extend({
   data() {
     return {
-      mdiGithub
+      mdiGithub,
+      mdiAccountArrowRight
     }
   }
 })

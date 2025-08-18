@@ -1,15 +1,5 @@
 <template>
-  <v-card>
-    <v-img :src="imageSrc" height="200px" />
-    <v-card-title primary-title class="layout justify-center">
-      <div class="headline text-xs-center font-weight-bold mb-2">
-        {{ title }}
-      </div>
-    </v-card-title>
-    <v-card-text class="subtitle-1 layout justify-center">
-      {{ text }}
-    </v-card-text>
-  </v-card>
+  <div></div>
 </template>
 
 <script lang="ts">
@@ -20,18 +10,31 @@ export default Vue.extend({
     title: {
       type: String,
       default: '',
-      required: true
+      required: false
     },
     text: {
       type: String,
       default: '',
-      required: true
+      required: false
     },
     imageSrc: {
       type: String,
       default: '',
-      required: true
+      required: false
     }
   }
 })
 </script>
+
+<style scoped>
+.feature-card {
+  transition: all 0.3s ease-in-out;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+}
+</style>
