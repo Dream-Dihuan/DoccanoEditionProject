@@ -40,12 +40,9 @@ export const getters = {
 
 export const actions = {
   async authenticateUser({ commit }, authData) {
-    try {
-      await this.$repositories.auth.login(authData.username, authData.password)
-      commit('setAuthenticated', true)
-    } catch (error) {
-      throw new Error('The credential is invalid')
-    }
+    // 直接调用登录方法，不使用try/catch包装
+    await this.$repositories.auth.login(authData.username, authData.password)
+    commit('setAuthenticated', true)
   },
   async fetchSocialLink() {
     return await this.$repositories.auth.socialLink()

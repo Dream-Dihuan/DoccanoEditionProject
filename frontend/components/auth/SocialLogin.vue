@@ -1,17 +1,29 @@
 <template>
-  <div>
-    <v-btn
-      v-for="item in social"
-      :key="item.provider"
-      block
-      elevation="2"
-      color="secondary"
-      :href="item.href"
-      class="mt-5"
-    >
-      {{ $t('user.socialLogin', { provider: item.provider }) }}
-    </v-btn>
-  </div>
+  <v-card v-if="social.length > 0" class="elevation-2 rounded-lg mt-6" :outlined="$vuetify.theme.dark">
+    <v-card-text class="py-4">
+      <div class="d-flex align-center">
+        <v-divider></v-divider>
+        <span class="px-4 text--secondary caption text-uppercase">{{ $t('home.experienceIt') }}</span>
+        <v-divider></v-divider>
+      </div>
+      
+      <div class="mt-4">
+        <v-btn
+          v-for="item in social"
+          :key="item.provider"
+          block
+          :elevation="$vuetify.theme.dark ? 0 : 1"
+          color="secondary"
+          :href="item.href"
+          class="mt-3 text-capitalize"
+          :outlined="$vuetify.theme.dark"
+          :class="{'white--text': !$vuetify.theme.dark, 'accent--text': $vuetify.theme.dark}"
+        >
+          {{ $t('user.socialLogin', { provider: item.provider }) }}
+        </v-btn>
+      </div>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -27,7 +39,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      social: {} as any
+      social: [] as any[]
     }
   },
   async mounted() {
@@ -49,3 +61,9 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style scoped>
+.v-card {
+  border-radius: 12px !important;
+}
+</style>
