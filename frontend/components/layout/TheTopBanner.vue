@@ -17,12 +17,13 @@
                 </v-icon>
                 {{ $t('home.getStarted') }}
               </v-btn>
-              <v-btn x-large outlined color="white" class="ml-md-4" dark href="https://github.com/doccano/doccano">
+              <!-- GitHub Button -->
+              <!-- <v-btn x-large outlined color="white" class="ml-md-4" dark @click="">
                 <v-icon left>
                   {{ mdiGithub }}
                 </v-icon>
-                GitHub
-              </v-btn>
+                联系我们
+              </v-btn> -->
             </div>
           </v-col>
           <v-col cols="12" md="6" class="d-none d-md-block text-center">
