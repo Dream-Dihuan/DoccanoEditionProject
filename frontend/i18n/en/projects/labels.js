@@ -1,4 +1,7 @@
 export default {
+  category: 'Category',
+  span: 'Span',
+  relation: 'Relation',
   labels: 'Labels',
   shortkey: 'Shortkey',
   color: 'Color',
@@ -16,5 +19,9 @@ export default {
   importTitle: 'Upload Label',
   importMessage1: 'Example format',
   importMessage2: 'Select a file',
-  filePlaceholder: 'File input'
+  filePlaceholder: 'File input',
+  createLabelType: 'Create a Label Type',
+  randomColor: 'Random color',
+  randomColorTooltip: 'Random color',
+  preview: 'Preview'
 }

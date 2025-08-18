@@ -8,10 +8,10 @@
           class="text-capitalize mr-2"
           @click="allowOverlapping = !allowOverlapping"
         >
-          Overlapping({{ allowOverlapping }})
+          {{ $t('demo.overlapping') }}({{ allowOverlapping }})
         </v-btn>
         <v-btn text outlined @click="rtl = !rtl">
-          RTL(<span class="text-capitalize">{{ rtl }}</span
+          {{ $t('demo.rtl') }}(<span class="text-capitalize">{{ rtl }}</span
           >)
         </v-btn>
       </div>

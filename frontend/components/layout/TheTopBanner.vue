@@ -14,7 +14,7 @@
               <v-icon left>
                 {{ mdiGithub }}
               </v-icon>
-              GitHub
+              GitHub dihuan v2
             </v-btn>
             <v-btn class="blue lighten-2 ml-5" dark large :href="localePath('/auth')">
               {{ $t('home.getStarted') }}

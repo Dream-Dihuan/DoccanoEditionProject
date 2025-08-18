@@ -84,7 +84,7 @@ export default Vue.extend({
       editedPage: '1',
       rules: [
         (v: string) =>
-          (v && parseInt(v, 10) > 0 && parseInt(v, 10) <= this.total) || 'Invalid page number!'
+          (v && parseInt(v, 10) > 0 && parseInt(v, 10) <= this.total) || this.$t('annotation.invalidPageNumber')
       ],
       mdiPageFirst,
       mdiPageLast,

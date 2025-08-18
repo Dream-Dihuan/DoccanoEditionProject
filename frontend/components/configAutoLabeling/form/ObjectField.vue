@@ -8,11 +8,11 @@
         <v-spacer />
         <v-dialog v-model="dialog" max-width="800px">
           <template #activator="{ on, attrs }">
-            <v-btn color="primary" dark class="text-none" v-bind="attrs" v-on="on"> Add </v-btn>
+            <v-btn color="primary" dark class="text-none" v-bind="attrs" v-on="on"> {{ $t('generic.add') }} </v-btn>
           </template>
           <v-card>
             <v-card-title>
-              <span class="headline">Add a new field</span>
+              <span class="headline">{{ $t('autoLabeling.addNewField') }}</span>
             </v-card-title>
 
             <v-card-text>
@@ -20,10 +20,10 @@
                 <v-form ref="form" v-model="valid">
                   <v-row>
                     <v-col cols="12" sm="12" class="pa-0">
-                      <v-text-field v-model="editedItem.key" label="Key" outlined />
+                      <v-text-field v-model="editedItem.key" :label="$t('generic.key')" outlined />
                     </v-col>
                     <v-col cols="12" sm="12" class="pa-0">
-                      <v-text-field v-model="editedItem.value" label="Value" outlined />
+                      <v-text-field v-model="editedItem.value" :label="$t('generic.value')" outlined />
                     </v-col>
                   </v-row>
                 </v-form>
@@ -33,7 +33,7 @@
             <v-card-actions>
               <v-spacer />
               <v-btn color="blue darken-1" class="text-capitalize" text @click="close">
-                Cancel
+                {{ $t('autoLabeling.cancel') }}
               </v-btn>
               <v-btn
                 :disabled="!valid"
@@ -42,7 +42,7 @@
                 text
                 @click="save"
               >
-                Save
+                {{ $t('autoLabeling.save') }}
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -81,19 +81,19 @@ export default Vue.extend({
     return {
       headers: [
         {
-          text: 'Key',
+          text: this.$t('generic.key'),
           align: 'left',
           value: 'key',
           sortable: false
         },
         {
-          text: 'Value',
+          text: this.$t('generic.value'),
           align: 'left',
           value: 'value',
           sortable: false
         },
         {
-          text: 'Actions',
+          text: this.$t('generic.actions'),
           value: 'actions',
           sortable: false
         }

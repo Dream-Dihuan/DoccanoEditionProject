@@ -72,7 +72,7 @@ export default Vue.extend({
       return [
         { text: this.$t('generic.name'), value: 'username' },
         { text: this.$t('members.role'), value: 'rolename' },
-        { text: 'Actions', value: 'actions', sortable: false }
+        { text: this.$t('generic.actions'), value: 'actions', sortable: false }
       ]
     }
   }

@@ -1,0 +1,20 @@
+export default {
+  assignToMember: '分配给成员',
+  resetAssignment: '重置分配',
+  assignTitle: '将示例分配给成员',
+  selectStrategy: '选择分配策略',
+  projectManagerAccess: '项目经理可以访问所有示例，无论是否已分配。',
+  allocateWeights: '分配权重',
+  assign: '分配',
+  weightedSequential: '加权顺序',
+  weightedSequentialDesc: '按照成员的工作量顺序分配示例。总权重必须等于100。',
+  weightedRandom: '加权随机',
+  weightedRandomDesc: '根据成员的工作量随机分配示例。总权重必须等于100。',
+  samplingWithoutReplacement: '无放回抽样',
+  samplingWithoutReplacementDesc: '随机无放回地将示例分配给成员。',
+  resetTitle: '重置分配',
+  resetMessage: '您确定要重置所有分配吗？',
+  noOne: '无',
+  finished: '已完成',
+  inProgress: '进行中'
+}

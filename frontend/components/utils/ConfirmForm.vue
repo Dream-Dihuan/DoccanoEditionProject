@@ -1,8 +1,8 @@
 <template>
   <base-card
     :title="title"
-    :agree-text="buttonTrueText"
-    :cancel-text="buttonFalseText"
+    :agree-text="$t(buttonTrueText)"
+    :cancel-text="$t(buttonFalseText)"
     @agree="ok"
     @cancel="cancel"
   >
@@ -51,11 +51,15 @@ export default Vue.extend({
     },
     buttonTrueText: {
       type: String,
-      default: 'Yes'
+      default() {
+        return this.$t('generic.yes')
+      }
     },
     buttonFalseText: {
       type: String,
-      default: 'Cancel'
+      default() {
+        return this.$t('generic.cancel')
+      }
     }
   },
 

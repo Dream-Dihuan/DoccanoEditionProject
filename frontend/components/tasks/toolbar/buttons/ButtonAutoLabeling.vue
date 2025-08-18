@@ -7,7 +7,7 @@
         </v-icon>
       </v-btn>
     </template>
-    <span>Auto Labeling</span>
+    <span>{{ $t('autoLabeling.autoLabeling') }}</span>
   </v-tooltip>
 </template>
 

@@ -29,7 +29,7 @@
           class="text-capitalize"
           @click="$emit('upload', file)"
         >
-          Import
+          {{ $t('generic.import') }}
         </v-btn>
       </v-form>
     </v-card-text>

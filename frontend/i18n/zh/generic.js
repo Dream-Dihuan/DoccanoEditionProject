@@ -5,6 +5,7 @@ export default {
   save: '保存',
   edit: '编辑',
   create: '创建',
+  clone: '克隆',
   cancel: '取消',
   close: '关闭',
   upload: '上传',
@@ -17,5 +18,11 @@ export default {
   export: '导出',
   description: '描述',
   type: '类型',
-  loading: '加载中... 请等待'
+  loading: '加载中... 请等待',
+  from: '从',
+  to: '到',
+  actions: '操作',
+  test: '测试',
+  next: '下一步',
+  prev: '上一步'
 }

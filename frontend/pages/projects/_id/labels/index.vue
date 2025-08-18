@@ -2,12 +2,12 @@
   <v-card>
     <v-tabs v-if="hasMultiType" v-model="tab">
       <template v-if="isIntentDetectionAndSlotFilling">
-        <v-tab class="text-capitalize">Category</v-tab>
-        <v-tab class="text-capitalize">Span</v-tab>
+        <v-tab class="text-capitalize">{{ $t('labels.category') }}</v-tab>
+        <v-tab class="text-capitalize">{{ $t('labels.span') }}</v-tab>
       </template>
       <template v-else>
-        <v-tab class="text-capitalize">Span</v-tab>
-        <v-tab class="text-capitalize">Relation</v-tab>
+        <v-tab class="text-capitalize">{{ $t('labels.span') }}</v-tab>
+        <v-tab class="text-capitalize">{{ $t('labels.relation') }}</v-tab>
       </template>
     </v-tabs>
     <v-card-title>

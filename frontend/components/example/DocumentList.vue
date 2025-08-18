@@ -31,7 +31,7 @@
     </template>
     <template #[`item.isConfirmed`]="{ item }">
       <v-chip :color="item.isConfirmed ? 'success' : 'warning'" text small>
-        {{ item.isConfirmed ? 'Finished' : 'In progress' }}
+        {{ item.isConfirmed ? $t('examples.finished') : $t('examples.inProgress') }}
       </v-chip>
     </template>
     <template #[`item.text`]="{ item }">
@@ -46,7 +46,7 @@
         :value="toSelected(item)"
         :items="members"
         item-text="username"
-        no-data-text="No one"
+        :no-data-text="$t('examples.noOne')"
         multiple
         chips
         dense
@@ -68,7 +68,7 @@
     </template>
     <template #[`item.action`]="{ item }">
       <v-btn class="me-1" small color="primary text-capitalize" @click="$emit('edit', item)"
-        >Edit</v-btn
+        >{{ $t('generic.edit') }}</v-btn
       >
       <v-btn small color="primary text-capitalize" @click="toLabeling(item)">
         {{ $t('dataset.annotate') }}

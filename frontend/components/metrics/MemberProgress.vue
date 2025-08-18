@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title>Member's Progress</v-card-title>
+    <v-card-title>{{ $t('statistics.memberProgress') }}</v-card-title>
     <v-divider />
     <v-card-text>
       <div v-for="(item, index) in stats.progress" :key="index" class="mb-2">
@@ -24,6 +24,7 @@ export default Vue.extend({
   },
 
   async created() {
+    // @ts-ignore
     this.stats = await this.$repositories.metrics.fetchMemberProgress(this.$route.params.id)
   },
 

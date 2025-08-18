@@ -6,5 +6,7 @@ export default {
   created_at: '创建',
   document: '文档',
   send: '发送',
-  message: '消息'
+  message: '消息',
+  isRequired: '评论是必需的',
+  commentRequired: '评论是必需的'
 }

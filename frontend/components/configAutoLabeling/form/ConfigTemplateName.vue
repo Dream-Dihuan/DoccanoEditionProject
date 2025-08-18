@@ -3,16 +3,16 @@
     <v-card>
       <v-card-text class="pa-0">
         <v-form ref="form" v-model="valid">
-          <h4 class="text-h6">Select a config template</h4>
+          <h4 class="text-h6">{{ $t('autoLabeling.selectConfigTemplate') }}</h4>
           <p class="font-weight-regular body-1">
-            You can select the template to create the auto-labeling configuration.{{ valid }}
+            {{ $t('autoLabeling.configTemplateDescription') }}{{ valid }}
           </p>
-          <v-select v-model="selectedTask" :items="taskNames" label="Select a task name" outlined />
+          <v-select v-model="selectedTask" :items="taskNames" :label="$t('autoLabeling.selectTaskName')" outlined />
           <v-select
             v-model="templateName"
             :items="templateNames"
             :rules="templateNameRules()"
-            label="Select a config template"
+            :label="$t('autoLabeling.selectConfigTemplate')"
             outlined
           />
         </v-form>
@@ -20,7 +20,7 @@
       <v-card-actions class="pa-0">
         <v-spacer />
         <v-btn :disabled="!valid" color="primary" class="text-capitalize" @click="$emit('next')">
-          Next
+          {{ $t('generic.next') }}
         </v-btn>
       </v-card-actions>
     </v-card>

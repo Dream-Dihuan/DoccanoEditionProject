@@ -31,7 +31,7 @@
         <v-select
           v-model="speed"
           :items="speeds"
-          label="Speed"
+          :label="$t('tasks.speed')"
           dense
           outlined
           hide-details
@@ -46,8 +46,8 @@
       <v-icon v-else left>
         {{ mdiPauseCircleOutline }}
       </v-icon>
-      <span v-if="!isPlaying">Play</span>
-      <span v-else>Pause</span>
+      <span v-if="!isPlaying">{{ $t('tasks.play') }}</span>
+      <span v-else>{{ $t('tasks.pause') }}</span>
     </v-btn>
   </div>
 </template>

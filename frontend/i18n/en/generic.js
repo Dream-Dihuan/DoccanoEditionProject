@@ -5,6 +5,7 @@ export default {
   save: 'Save',
   edit: 'Edit',
   create: 'Create',
+  clone: 'Clone',
   cancel: 'Cancel',
   close: 'Close',
   upload: 'Upload',
@@ -17,5 +18,11 @@ export default {
   export: 'Export',
   description: 'Description',
   type: 'Type',
-  loading: 'Loading... Please wait'
+  loading: 'Loading... Please wait',
+  from: 'From',
+  to: 'To',
+  actions: 'Actions',
+  test: 'Test',
+  next: 'Next',
+  prev: 'Prev'
 }

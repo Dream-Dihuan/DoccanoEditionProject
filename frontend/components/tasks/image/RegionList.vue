@@ -1,6 +1,6 @@
 <template>
   <v-card max-height="500" style="overflow-y: scroll">
-    <v-card-title class="pb-0">Regions</v-card-title>
+    <v-card-title class="pb-0">{{ $t('tasks.regions') }}</v-card-title>
     <v-list dense>
       <v-list-item-group v-model="model">
         <v-list-item
@@ -57,11 +57,11 @@ export default {
       model: null,
       headers: [
         {
-          text: 'Category',
+          text: this.$t('tasks.category'),
           align: 'start',
           value: 'category'
         },
-        { text: 'Visibility', value: 'visibility' }
+        { text: this.$t('tasks.visibility'), value: 'visibility' }
       ]
     }
   }

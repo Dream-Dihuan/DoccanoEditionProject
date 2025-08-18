@@ -123,7 +123,7 @@ export default {
     },
 
     direction() {
-      return this.isRTL ? 'RTL' : 'LTR'
+      return this.isRTL ? this.$t('header.rtl') : this.$t('header.ltr')
     }
   },
 

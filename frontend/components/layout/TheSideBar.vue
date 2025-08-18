@@ -101,7 +101,7 @@ export default {
         },
         {
           icon: mdiCommentAccountOutline,
-          text: 'Comments',
+          text: this.$t('comments.comments'),
           link: 'comments',
           isVisible: this.isProjectAdmin
         },

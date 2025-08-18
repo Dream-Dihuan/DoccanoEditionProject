@@ -6,6 +6,7 @@ import toastui from './toastui'
 import user from './user'
 import vuetify from './vuetify'
 import annotation from './projects/annotation'
+import autoLabeling from './projects/autoLabeling'
 import dataset from './projects/dataset'
 import errors from './projects/errors'
 import guideline from './projects/guideline'
@@ -24,6 +25,7 @@ export default {
   user,
   vuetify,
   annotation,
+  autoLabeling,
   dataset,
   errors,
   guideline,

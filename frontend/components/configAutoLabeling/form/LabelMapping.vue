@@ -3,11 +3,11 @@
     <template #top>
       <v-dialog v-model="dialog" max-width="800px">
         <template #activator="{ on, attrs }">
-          <v-btn color="primary" dark class="text-none" v-bind="attrs" v-on="on"> Add </v-btn>
+          <v-btn color="primary" dark class="text-none" v-bind="attrs" v-on="on"> {{ $t('generic.add') }} </v-btn>
         </template>
         <v-card>
           <v-card-title>
-            <span class="headline">Add a new mapping</span>
+            <span class="headline">{{ $t('autoLabeling.addNewMapping') }}</span>
           </v-card-title>
 
           <v-card-text>
@@ -17,7 +17,7 @@
                   <v-col cols="12" sm="12" class="pa-0">
                     <v-text-field
                       v-model="editedItem.from"
-                      label="From"
+                      :label="$t('generic.from')"
                       :rules="labelNameRules($t('rules.labelNameRules'))"
                       outlined
                     />
@@ -27,7 +27,7 @@
                       v-model="editedItem.to"
                       :items="items"
                       :rules="labelNameRules($t('rules.labelNameRules'))"
-                      label="To"
+                      :label="$t('generic.to')"
                       outlined
                     />
                   </v-col>
@@ -39,7 +39,7 @@
           <v-card-actions>
             <v-spacer />
             <v-btn color="blue darken-1" class="text-capitalize" text @click="close">
-              Cancel
+              {{ $t('autoLabeling.cancel') }}
             </v-btn>
             <v-btn
               :disabled="!valid"
@@ -48,7 +48,7 @@
               text
               @click="save"
             >
-              Save
+              {{ $t('autoLabeling.save') }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -83,19 +83,19 @@ export default Vue.extend({
       dialog: false,
       headers: [
         {
-          text: 'From',
+          text: this.$t('generic.from'),
           align: 'left',
           value: 'from',
           sortable: false
         },
         {
-          text: 'To',
+          text: this.$t('generic.to'),
           align: 'left',
           value: 'to',
           sortable: false
         },
         {
-          text: 'Actions',
+          text: this.$t('generic.actions'),
           value: 'actions',
           sortable: false
         }

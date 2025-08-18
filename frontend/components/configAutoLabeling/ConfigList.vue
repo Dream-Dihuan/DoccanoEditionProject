@@ -33,8 +33,8 @@
         <v-dialog v-model="dialogDelete">
           <confirm-form
             :items="selected"
-            title="Delete Config"
-            message="Are you sure you want to delete these configs?"
+            :title="$t('autoLabeling.deleteConfigTitle')"
+            :message="$t('autoLabeling.deleteConfigMessage')"
             item-key="modelName"
             @ok="
               remove()
@@ -70,7 +70,7 @@ export default Vue.extend({
       selected: [] as ConfigItemResponse[],
       headers: [
         {
-          text: 'Model name',
+          text: this.$t('autoLabeling.modelName'),
           align: 'left',
           value: 'modelName',
           sortable: false

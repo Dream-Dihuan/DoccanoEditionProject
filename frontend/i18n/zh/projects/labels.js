@@ -1,4 +1,7 @@
 export default {
+  category: '分类',
+  span: '跨度',
+  relation: '关系',
   labels: '标签',
   shortkey: '短键',
   color: '颜色',
@@ -16,5 +19,9 @@ export default {
   importTitle: '导入标签',
   importMessage1: '样例格式',
   importMessage2: '请选择一个文件',
-  filePlaceholder: '输入文件'
+  filePlaceholder: '输入文件',
+  createLabelType: '创建标签类型',
+  randomColor: '随机颜色',
+  randomColorTooltip: '随机颜色',
+  preview: '预览'
 }

@@ -66,12 +66,12 @@ export default Vue.extend({
       newText: '',
       headers: [
         {
-          text: 'Text',
+          text: this.$t('generic.text'),
           align: 'left',
           value: 'text'
         },
         {
-          text: 'Actions',
+          text: this.$t('generic.actions'),
           align: 'right',
           value: 'action'
         }

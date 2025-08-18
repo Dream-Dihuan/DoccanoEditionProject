@@ -1,7 +1,7 @@
 <template>
   <confirm-form
     :items="selected"
-    title="Delete Label"
+    :title="$t('labels.deleteLabel')"
     :message="$t('labels.deleteMessage')"
     item-key="text"
     @ok="$emit('remove')"

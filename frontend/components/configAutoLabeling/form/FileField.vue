@@ -2,7 +2,7 @@
   <file-pond
     ref="pond"
     chunk-uploads="true"
-    label-idle="Drop files here..."
+    :label-idle="$t('autoLabeling.dropFilesHere')"
     :allow-multiple="false"
     :server="server"
     :files="myFiles"

@@ -1,0 +1,20 @@
+export default {
+  assignToMember: 'Assign to member',
+  resetAssignment: 'Reset Assignment',
+  assignTitle: 'Assign examples to members',
+  selectStrategy: 'Select assignment strategy',
+  projectManagerAccess: 'The project managers have access to all examples, regardless of whether they are assigned or not.',
+  allocateWeights: 'Allocate weights',
+  assign: 'Assign',
+  weightedSequential: 'Weighted sequential',
+  weightedSequentialDesc: 'Assign examples to members in order of their workload. The total weight must equal 100.',
+  weightedRandom: 'Weighted random',
+  weightedRandomDesc: 'Assign examples to members randomly based on their workload. The total weight must equal 100.',
+  samplingWithoutReplacement: 'Sampling without replacement',
+  samplingWithoutReplacementDesc: 'Assign examples to members randomly without replacement.',
+  resetTitle: 'Reset assignment',
+  resetMessage: 'Are you sure you want to reset all the assignments?',
+  noOne: 'No one',
+  finished: 'Finished',
+  inProgress: 'In progress'
+}

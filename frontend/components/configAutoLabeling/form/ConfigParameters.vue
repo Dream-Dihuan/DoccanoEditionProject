@@ -3,8 +3,8 @@
     <v-card>
       <v-card-text class="pa-0">
         <v-form>
-          <h4 class="text-h6">Set parameters</h4>
-          <p class="font-weight-regular body-1">You can set parameters to fetch API response.</p>
+          <h4 class="text-h6">{{ $t('autoLabeling.setParameters') }}</h4>
+          <p class="font-weight-regular body-1">{{ $t('autoLabeling.setParametersDescription') }}</p>
           <template v-for="item in value">
             <v-text-field
               v-if="item.type === 'textField'"
@@ -28,17 +28,18 @@
               :title="item.name"
             />
           </template>
-          <h4 class="text-h6">Test the parameters</h4>
+          <h4 class="text-h6">{{ $t('autoLabeling.testParameters') }}</h4>
           <p class="font-weight-regular body-1">
-            Before proceeding, you need to test the parameters whether they can fetch API response.
-            Please input sample text and press the
-            <strong>Test</strong> button.
+            {{ $t('autoLabeling.testParametersDescription') }}
+            {{ $t('autoLabeling.testParametersDescription2') }}
+            <strong>{{ $t('generic.test') }}</strong>
+            {{ $t('autoLabeling.testParametersDescription3') }}
           </p>
           <v-text-field
             v-if="project.isTextProject"
             v-model="payload"
             outlined
-            label="Sample Text"
+            :label="$t('autoLabeling.sampleText')"
           />
           <file-field v-else v-model="payload" />
           <v-alert v-for="(error, index) in errorMessages" :key="index" prominent type="error">
@@ -48,7 +49,7 @@
               </v-col>
             </v-row>
           </v-alert>
-          <h4 class="text-h6">Response</h4>
+          <h4 class="text-h6">{{ $t('autoLabeling.response') }}</h4>
           <v-sheet :dark="!$vuetify.theme.dark" :light="$vuetify.theme.dark" class="mb-5 pa-5">
             <pre>{{ JSON.stringify(response, null, 4) }}</pre>
           </v-sheet>
@@ -56,17 +57,17 @@
       </v-card-text>
       <v-card-actions class="pa-0">
         <v-spacer />
-        <v-btn text class="text-capitalize" @click="$emit('prev')"> Prev </v-btn>
+        <v-btn text class="text-capitalize" @click="$emit('prev')"> {{ $t('generic.prev') }} </v-btn>
         <v-btn
           v-show="!isPassed"
           color="primary"
           class="text-capitalize"
           @click="$emit('onTest', payload)"
         >
-          Test
+          {{ $t('generic.test') }}
         </v-btn>
         <v-btn v-show="isPassed" color="primary" class="text-capitalize" @click="$emit('next')">
-          Next
+          {{ $t('generic.next') }}
         </v-btn>
       </v-card-actions>
     </v-card>

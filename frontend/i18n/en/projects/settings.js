@@ -1,3 +1,4 @@
 export default {
-  title: 'Settings'
+  project: 'Project',
+  autoLabeling: 'Auto Labeling'
 }

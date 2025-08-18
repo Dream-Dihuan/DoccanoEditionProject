@@ -15,21 +15,21 @@
         <v-checkbox
           v-if="_canDefineLabel"
           v-model="editedItem.allowMemberToCreateLabelType"
-          label="Allow project members to create label types"
+          :label="$t('overview.allowMemberToCreateLabelType')"
         />
         <template v-if="isSequenceLabelingProject">
-          <v-checkbox v-model="editedItem.allowOverlappingSpans" label="Allow overlapping spans" />
+          <v-checkbox v-model="editedItem.allowOverlappingSpans" :label="$t('overview.allowOverlappingSpans')" />
           <v-img
             :src="require('~/assets/project/creation.gif')"
             height="200"
             position="left"
             contain
           />
-          <v-checkbox v-model="editedItem.useRelation" label="Use relation labeling" />
+          <v-checkbox v-model="editedItem.useRelation" :label="$t('overview.useRelationLabeling')" />
           <v-checkbox v-model="editedItem.enableGraphemeMode">
             <template #label>
               <div>
-                Count
+                {{ $t('overview.countGraphemeClusters') }}
                 <v-tooltip bottom>
                   <template #activator="{ on }">
                     <a
@@ -41,7 +41,7 @@
                       grapheme clusters
                     </a>
                   </template>
-                  Like emoji(🌷, 💩, and 👍), CRLF(\r\n), and so on.
+                  {{ $t('overview.graphemeClustersDesc') }}
                 </v-tooltip>
                 as one character
               </div>

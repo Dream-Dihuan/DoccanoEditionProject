@@ -5,6 +5,8 @@ import rules from './rules'
 import toastui from './toastui'
 import user from './user'
 import vuetify from './vuetify'
+import demo from './demo'
+import projects from './projects'
 import annotation from './projects/annotation'
 import dataset from './projects/dataset'
 import errors from './projects/errors'
@@ -16,6 +18,9 @@ import comments from './projects/comments'
 import overview from './projects/overview'
 import statistics from './projects/statistics'
 import settings from './projects/settings'
+import examples from './projects/examples'
+import tasks from './projects/tasks'
+import autoLabeling from './projects/autoLabeling'
 
 export default {
   home,
@@ -25,6 +30,8 @@ export default {
   toastui,
   user,
   vuetify,
+  demo,
+  projects,
   annotation,
   dataset,
   errors,
@@ -35,5 +42,8 @@ export default {
   comments,
   overview,
   statistics,
-  settings
+  settings,
+  examples,
+  tasks,
+  autoLabeling
 }

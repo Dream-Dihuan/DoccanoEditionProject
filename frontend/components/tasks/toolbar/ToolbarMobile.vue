@@ -1,12 +1,12 @@
 <template>
   <v-bottom-navigation app absolute hide-on-scroll>
     <v-btn :disabled="isFirstPage" @click="updatePage(page - 1)">
-      <span>Prev</span>
+      <span>{{ $t('generic.prev') }}</span>
       <v-icon>{{ mdiChevronLeft }}</v-icon>
     </v-btn>
 
     <v-btn :disabled="isLastPage" @click="updatePage(page + 1)">
-      <span>Next</span>
+      <span>{{ $t('generic.next') }}</span>
       <v-icon>{{ mdiChevronRight }}</v-icon>
     </v-btn>
   </v-bottom-navigation>

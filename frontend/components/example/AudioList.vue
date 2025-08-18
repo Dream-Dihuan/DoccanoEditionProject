@@ -31,7 +31,7 @@
     </template>
     <template #[`item.isConfirmed`]="{ item }">
       <v-chip :color="item.isConfirmed ? 'success' : 'warning'" text small>
-        {{ item.isConfirmed ? 'Finished' : 'In progress' }}
+        {{ item.isConfirmed ? $t('examples.finished') : $t('examples.inProgress') }}
       </v-chip>
     </template>
     <template #[`item.url`]="{ item }">
@@ -48,7 +48,7 @@
         :value="toSelected(item)"
         :items="members"
         item-text="username"
-        no-data-text="No one"
+        :no-data-text="$t('examples.noOne')"
         multiple
         chips
         dense

@@ -87,7 +87,7 @@ export default Vue.extend({
         { text: this.$t('labels.color'), value: 'backgroundColor', sortable: true }
       ]
       if (!this.disableEdit) {
-        headers.push({ text: 'Actions', value: 'actions', sortable: false })
+        headers.push({ text: this.$t('generic.actions'), value: 'actions', sortable: false })
       }
       return headers
     }

@@ -1,12 +1,12 @@
 <template>
   <v-card>
     <v-toolbar color="primary white--text" flat>
-      <v-toolbar-title>Assign examples to members</v-toolbar-title>
+      <v-toolbar-title>{{ $t('examples.assignTitle') }}</v-toolbar-title>
     </v-toolbar>
     <v-card-text>
       <v-container fluid>
         <v-row>
-          <v-card-title class="pb-0 pl-3">Select assignment strategy</v-card-title>
+          <v-card-title class="pb-0 pl-3">{{ $t('examples.selectStrategy') }}</v-card-title>
           <v-col cols="12">
             <v-select
               v-model="selectedStrategy"
@@ -18,12 +18,11 @@
               hide-details
             ></v-select>
             {{ strategies.find((strategy) => strategy.value === selectedStrategy)?.description }}
-            The project managers have access to all examples, regardless of whether they are
-            assigned or not.
+            {{ $t('examples.projectManagerAccess') }}
           </v-col>
         </v-row>
         <v-row>
-          <v-card-title class="pb-0 pl-3">Allocate weights</v-card-title>
+          <v-card-title class="pb-0 pl-3">{{ $t('examples.allocateWeights') }}</v-card-title>
           <v-col v-for="(member, i) in members" :key="member.id" cols="12" class="pt-0 pb-0">
             <v-subheader class="pl-0">{{ member.username }}</v-subheader>
             <v-slider v-model="workloadAllocation[i]" :max="100" class="align-center">
@@ -43,7 +42,7 @@
     <v-card-actions>
       <v-spacer />
       <v-btn class="text-capitalize" text color="primary" data-test="cancel-button" @click="cancel">
-        Cancel
+        {{ $t('generic.cancel') }}
       </v-btn>
       <v-btn
         class="text-none"
@@ -52,7 +51,7 @@
         data-test="delete-button"
         @click="agree"
       >
-        Assign
+        {{ $t('examples.assign') }}
       </v-btn>
     </v-card-actions>
     <v-overlay :value="isWaiting">
@@ -88,21 +87,19 @@ export default Vue.extend({
     strategies() {
       return [
         {
-          displayName: 'Weighted sequential',
+          displayName: this.$t('examples.weightedSequential'),
           value: 'weighted_sequential',
-          description:
-            'Assign examples to members in order of their workload. The total weight must equal 100.'
+          description: this.$t('examples.weightedSequentialDesc')
         },
         {
-          displayName: 'Weighted random',
+          displayName: this.$t('examples.weightedRandom'),
           value: 'weighted_random',
-          description:
-            'Assign examples to members randomly based on their workload. The total weight must equal 100.'
+          description: this.$t('examples.weightedRandomDesc')
         },
         {
-          displayName: 'Sampling without replacement',
+          displayName: this.$t('examples.samplingWithoutReplacement'),
           value: 'sampling_without_replacement',
-          description: 'Assign examples to members randomly without replacement.'
+          description: this.$t('examples.samplingWithoutReplacementDesc')
         }
       ]
     },

@@ -6,5 +6,6 @@ export default {
   created_at: 'Created at',
   document: 'Document',
   send: 'Send',
-  message: 'Message'
+  message: 'Message',
+  isRequired: 'Comment is required'
 }

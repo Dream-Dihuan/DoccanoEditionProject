@@ -1,7 +1,7 @@
 <template>
   <confirm-form
-    title="Reset assignment"
-    message="Are you sure you want to reset all the assignments?"
+    :title="$t('examples.resetTitle')"
+    :message="$t('examples.resetMessage')"
     @ok="$emit('reset')"
     @cancel="$emit('cancel')"
   />
