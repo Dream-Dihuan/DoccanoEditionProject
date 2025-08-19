@@ -1,4 +1,5 @@
 export default {
+  createProjectTitle: 'Create a project',
   projectType: 'Project Type',
   projectName: 'Project Name',
   projectDescription: 'Project Description',
@@ -8,6 +9,7 @@ export default {
   deleteProjectTitle: 'Delete project',
   deleteProjectMessage: 'Are you sure you want to delete selected projects?',
   allowMemberToCreateLabelType: 'Allow project members to create label types',
+  allowSingleLabel: 'Allow single label',
   allowOverlappingSpans: 'Allow overlapping spans',
   useRelationLabeling: 'Use relation labeling',
   countGraphemeClusters: 'Count grapheme clusters as one character',

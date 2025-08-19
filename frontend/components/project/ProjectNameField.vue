@@ -5,6 +5,8 @@
     :rules="projectNameRules"
     :label="$t('overview.projectName')"
     required
+    filled
+    rounded
     @input="$emit('input', $event)"
   />
 </template>
@@ -31,3 +33,22 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style scoped>
+::v-deep .v-input__control {
+  min-height: 56px;
+}
+
+::v-deep .v-text-field--filled .v-text-field__prefix,
+::v-deep .v-text-field--filled .v-text-field__suffix,
+::v-deep .v-text-field--filled .v-label {
+  padding-top: 18px;
+}
+
+::v-deep .v-text-field--filled:not(.v-text-field--single-line) .v-text-field__prefix,
+::v-deep .v-text-field--filled:not(.v-text-field--single-line) .v-text-field__suffix,
+::v-deep .v-text-field--filled:not(.v-text-field--single-line) input {
+  padding-top: 22px;
+  padding-bottom: 10px;
+}
+</style>

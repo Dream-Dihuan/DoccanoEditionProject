@@ -1,69 +1,120 @@
 <template>
-  <v-card>
-    <v-card-title>{{ $t('overview.createProjectTitle') }}</v-card-title>
-    <v-card-text>
-      <v-form v-model="valid">
-        <project-type-field v-model="editedItem.projectType" />
-        <project-name-field v-model="editedItem.name" outlined autofocus />
-        <project-description-field v-model="editedItem.description" outlined />
-        <tag-list v-model="editedItem.tags" outlined />
-        <v-checkbox
-          v-if="showExclusiveCategories"
-          v-model="editedItem.exclusiveCategories"
-          :label="$t('overview.allowSingleLabel')"
-        />
-        <v-checkbox
-          v-if="_canDefineLabel"
-          v-model="editedItem.allowMemberToCreateLabelType"
-          :label="$t('overview.allowMemberToCreateLabelType')"
-        />
-        <template v-if="isSequenceLabelingProject">
-          <v-checkbox v-model="editedItem.allowOverlappingSpans" :label="$t('overview.allowOverlappingSpans')" />
-          <v-img
-            :src="require('~/assets/project/creation.gif')"
-            height="200"
-            position="left"
-            contain
-          />
-          <v-checkbox v-model="editedItem.useRelation" :label="$t('overview.useRelationLabeling')" />
-          <v-checkbox v-model="editedItem.enableGraphemeMode">
-            <template #label>
-              <div>
-                {{ $t('overview.countGraphemeClusters') }}
-                <v-tooltip bottom>
-                  <template #activator="{ on }">
-                    <a
-                      target="_blank"
-                      href="https://unicode.org/reports/tr29/"
-                      @click.stop
-                      v-on="on"
-                    >
-                      grapheme clusters
-                    </a>
-                  </template>
-                  {{ $t('overview.graphemeClustersDesc') }}
-                </v-tooltip>
-                as one character
-              </div>
-            </template>
-          </v-checkbox>
-        </template>
-        <random-order-field v-model="editedItem.enableRandomOrder" />
-        <sharing-mode-field v-model="editedItem.enableSharingMode" />
-      </v-form>
-    </v-card-text>
-    <v-card-actions class="ps-4">
-      <v-btn
-        :disabled="!valid"
-        color="primary"
-        style="text-transform: none"
-        outlined
-        @click="create"
-      >
-        {{ $t('generic.create') }}
-      </v-btn>
-    </v-card-actions>
-  </v-card>
+  <div class="project-creation-container">
+    <v-card class="project-creation-card" elevation="6">
+      <v-toolbar flat class="project-creation-toolbar">
+        <v-toolbar-title class="text-h5 font-weight-bold">
+          {{ $t('overview.createProjectTitle') }}
+        </v-toolbar-title>
+      </v-toolbar>
+      
+      <v-card-text class="project-creation-content">
+        <v-form v-model="valid" ref="form">
+          <v-row>
+            <v-col cols="12">
+              <div class="section-title">{{ $t('overview.projectType') }}</div>
+              <project-type-field v-model="editedItem.projectType" />
+            </v-col>
+          </v-row>
+          
+          <v-row>
+            <v-col cols="12" md="6">
+              <div class="section-title">{{ $t('overview.projectName') }}</div>
+              <project-name-field v-model="editedItem.name" outlined autofocus />
+            </v-col>
+            
+            <v-col cols="12" md="6">
+              <div class="section-title">{{ $t('generic.description') }}</div>
+              <project-description-field v-model="editedItem.description" outlined />
+            </v-col>
+          </v-row>
+          
+          <v-row>
+            <v-col cols="12">
+              <div class="section-title">{{ $t('overview.tags') }}</div>
+              <tag-list v-model="editedItem.tags" outlined />
+            </v-col>
+          </v-row>
+          
+          <v-row>
+            <v-col cols="12">
+              <div class="section-title">{{ $t('settings.title') }}</div>
+              <v-card outlined class="settings-card">
+                <v-card-text>
+                  <v-row>
+                    <v-col cols="12" md="6">
+                      <v-checkbox
+                        v-if="showExclusiveCategories"
+                        v-model="editedItem.exclusiveCategories"
+                        :label="$t('overview.allowSingleLabel')"
+                        hide-details
+                      />
+                      <v-checkbox
+                        v-if="_canDefineLabel"
+                        v-model="editedItem.allowMemberToCreateLabelType"
+                        :label="$t('overview.allowMemberToCreateLabelType')"
+                        hide-details
+                      />
+                      <random-order-field v-model="editedItem.enableRandomOrder" />
+                      <sharing-mode-field v-model="editedItem.enableSharingMode" />
+                    </v-col>
+                    
+                    <template v-if="isSequenceLabelingProject">
+                      <v-col cols="12" md="6">
+                        <v-checkbox 
+                          v-model="editedItem.allowOverlappingSpans" 
+                          :label="$t('projects.overview.allowOverlappingSpans')"
+                          hide-details
+                        />
+                        <v-checkbox 
+                          v-model="editedItem.useRelation" 
+                          :label="$t('projects.overview.useRelationLabeling')"
+                          hide-details
+                        />
+                        <v-checkbox v-model="editedItem.enableGraphemeMode" hide-details>
+                          <template #label>
+                            <div>
+                              {{ $t('overview.countGraphemeClusters') }}
+                              <v-tooltip bottom>
+                                <template #activator="{ on }">
+                                  <a
+                                    target="_blank"
+                                    href="https://unicode.org/reports/tr29/"
+                                    @click.stop
+                                    v-on="on"
+                                    class="text-decoration-none"
+                                  >
+                                    grapheme clusters
+                                  </a>
+                                </template>
+                                {{ $t('overview.graphemeClustersDesc') }}
+                              </v-tooltip>
+                              as one character
+                            </div>
+                          </template>
+                        </v-checkbox>
+                      </v-col>
+                    </template>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-form>
+      </v-card-text>
+      
+      <v-card-actions class="project-creation-actions">
+        <v-spacer></v-spacer>
+        <v-btn
+          :disabled="!valid"
+          color="primary"
+          @click="create"
+          x-large
+        >
+          {{ $t('generic.create') }}
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </div>
 </template>
 
 <script lang="ts">
@@ -142,3 +193,69 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style scoped>
+.project-creation-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.project-creation-card {
+  border-radius: 12px;
+  width: 100%;
+}
+
+.project-creation-toolbar {
+  background: linear-gradient(120deg, #1976D2, #42A5F5) !important;
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+  color: white !important;
+}
+
+.project-creation-content {
+  padding: 30px;
+}
+
+.project-creation-actions {
+  padding: 20px 30px 30px;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #1976D2;
+}
+
+.settings-card {
+  border-radius: 8px;
+  background-color: #f5f9ff;
+}
+
+.theme--dark .settings-card {
+  background-color: #1E1E1E;
+}
+
+.theme--dark .section-title {
+  color: #64B5F6;
+}
+
+.project-creation-toolbar ::v-deep .v-toolbar__title {
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .project-creation-container {
+    padding: 10px;
+  }
+  
+  .project-creation-content {
+    padding: 15px;
+  }
+  
+  .project-creation-actions {
+    padding: 15px;
+  }
+}
+</style>

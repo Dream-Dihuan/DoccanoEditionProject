@@ -4,6 +4,7 @@
     :value="value"
     :label="$t('overview.randomizeDocOrder')"
     @change="$emit('input', $event === true)"
+    hide-details
   />
 </template>
 
@@ -19,3 +20,9 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style scoped>
+::v-deep .v-input--selection-controls__input {
+  margin-right: 8px;
+}
+</style>

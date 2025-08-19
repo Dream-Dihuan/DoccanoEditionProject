@@ -1,4 +1,5 @@
 export default {
+  createProjectTitle: '创建项目',
   projectType: '项目类型',
   projectName: '项目名称',
   projectDescription: '项目描述',
@@ -7,6 +8,7 @@ export default {
   shareAnnotations: '共享标注结果',
   deleteProjectTitle: '删除项目',
   deleteProjectMessage: '确定要删除选中的项目吗？',
+  allowSingleLabel: '只允许单个标签',
   allowMemberToCreateLabelType: '允许项目成员创建标签类型',
   allowOverlappingSpans: '允许重叠区间',
   useRelationLabeling: '使用关系标注',

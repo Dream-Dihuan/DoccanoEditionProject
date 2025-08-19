@@ -10,6 +10,7 @@ export default {
   delete: 'Löschen',
   deleteProjectTitle: 'Lösche Projekt',
   deleteProjectMessage: 'Bist du dir sicher, dass du diese Projekte löschen willst?',
+  allowSingleLabel: 'Nur ein Label erlauben',
   search: 'Suchen',
   projectTypes: [
     'Textklassifikation',

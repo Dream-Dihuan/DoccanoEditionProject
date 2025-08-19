@@ -12,6 +12,11 @@ export default {
   deleteProjectTitle: 'Supprimer le projet',
   deleteProjectMessage: 'Êtes-vous sûr de vouloir supprimer ces projets ?',
   search: 'Recherche',
+  allowMemberToCreateLabelType: 'Autoriser les membres du projet à créer des types d\'étiquettes',
+  allowOverlappingSpans: 'Autoriser les chevauchements',
+  useRelationLabeling: 'Utiliser l\'étiquetage des relations',
+  countGraphemeClusters: 'Compter les grappes de graphèmes comme un seul caractère',
+  graphemeClustersDesc: 'Comme les emoji(🌷, 💩, et 👍), CRLF(\\r\\n), etc.',
   projectTypes: [
     'Classification des textes',
     'Étiquetage des séquences',
