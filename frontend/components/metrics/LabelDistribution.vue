@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="label-distribution elevation-8">
     <v-card-title v-text="title" />
     <v-divider />
     <v-tabs show-arrows>
@@ -76,3 +76,14 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style scoped>
+.label-distribution {
+  border-radius: 12px !important;
+}
+
+.theme--dark .label-distribution {
+  background-color: var(--card-bg) !important;
+  border: 2px solid var(--card-border);
+}
+</style>
