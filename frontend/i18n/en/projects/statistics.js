@@ -6,5 +6,7 @@ export default {
   memberProgress: 'Member\'s Progress',
   categoryDistribution: 'Category Distribution',
   spanDistribution: 'Span Distribution',
-  relationDistribution: 'Relation Distribution'
+  relationDistribution: 'Relation Distribution',
+  title: 'Project Metrics',
+  description: 'View project statistics and member progress'
 }
