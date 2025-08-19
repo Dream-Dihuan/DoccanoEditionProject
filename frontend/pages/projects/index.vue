@@ -1,6 +1,6 @@
 <template>
   <div class="projects-page">
-    <v-container fluid class="py-8">
+    <v-container fluid class="py-8 px-4 px-sm-6">
       <v-row class="mb-6">
         <v-col cols="12">
           <div class="d-flex align-center justify-space-between flex-wrap">
@@ -53,7 +53,7 @@
 
       <v-row>
         <v-col cols="12">
-          <base-card>
+          <base-card class="elevation-8">
             <template #content>
               <div class="project-list-wrapper">
                 <project-list
@@ -162,6 +162,7 @@ export default Vue.extend({
   background-color: var(--background);
   min-height: 100%;
   width: 100%;
+  padding: 0;
 }
 
 .theme--dark .projects-page {
@@ -182,5 +183,23 @@ export default Vue.extend({
     flex-direction: column;
     align-items: flex-start !important;
   }
+  
+  .v-container {
+    padding: 16px !important;
+  }
+}
+
+/* Add smooth transitions */
+.v-card {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.v-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15) !important;
+}
+
+.theme--dark .v-card:hover {
+  box-shadow: 0 6px 12px rgba(255,255,255,0.15) !important;
 }
 </style>

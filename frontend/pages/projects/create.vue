@@ -1,6 +1,6 @@
 <template>
   <div class="project-creation-container">
-    <v-card class="project-creation-card" elevation="6">
+    <v-card class="project-creation-card" elevation="8">
       <v-toolbar flat class="project-creation-toolbar">
         <v-toolbar-title class="text-h5 font-weight-bold">
           {{ $t('overview.createProjectTitle') }}
@@ -38,7 +38,7 @@
           <v-row>
             <v-col cols="12">
               <div class="section-title">{{ $t('settings.title') }}</div>
-              <v-card outlined class="settings-card">
+              <v-card outlined class="settings-card" elevation="2">
                 <v-card-text>
                   <v-row>
                     <v-col cols="12" md="6">
@@ -47,12 +47,14 @@
                         v-model="editedItem.exclusiveCategories"
                         :label="$t('overview.allowSingleLabel')"
                         hide-details
+                        class="mb-2"
                       />
                       <v-checkbox
                         v-if="_canDefineLabel"
                         v-model="editedItem.allowMemberToCreateLabelType"
                         :label="$t('overview.allowMemberToCreateLabelType')"
                         hide-details
+                        class="mb-2"
                       />
                       <random-order-field v-model="editedItem.enableRandomOrder" />
                       <sharing-mode-field v-model="editedItem.enableSharingMode" />
@@ -64,13 +66,15 @@
                           v-model="editedItem.allowOverlappingSpans" 
                           :label="$t('projects.overview.allowOverlappingSpans')"
                           hide-details
+                          class="mb-2"
                         />
                         <v-checkbox 
                           v-model="editedItem.useRelation" 
                           :label="$t('projects.overview.useRelationLabeling')"
                           hide-details
+                          class="mb-2"
                         />
-                        <v-checkbox v-model="editedItem.enableGraphemeMode" hide-details>
+                        <v-checkbox v-model="editedItem.enableGraphemeMode" hide-details class="mb-2">
                           <template #label>
                             <div>
                               {{ $t('overview.countGraphemeClusters') }}
@@ -109,6 +113,7 @@
           color="primary"
           @click="create"
           x-large
+          class="text-capitalize font-weight-medium"
         >
           {{ $t('generic.create') }}
         </v-btn>
@@ -199,11 +204,13 @@ export default Vue.extend({
   width: 100%;
   margin: 0 auto;
   padding: 20px;
+  max-width: 1400px;
 }
 
 .project-creation-card {
   border-radius: 12px;
   width: 100%;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .project-creation-toolbar {
@@ -231,10 +238,11 @@ export default Vue.extend({
 .settings-card {
   border-radius: 8px;
   background-color: #f5f9ff;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .theme--dark .settings-card {
-  background-color: #1E1E1E;
+  background-color: #2A2A2A;
 }
 
 .theme--dark .section-title {
@@ -243,6 +251,20 @@ export default Vue.extend({
 
 .project-creation-toolbar ::v-deep .v-toolbar__title {
   color: white;
+}
+
+@media (max-width: 960px) {
+  .project-creation-container {
+    padding: 15px;
+  }
+  
+  .project-creation-content {
+    padding: 20px;
+  }
+  
+  .project-creation-actions {
+    padding: 15px 20px 20px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -256,6 +278,39 @@ export default Vue.extend({
   
   .project-creation-actions {
     padding: 15px;
+    flex-direction: column;
   }
+  
+  .v-card-actions .v-btn {
+    width: 100%;
+  }
+}
+
+/* 添加悬停效果 */
+.project-creation-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1) !important;
+}
+
+.theme--dark .project-creation-card:hover {
+  box-shadow: 0 6px 12px rgba(255,255,255,0.1) !important;
+}
+
+/* 改善表单元素间距 */
+.v-input {
+  margin-bottom: 16px;
+}
+
+.v-input ::v-deep .v-label {
+  font-weight: 500;
+}
+
+/* 改善复选框样式 */
+.v-input--checkbox ::v-deep .v-input__slot {
+  margin-bottom: 0 !important;
+}
+
+.v-input--checkbox ::v-deep .v-messages {
+  min-height: 0;
 }
 </style>

@@ -1,10 +1,12 @@
 export default {
   comments: 'Kommentare',
+  management: 'Projektkommentare verwalten',
   removeComment: 'Entferne Kommentar',
   removePrompt: 'Sollen diese Kommentare wirklich entfernt werden?',
   commentView: 'Ansehen',
   created_at: 'Erstellt am',
   document: 'Dokument',
   send: 'Senden',
-  message: 'Nachricht'
+  message: 'Nachricht',
+  isRequired: 'Kommentar ist erforderlich'
 }
