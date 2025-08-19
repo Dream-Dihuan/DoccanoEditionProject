@@ -7,6 +7,7 @@ export default {
   userSearchPrompt: '开始搜索',
   removeMember: '移除成员',
   removePrompt: '你确定要移除当前成员吗?',
+  actions: '管理项目成员',
   roles: {
     projectAdmin: '项目管理员',
     annotator: '标注员',

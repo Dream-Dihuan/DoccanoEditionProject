@@ -7,6 +7,7 @@ export default {
   userSearchPrompt: 'Tippe, um zu suchen',
   removeMember: 'Mitglied entfernen',
   removePrompt: 'Bist du dir sicher, dass du diese Mitglieder entfernen willst?',
+  actions: 'Projektmitglieder verwalten',
   roles: {
     projectAdmin: 'Projektadministrator',
     annotator: 'Annotator',

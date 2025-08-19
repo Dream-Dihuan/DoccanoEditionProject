@@ -1,13 +1,6 @@
 <template>
-  <base-card
-    :disabled="!valid"
-    :title="$t('members.addMember')"
-    :agree-text="$t('generic.save')"
-    :cancel-text="$t('generic.cancel')"
-    @agree="$emit('save')"
-    @cancel="$emit('cancel')"
-  >
-    <template #content>
+  <div>
+    <v-card-text class="pt-5">
       <v-form v-model="valid">
         <v-autocomplete
           v-model="user"
@@ -47,24 +40,28 @@
           </v-row>
         </v-alert>
       </v-form>
-    </template>
-  </base-card>
+    </v-card-text>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn text @click="$emit('cancel')">
+        {{ $t('generic.cancel') }}
+      </v-btn>
+      <v-btn color="primary" :disabled="!valid" @click="$emit('save')">
+        {{ $t('generic.save') }}
+      </v-btn>
+    </v-card-actions>
+  </div>
 </template>
 
 <script lang="ts">
 import { mdiAccount, mdiCreditCardOutline } from '@mdi/js'
 import type { PropType } from 'vue'
 import Vue from 'vue'
-import BaseCard from '@/components/utils/BaseCard.vue'
 import { MemberItem } from '~/domain/models/member/member'
 import { RoleItem } from '~/domain/models/role/role'
 import { UserItem } from '~/domain/models/user/user'
 
 export default Vue.extend({
-  components: {
-    BaseCard
-  },
-
   props: {
     value: {
       type: Object as PropType<MemberItem>,

@@ -1,31 +1,80 @@
 <template>
-  <v-card>
-    <v-card-title>
-      <v-btn class="text-capitalize" color="primary" @click.stop="dialogCreate = true">
-        {{ $t('generic.add') }}
-      </v-btn>
-      <v-btn
-        class="text-capitalize ms-2"
-        :disabled="!canDelete"
-        outlined
-        @click.stop="dialogDelete = true"
-      >
-        {{ $t('generic.delete') }}
-      </v-btn>
-      <v-dialog v-model="dialogCreate">
-        <form-create
-          v-model="editedItem"
-          :error-message="errorMessage"
-          @cancel="close"
-          @save="save"
-        />
+  <div class="members-page">
+    <v-container fluid class="py-8 px-4 px-sm-6">
+      <v-row class="mb-6">
+        <v-col cols="12">
+          <div class="d-flex align-center justify-space-between flex-wrap">
+            <div>
+              <h1 class="text-h4 font-weight-bold primary--text mb-2">
+                {{ $t('members.members') }}
+              </h1>
+              <p class="text--secondary mb-0">
+                {{ $t('members.actions') }}
+              </p>
+            </div>
+            
+            <div class="mt-4 mt-sm-0">
+              <v-btn 
+                class="text-capitalize font-weight-medium" 
+                color="primary" 
+                rounded
+                @click.stop="dialogCreate = true"
+              >
+                {{ $t('generic.add') }}
+              </v-btn>
+              <v-btn
+                class="text-capitalize font-weight-medium ms-2"
+                :disabled="!canDelete"
+                outlined
+                rounded
+                @click.stop="dialogDelete = true"
+              >
+                {{ $t('generic.delete') }}
+              </v-btn>
+            </div>
+          </div>
+        </v-col>
+      </v-row>
+      
+      <v-row>
+        <v-col cols="12">
+          <base-card class="elevation-8">
+            <template #content>
+              <member-list 
+                v-model="selected" 
+                :items="items" 
+                :is-loading="isLoading" 
+                @edit="editItem" 
+              />
+            </template>
+          </base-card>
+        </v-col>
+      </v-row>
+      
+      <v-dialog v-model="dialogCreate" max-width="500">
+        <v-card elevation="8">
+          <v-toolbar flat dark color="primary">
+            <v-toolbar-title>{{ $t('members.addMember') }}</v-toolbar-title>
+          </v-toolbar>
+          <form-create
+            v-model="editedItem"
+            :error-message="errorMessage"
+            @cancel="close"
+            @save="save"
+          />
+        </v-card>
       </v-dialog>
-      <v-dialog v-model="dialogDelete">
-        <form-delete :selected="selected" @cancel="dialogDelete = false" @remove="remove" />
+      
+      <v-dialog v-model="dialogDelete" max-width="500">
+        <v-card elevation="8">
+          <v-toolbar flat dark color="primary">
+            <v-toolbar-title>{{ $t('members.removeMember') }}</v-toolbar-title>
+          </v-toolbar>
+          <form-delete :selected="selected" @cancel="dialogDelete = false" @remove="remove" />
+        </v-card>
       </v-dialog>
-    </v-card-title>
-    <member-list v-model="selected" :items="items" :is-loading="isLoading" @edit="editItem" />
-  </v-card>
+    </v-container>
+  </div>
 </template>
 
 <script lang="ts">
@@ -34,12 +83,14 @@ import FormDelete from '@/components/member/FormDelete.vue'
 import MemberList from '@/components/member/MemberList.vue'
 import FormCreate from '~/components/member/FormCreate.vue'
 import { MemberItem } from '~/domain/models/member/member'
+import BaseCard from '@/components/utils/BaseCard.vue'
 
 export default Vue.extend({
   components: {
     MemberList,
     FormCreate,
-    FormDelete
+    FormDelete,
+    BaseCard
   },
 
   layout: 'project',
@@ -151,5 +202,10 @@ export default Vue.extend({
 <style scoped>
 ::v-deep .v-dialog {
   width: 800px;
+}
+
+.members-page {
+  width: 100%;
+  height: 100%;
 }
 </style>
