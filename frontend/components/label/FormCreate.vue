@@ -1,5 +1,8 @@
 <template>
-  <v-form ref="form" v-model="valid">
+  <v-card>
+    <v-card-title>{{ $t('labels.createLabelType') }}</v-card-title>
+    <v-card-text>
+      <v-form ref="form" v-model="valid">
         <v-row>
           <v-col cols="12" sm="6">
             <v-text-field
@@ -35,7 +38,7 @@
               required
               @input="$emit('update:backgroundColor', $event)"
             />
-            <v-chip-group v-model="selectedColorIndex" column mandatory>
+            <v-chip-group v-model="selectedColorIndex" column mandatory @change="onColorSelect">
               <v-chip
                 v-for="color in predefinedColors"
                 :key="color"
@@ -141,6 +144,12 @@ export default Vue.extend({
         '#98FB98',
         '#DDA0DD'
       ],
+      availableSuffixKeys: [
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+        'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+        'u', 'v', 'w', 'x', 'y', 'z'
+      ],
       rules: {
         required: (value: string) => !!value || this.$t('rules.requiredRules'),
         counter: (value: string) => value.length <= 100 || this.$t('rules.counterRules'),
@@ -167,6 +176,12 @@ export default Vue.extend({
       const randomIndex = Math.floor(Math.random() * this.predefinedColors.length)
       this.selectedColorIndex = randomIndex
       this.$emit('update:backgroundColor', this.predefinedColors[randomIndex])
+    },
+    
+    onColorSelect(index: number) {
+      if (index !== -1) {
+        this.$emit('update:backgroundColor', this.predefinedColors[index])
+      }
     }
   }
 })
