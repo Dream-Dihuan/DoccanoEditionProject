@@ -15,6 +15,7 @@ import members from './projects/members'
 import overview from './projects/overview'
 import statistics from './projects/statistics'
 import comments from './projects/comments'
+import settings from './projects/settings'
 
 export default {
   home,
@@ -33,5 +34,6 @@ export default {
   members,
   overview,
   statistics,
-  comments
+  comments,
+  settings
 }
