@@ -3,8 +3,8 @@
     v-bind="$attrs"
     :value="value"
     :label="$t('overview.randomizeDocOrder')"
-    @change="$emit('input', $event === true)"
     hide-details
+    @change="$emit('input', $event === true)"
   />
 </template>
 

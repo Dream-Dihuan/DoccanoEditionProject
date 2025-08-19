@@ -1,94 +1,113 @@
 <template>
-  <v-card>
-    <v-card-title>
-      {{ $t('dataset.importDataTitle') }}
-    </v-card-title>
-    <v-card-text>
-      <v-overlay :value="isImporting">
-        <v-progress-circular indeterminate size="64" />
-      </v-overlay>
-      <v-select
-        v-model="selected"
-        :items="catalog"
-        item-text="displayName"
-        label="File format"
-        outlined
-      />
-      <v-form v-model="valid">
-        <v-text-field
-          v-for="(item, key) in textFields"
-          :key="key"
-          v-model="option[key]"
-          :label="item.title"
-          :rules="requiredRules"
-          outlined
-        />
-        <v-select
-          v-for="(val, key) in selectFields"
-          :key="key"
-          v-model="option[key]"
-          :items="val.enum"
-          :label="val.title"
-          outlined
-        >
-          <template #selection="{ item }">
-            {{ toVisualize(item) }}
-          </template>
-          <template #item="{ item }">
-            {{ toVisualize(item) }}
-          </template>
-        </v-select>
-      </v-form>
-      <v-sheet
-        v-if="selected"
-        :dark="!$vuetify.theme.dark"
-        :light="$vuetify.theme.dark"
-        class="mb-5 pa-5"
-      >
-        <pre>{{ example }}</pre>
-      </v-sheet>
-      <div v-if="selected === 'JSONL(Relation)'">
-        <p class="body-1">For readability, the above format can be displayed as follows:</p>
-        <v-sheet :dark="!$vuetify.theme.dark" :light="$vuetify.theme.dark" class="mb-5 pa-5">
-          <pre>{{ JSON.stringify(JSON.parse(example.replaceAll("'", '"')), null, 4) }}</pre>
-        </v-sheet>
-      </div>
-      <file-pond
-        v-if="selected && acceptedFileTypes !== '*'"
-        ref="pond"
-        chunk-uploads="true"
-        label-idle="Drop files here..."
-        :allow-multiple="true"
-        :accepted-file-types="acceptedFileTypes"
-        :server="server"
-        :files="myFiles"
-        @processfile="handleFilePondProcessFile"
-        @removefile="handleFilePondRemoveFile"
-      />
-      <file-pond
-        v-if="selected && acceptedFileTypes === '*'"
-        ref="pond"
-        chunk-uploads="true"
-        label-idle="Drop files here..."
-        :allow-multiple="true"
-        :server="server"
-        :files="myFiles"
-        @processfile="handleFilePondProcessFile"
-        @removefile="handleFilePondRemoveFile"
-      />
-      <v-data-table
-        v-if="errors.length > 0"
-        :headers="headers"
-        :items="errors"
-        class="elevation-1"
-      ></v-data-table>
-    </v-card-text>
-    <v-card-actions>
-      <v-btn class="text-capitalize ms-2 primary" :disabled="isDisabled" @click="importDataset">
-        {{ $t('generic.import') }}
-      </v-btn>
-    </v-card-actions>
-  </v-card>
+  <v-container fluid class="pt-6">
+    <v-row justify="center">
+      <v-col cols="12">
+        <v-card class="elevation-8" :class="{ 'dark-mode-card': $vuetify.theme.dark }">
+          <v-toolbar color="primary" dark flat class="rounded-t-lg">
+            <v-toolbar-title>
+              {{ $t('dataset.importDataTitle') }}
+            </v-toolbar-title>
+          </v-toolbar>
+          
+          <v-card-text class="mt-5">
+            <v-overlay :value="isImporting">
+              <v-progress-circular indeterminate size="64" />
+            </v-overlay>
+            <v-select
+              v-model="selected"
+              :items="catalog"
+              item-text="displayName"
+              :label="$t('generic.type')"
+              outlined
+              class="mb-4"
+            />
+            <v-form v-model="valid">
+              <v-text-field
+                v-for="(item, key) in textFields"
+                :key="key"
+                v-model="option[key]"
+                :label="item.title"
+                :rules="requiredRules"
+                outlined
+                class="mb-4"
+              />
+              <v-select
+                v-for="(val, key) in selectFields"
+                :key="key"
+                v-model="option[key]"
+                :items="val.enum"
+                :label="val.title"
+                outlined
+                class="mb-4"
+              >
+                <template #selection="{ item }">
+                  {{ toVisualize(item) }}
+                </template>
+                <template #item="{ item }">
+                  {{ toVisualize(item) }}
+                </template>
+              </v-select>
+            </v-form>
+            <v-sheet
+              v-if="selected"
+              :dark="!$vuetify.theme.dark"
+              :light="$vuetify.theme.dark"
+              class="mb-5 pa-5"
+            >
+              <pre>{{ example }}</pre>
+            </v-sheet>
+            <div v-if="selected === 'JSONL(Relation)'">
+              <p class="body-1">{{ $t('dataset.formatExample') }}</p>
+              <v-sheet :dark="!$vuetify.theme.dark" :light="$vuetify.theme.dark" class="mb-5 pa-5">
+                <pre>{{ JSON.stringify(JSON.parse(example.replaceAll("'", '"')), null, 4) }}</pre>
+              </v-sheet>
+            </div>
+            <file-pond
+              v-if="selected && acceptedFileTypes !== '*'"
+              ref="pond"
+              chunk-uploads="true"
+              :label-idle="$t('dataset.dropFilesHere')"
+              :allow-multiple="true"
+              :accepted-file-types="acceptedFileTypes"
+              :server="server"
+              :files="myFiles"
+              @processfile="handleFilePondProcessFile"
+              @removefile="handleFilePondRemoveFile"
+            />
+            <file-pond
+              v-if="selected && acceptedFileTypes === '*'"
+              ref="pond"
+              chunk-uploads="true"
+              :label-idle="$t('dataset.dropFilesHere')"
+              :allow-multiple="true"
+              :server="server"
+              :files="myFiles"
+              @processfile="handleFilePondProcessFile"
+              @removefile="handleFilePondRemoveFile"
+            />
+            <v-data-table
+              v-if="errors.length > 0"
+              :headers="headers"
+              :items="errors"
+              class="elevation-1 mt-4"
+            ></v-data-table>
+          </v-card-text>
+          
+          <v-card-actions class="px-6 pb-6">
+            <v-spacer></v-spacer>
+            <v-btn 
+              class="text-capitalize primary" 
+              :disabled="isDisabled" 
+              depressed
+              @click="importDataset"
+            >
+              {{ $t('generic.import') }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

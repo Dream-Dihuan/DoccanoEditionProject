@@ -1,7 +1,7 @@
 <template>
   <v-menu offset-y open-on-hover>
     <template #activator="{ on }">
-      <v-btn color="primary text-capitalize" v-on="on">
+      <v-btn color="primary text-capitalize" rounded v-on="on">
         {{ text }}
         <v-icon>{{ mdiMenuDown }}</v-icon>
       </v-btn>

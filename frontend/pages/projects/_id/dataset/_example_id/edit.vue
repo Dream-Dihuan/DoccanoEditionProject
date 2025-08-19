@@ -1,22 +1,43 @@
 <template>
-  <v-card>
-    <v-card-title>Edit Text</v-card-title>
-    <v-card-text>
-      <v-form ref="form" v-model="valid">
-        <v-textarea
-          v-model="editedItem.text"
-          autofocus
-          auto-grow
-          counter
-          outlined
-          :rules="[rules.required]"
-        />
-        <v-btn :disabled="!valid" color="primary" class="text-capitalize" @click="save">
-          Save
-        </v-btn>
-      </v-form>
-    </v-card-text>
-  </v-card>
+  <v-container fluid class="pt-6">
+    <v-row justify="center">
+      <v-col cols="12" md="8" lg="6">
+        <v-card class="elevation-8" :class="{ 'dark-mode-card': $vuetify.theme.dark }">
+          <v-toolbar color="primary" dark flat class="rounded-t-lg">
+            <v-toolbar-title>
+              {{ $t('dataset.editText') }}
+            </v-toolbar-title>
+          </v-toolbar>
+          
+          <v-card-text class="mt-5">
+            <v-form ref="form" v-model="valid">
+              <v-textarea
+                v-model="editedItem.text"
+                autofocus
+                auto-grow
+                counter
+                outlined
+                :rules="[rules.required]"
+              />
+            </v-form>
+          </v-card-text>
+          
+          <v-card-actions class="px-6 pb-6">
+            <v-spacer></v-spacer>
+            <v-btn 
+              :disabled="!valid" 
+              color="primary" 
+              class="text-capitalize" 
+              depressed
+              @click="save"
+            >
+              {{ $t('generic.save') }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">

@@ -18,5 +18,10 @@ export default {
   deleteDocumentsMessage: '你确定要从这个项目中删除这些文档吗？',
   deleteBulkDocumentsTitle: '删除全部文档',
   deleteBulkDocumentsMessage: '你确定要从这个项目中删除全部文档吗？',
-  pageText: '{0}-{1} of {2}'
+  pageText: '{0}-{1} of {2}',
+  editText: '编辑文本',
+  fileFormat: '文件格式',
+  dropFilesHere: '拖拽文件到此处...',
+  formatExample: '为了提高可读性，上述格式可以显示如下：',
+  exportApprovedOnly: '仅导出已批准的文档'
 }

@@ -19,5 +19,10 @@ export default {
   deleteBulkDocumentsTitle: 'Supprimer Tous Les Documents',
   deleteBulkDocumentsMessage:
     'Êtes-vous sûr de vouloir supprimer tous les documents de ce projet ?',
-  pageText: '{0}-{1} de {2}'
+  pageText: '{0}-{1} de {2}',
+  editText: 'Modifier le texte',
+  fileFormat: 'Format de fichier',
+  dropFilesHere: 'Déposez les fichiers ici...',
+  formatExample: 'Pour une meilleure lisibilité, le format ci-dessus peut être affiché comme suit :',
+  exportApprovedOnly: 'Exporter uniquement les documents approuvés'
 }

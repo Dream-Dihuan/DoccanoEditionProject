@@ -6,7 +6,7 @@
     </v-toolbar>
     
     <v-card-text class="mt-5">
-      <v-form v-model="valid" ref="form">
+      <v-form ref="form" v-model="valid">
         <v-alert v-show="showError" v-model="showError" type="error" dismissible outlined>
           {{ errorMessage }}
         </v-alert>
@@ -34,8 +34,8 @@
           type="password"
           outlined
           dense
-          @keyup.enter="tryLogin"
           class="mt-4"
+          @keyup.enter="tryLogin"
         />
       </v-form>
     </v-card-text>
@@ -44,11 +44,11 @@
       <v-btn
         :disabled="!valid || loading"
         color="primary"
-        @click="tryLogin"
         block
         large
         depressed
         :class="{'white--text': !$vuetify.theme.dark, 'text--primary': $vuetify.theme.dark}"
+        @click="tryLogin"
       >
         {{ $t('user.login') }}
       </v-btn>

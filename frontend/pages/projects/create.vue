@@ -8,7 +8,7 @@
       </v-toolbar>
       
       <v-card-text class="project-creation-content">
-        <v-form v-model="valid" ref="form">
+        <v-form ref="form" v-model="valid">
           <v-row>
             <v-col cols="12">
               <div class="section-title">{{ $t('overview.projectType') }}</div>
@@ -83,9 +83,9 @@
                                   <a
                                     target="_blank"
                                     href="https://unicode.org/reports/tr29/"
+                                    class="text-decoration-none"
                                     @click.stop
                                     v-on="on"
-                                    class="text-decoration-none"
                                   >
                                     grapheme clusters
                                   </a>
@@ -111,9 +111,9 @@
         <v-btn
           :disabled="!valid"
           color="primary"
-          @click="create"
           x-large
           class="text-capitalize font-weight-medium"
+          @click="create"
         >
           {{ $t('generic.create') }}
         </v-btn>

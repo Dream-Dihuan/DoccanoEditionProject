@@ -1,88 +1,163 @@
 <template>
-  <v-card>
-    <v-card-title v-if="isProjectAdmin">
-      <action-menu
-        @upload="$router.push('dataset/import')"
-        @download="$router.push('dataset/export')"
-        @assign="dialogAssignment = true"
-        @reset="dialogReset = true"
-      />
-      <v-btn
-        class="text-capitalize ms-2"
-        :disabled="!canDelete"
-        outlined
-        @click.stop="dialogDelete = true"
-      >
-        {{ $t('generic.delete') }}
-      </v-btn>
-      <v-spacer />
-      <v-btn
-        :disabled="!item.count"
-        class="text-capitalize"
-        color="error"
-        @click="dialogDeleteAll = true"
-      >
-        {{ $t('generic.deleteAll') }}
-      </v-btn>
-      <v-dialog v-model="dialogDelete">
-        <form-delete
-          :selected="selected"
-          :item-key="itemKey"
-          @cancel="dialogDelete = false"
-          @remove="remove"
-        />
+  <div class="dataset-page">
+    <v-container fluid class="py-8 px-4 px-sm-6">
+      <v-row v-if="isProjectAdmin" class="mb-6">
+        <v-col cols="12">
+          <div class="d-flex align-center justify-space-between flex-wrap">
+            <div>
+              <h1 class="text-h4 font-weight-bold primary--text mb-2">
+                {{ $t('dataset.dataset') }}
+              </h1>
+              <p class="text--secondary mb-0">
+                {{ $t('dataset.actions') }}
+              </p>
+            </div>
+            
+            <div class="mt-4 mt-sm-0">
+              <action-menu
+                @upload="$router.push('dataset/import')"
+                @download="$router.push('dataset/export')"
+                @assign="dialogAssignment = true"
+                @reset="dialogReset = true"
+              />
+              <v-btn
+                class="text-capitalize font-weight-medium ms-2"
+                :disabled="!canDelete"
+                color="primary"
+                rounded
+                @click.stop="dialogDelete = true"
+              >
+                <v-icon left small>{{ mdiDelete }}</v-icon>
+                {{ $t('generic.delete') }}
+              </v-btn>
+              <v-btn
+                :disabled="!item.count"
+                class="text-capitalize font-weight-medium ms-2"
+                color="error"
+                rounded
+                @click="dialogDeleteAll = true"
+              >
+                <v-icon left small>{{ mdiDelete }}</v-icon>
+                {{ $t('generic.deleteAll') }}
+              </v-btn>
+            </div>
+          </div>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12">
+          <base-card class="elevation-8">
+            <template #content>
+              <div class="dataset-list-wrapper">
+                <image-list
+                  v-if="project.isImageProject"
+                  v-model="selected"
+                  :items="item.items"
+                  :is-admin="user.isProjectAdmin"
+                  :is-loading="isLoading"
+                  :members="members"
+                  :total="item.count"
+                  @update:query="updateQuery"
+                  @click:labeling="movePage"
+                  @assign="assign"
+                  @unassign="unassign"
+                />
+                <audio-list
+                  v-else-if="project.isAudioProject"
+                  v-model="selected"
+                  :items="item.items"
+                  :is-admin="user.isProjectAdmin"
+                  :is-loading="isLoading"
+                  :members="members"
+                  :total="item.count"
+                  @update:query="updateQuery"
+                  @click:labeling="movePage"
+                  @assign="assign"
+                  @unassign="unassign"
+                />
+                <document-list
+                  v-else
+                  v-model="selected"
+                  :items="item.items"
+                  :is-admin="user.isProjectAdmin"
+                  :is-loading="isLoading"
+                  :members="members"
+                  :total="item.count"
+                  @update:query="updateQuery"
+                  @click:labeling="movePage"
+                  @edit="editItem"
+                  @assign="assign"
+                  @unassign="unassign"
+                />
+              </div>
+            </template>
+          </base-card>
+        </v-col>
+      </v-row>
+      
+      <v-dialog v-model="dialogDelete" max-width="500">
+        <v-card elevation="8">
+          <v-toolbar flat dark color="primary">
+            <v-toolbar-title>{{ $t('dataset.deleteDocumentsTitle') }}</v-toolbar-title>
+          </v-toolbar>
+          <v-card-text class="pt-5">
+            <p>{{ $t('dataset.deleteDocumentsMessage', { number: selected.length }) }}</p>
+            <v-list v-if="selected.length > 0">
+              <v-list-item v-for="(selItem, i) in selected.slice(0, 10)" :key="i">
+                <v-list-item-content>
+                  <v-list-item-title>{{ selItem[itemKey] }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item v-if="selected.length > 10">
+                <v-list-item-content>
+                  <v-list-item-title>... and {{ selected.length - 10 }} more</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text @click="dialogDelete = false">
+              {{ $t('generic.cancel') }}
+            </v-btn>
+            <v-btn color="primary" @click="remove">
+              {{ $t('generic.yes') }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
       </v-dialog>
-      <v-dialog v-model="dialogDeleteAll">
-        <form-delete-bulk @cancel="dialogDeleteAll = false" @remove="removeAll" />
+      <v-dialog v-model="dialogDeleteAll" max-width="500">
+        <v-card elevation="8">
+          <v-toolbar flat dark color="primary">
+            <v-toolbar-title>{{ $t('dataset.deleteBulkDocumentsTitle') }}</v-toolbar-title>
+          </v-toolbar>
+          <v-card-text class="pt-5">
+            {{ $t('dataset.deleteBulkDocumentsMessage') }}
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text @click="dialogDeleteAll = false">
+              {{ $t('generic.cancel') }}
+            </v-btn>
+            <v-btn color="primary" @click="removeAll">
+              {{ $t('generic.yes') }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
       </v-dialog>
-      <v-dialog v-model="dialogAssignment">
-        <form-assignment @assigned="assigned" @cancel="dialogAssignment = false" />
+      <v-dialog v-model="dialogAssignment" max-width="500">
+        <v-card elevation="8">
+          <form-assignment @cancel="dialogAssignment = false" @assigned="assigned" />
+        </v-card>
       </v-dialog>
-      <v-dialog v-model="dialogReset">
-        <form-reset-assignment @cancel="dialogReset = false" @reset="resetAssignment" />
+      <v-dialog v-model="dialogReset" max-width="500">
+        <v-card elevation="8">
+          <form-reset-assignment @cancel="dialogReset = false" @reset="resetAssignment" />
+        </v-card>
       </v-dialog>
-    </v-card-title>
-    <image-list
-      v-if="project.isImageProject"
-      v-model="selected"
-      :items="item.items"
-      :is-admin="user.isProjectAdmin"
-      :is-loading="isLoading"
-      :members="members"
-      :total="item.count"
-      @update:query="updateQuery"
-      @click:labeling="movePage"
-      @assign="assign"
-      @unassign="unassign"
-    />
-    <audio-list
-      v-else-if="project.isAudioProject"
-      v-model="selected"
-      :items="item.items"
-      :is-admin="user.isProjectAdmin"
-      :is-loading="isLoading"
-      :members="members"
-      :total="item.count"
-      @update:query="updateQuery"
-      @click:labeling="movePage"
-      @assign="assign"
-      @unassign="unassign"
-    />
-    <document-list
-      v-else
-      v-model="selected"
-      :items="item.items"
-      :is-admin="user.isProjectAdmin"
-      :is-loading="isLoading"
-      :members="members"
-      :total="item.count"
-      @update:query="updateQuery"
-      @click:labeling="movePage"
-      @edit="editItem"
-      @assign="assign"
-      @unassign="unassign"
-    />
-  </v-card>
+    </v-container>
+  </div>
 </template>
 
 <script lang="ts">
@@ -90,14 +165,14 @@ import _ from 'lodash'
 import { mapGetters } from 'vuex'
 import Vue from 'vue'
 import { NuxtAppOptions } from '@nuxt/types'
+import { mdiDelete } from '@mdi/js'
 import DocumentList from '@/components/example/DocumentList.vue'
 import FormAssignment from '~/components/example/FormAssignment.vue'
-import FormDelete from '@/components/example/FormDelete.vue'
-import FormDeleteBulk from '@/components/example/FormDeleteBulk.vue'
 import FormResetAssignment from '~/components/example/FormResetAssignment.vue'
 import ActionMenu from '~/components/example/ActionMenu.vue'
 import AudioList from '~/components/example/AudioList.vue'
 import ImageList from '~/components/example/ImageList.vue'
+import BaseCard from '@/components/utils/BaseCard.vue'
 import { getLinkToAnnotationPage } from '~/presenter/linkToAnnotationPage'
 import { ExampleDTO, ExampleListDTO } from '~/services/application/example/exampleData'
 import { MemberItem } from '~/domain/models/member/member'
@@ -109,9 +184,8 @@ export default Vue.extend({
     DocumentList,
     ImageList,
     FormAssignment,
-    FormDelete,
-    FormDeleteBulk,
-    FormResetAssignment
+    FormResetAssignment,
+    BaseCard
   },
 
   layout: 'project',
@@ -133,7 +207,8 @@ export default Vue.extend({
       members: [] as MemberItem[],
       user: {} as MemberItem,
       isLoading: false,
-      isProjectAdmin: false
+      isProjectAdmin: false,
+      mdiDelete
     }
   },
 
@@ -235,7 +310,14 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-::v-deep .v-dialog {
-  width: 800px;
+.dataset-page {
+  background-color: var(--background);
+  min-height: 100%;
+  width: 100%;
+  padding: 0;
+}
+
+.theme--dark .dataset-page {
+  background-color: var(--background);
 }
 </style>

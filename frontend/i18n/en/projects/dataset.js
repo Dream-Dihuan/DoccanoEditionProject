@@ -18,5 +18,10 @@ export default {
   deleteDocumentsMessage: 'Are you sure you want to delete {number} items from this project?',
   deleteBulkDocumentsTitle: 'Delete All Documents',
   deleteBulkDocumentsMessage: 'Are you sure you want to delete all documents from this project?',
-  pageText: '{0}-{1} of {2}'
+  pageText: '{0}-{1} of {2}',
+  editText: 'Edit Text',
+  fileFormat: 'File format',
+  dropFilesHere: 'Drop files here...',
+  formatExample: 'For readability, the above format can be displayed as follows:',
+  exportApprovedOnly: 'Export only approved documents'
 }
