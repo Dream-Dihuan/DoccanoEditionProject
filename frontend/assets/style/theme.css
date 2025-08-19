@@ -1,0 +1,35 @@
+:root {
+  /* Light theme variables */
+  --primary: #1976d2;
+  --primary-light: #63a4ff;
+  --primary-dark: #004ba0;
+  --secondary: #ff9800;
+  --text-primary: #212121;
+  --text-secondary: #757575;
+  --background: #f5f7fa;
+  --card-bg: #ffffff;
+  --card-border: #e0e0e0;
+  --toolbar-bg: #f8f9fa;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark theme variables */
+.theme--dark {
+  --primary: #42a5f5;
+  --primary-light: #63a4ff;
+  --primary-dark: #004ba0;
+  --secondary: #ffa726;
+  --text-primary: #ffffff;
+  --text-secondary: #b0bec5;
+  --background: #1a1a2e;
+  --card-bg: #1e1e2d;
+  --card-border: #2d2d44;
+  --toolbar-bg: #252536;
+  --shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* Common variables */
+:root {
+  --radius: 12px;
+  --transition: all 0.3s ease;
+}

@@ -1,5 +1,6 @@
 export default {
   created: 'Created',
   author: 'Author',
-  tags: 'Tags'
+  tags: 'Tags',
+  management: 'Project Management'
 }
