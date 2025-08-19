@@ -1,45 +1,55 @@
 <template>
-  <v-data-table
-    :value="value"
-    :headers="headers"
-    :items="items"
-    :search="search"
-    :loading="isLoading"
-    :loading-text="$t('generic.loading')"
-    :no-data-text="$t('vuetify.noDataAvailable')"
-    :footer-props="{
-      showFirstLastPage: true,
-      'items-per-page-text': $t('vuetify.itemsPerPageText'),
-      'page-text': $t('dataset.pageText')
-    }"
-    item-key="id"
-    show-select
-    @input="$emit('input', $event)"
-  >
-    <template #top>
-      <v-text-field
-        v-model="search"
-        :prepend-inner-icon="mdiMagnify"
-        :label="$t('generic.search')"
-        single-line
-        hide-details
-        filled
-      />
-    </template>
-    <template #[`item.backgroundColor`]="props">
-      <v-chip
-        :color="props.item.backgroundColor"
-        :text-color="$contrastColor(props.item.backgroundColor)"
-      >
-        {{ props.item.backgroundColor }}
-      </v-chip>
-    </template>
-    <template #[`item.actions`]="{ item }">
-      <v-icon small @click="$emit('edit', item)">
-        {{ mdiPencil }}
-      </v-icon>
-    </template>
-  </v-data-table>
+  <div class="label-list-wrapper">
+    <v-data-table
+      :value="value"
+      :headers="headers"
+      :items="items"
+      :search="search"
+      :loading="isLoading"
+      :loading-text="$t('generic.loading')"
+      :no-data-text="$t('vuetify.noDataAvailable')"
+      :footer-props="{
+        showFirstLastPage: true,
+        'items-per-page-text': $t('vuetify.itemsPerPageText'),
+        'page-text': $t('dataset.pageText')
+      }"
+      item-key="id"
+      show-select
+      @input="$emit('input', $event)"
+    >
+      <template #top>
+        <v-text-field
+          v-model="search"
+          :prepend-inner-icon="mdiMagnify"
+          :label="$t('generic.search')"
+          single-line
+          hide-details
+          filled
+          rounded
+          dense
+          class="mb-4"
+        />
+      </template>
+      <template #[`item.backgroundColor`]="props">
+        <v-chip
+          :color="props.item.backgroundColor"
+          :text-color="$contrastColor(props.item.backgroundColor)"
+          small
+        >
+          {{ props.item.backgroundColor }}
+        </v-chip>
+      </template>
+      <template #[`item.actions`]="{ item }">
+        <v-icon 
+          v-if="!disableEdit"
+          small 
+          @click="$emit('edit', item)"
+        >
+          {{ mdiPencil }}
+        </v-icon>
+      </template>
+    </v-data-table>
+  </div>
 </template>
 
 <script lang="ts">
@@ -94,3 +104,17 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style scoped>
+.label-list-wrapper ::v-deep .v-data-table {
+  background-color: transparent;
+}
+
+.label-list-wrapper ::v-deep .v-data-table-header {
+  background-color: var(--background);
+}
+
+.label-list-wrapper ::v-deep .v-data-table tbody tr:hover:not(.v-data-table__selected) {
+  background-color: var(--background) !important;
+}
+</style>

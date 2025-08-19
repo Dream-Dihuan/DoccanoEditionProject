@@ -1,5 +1,21 @@
 <template>
-  <form-import :error-message="errorMessage" @clear="clearErrorMessage" @upload="upload" />
+  <v-container fluid class="pt-6">
+    <v-row justify="center">
+      <v-col cols="12">
+        <v-card class="elevation-8" :class="{ 'dark-mode-card': $vuetify.theme.dark }">
+          <v-toolbar color="primary" dark flat class="rounded-t-lg">
+            <v-toolbar-title>
+              {{ $t('labels.importLabels') }}
+            </v-toolbar-title>
+          </v-toolbar>
+          
+          <v-card-text class="mt-5">
+            <form-import :error-message="errorMessage" @clear="clearErrorMessage" @upload="upload" />
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -65,3 +81,10 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style scoped>
+.dark-mode-card {
+  background-color: var(--card-bg) !important;
+  border: 2px solid var(--card-border) !important;
+}
+</style>

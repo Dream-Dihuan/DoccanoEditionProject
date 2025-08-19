@@ -1,4 +1,5 @@
 export default {
+  actions: 'Aktionen',
   labels: 'Labels',
   shortkey: 'Tastenkürzel',
   color: 'Farbe',
@@ -14,5 +15,9 @@ export default {
   importTitle: 'Label hochladen',
   importMessage1: 'Beispielformat',
   importMessage2: 'Wähle eine Datei',
-  filePlaceholder: 'Eingabe einer Datei'
+  filePlaceholder: 'Eingabe einer Datei',
+  saveAndAddAnother: 'Speichern und weitere hinzufügen',
+  manageLabels: 'Verwalten Sie Ihre Labels',
+  deleteLabelsTitle: 'Labels löschen',
+  deleteLabelsMessage: 'Sind Sie sicher, dass Sie {number} Label löschen möchten?'
 }

@@ -1,7 +1,7 @@
 <template>
   <action-menu
     :items="items"
-    :text="$t('dataset.actions')"
+    :text="$t('labels.actions')"
     @create="$emit('create')"
     @upload="$emit('upload')"
     @download="$emit('download')"

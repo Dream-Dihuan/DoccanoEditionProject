@@ -1,4 +1,5 @@
 export default {
+  actions: '操作',
   category: '分类',
   span: '跨度',
   relation: '关系',
@@ -23,5 +24,9 @@ export default {
   createLabelType: '创建标签类型',
   randomColor: '随机颜色',
   randomColorTooltip: '随机颜色',
-  preview: '预览'
+  preview: '预览',
+  saveAndAddAnother: '保存并添加另一个',
+  manageLabels: '管理你的标签',
+  deleteLabelsTitle: '删除标签',
+  deleteLabelsMessage: '你确定要删除 {number} 个标签吗？'
 }

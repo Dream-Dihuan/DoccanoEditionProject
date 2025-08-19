@@ -1,4 +1,5 @@
 export default {
+  actions: 'Actions',
   category: 'Category',
   span: 'Span',
   relation: 'Relation',
@@ -23,5 +24,9 @@ export default {
   createLabelType: 'Create a Label Type',
   randomColor: 'Random color',
   randomColorTooltip: 'Random color',
-  preview: 'Preview'
+  preview: 'Preview',
+  saveAndAddAnother: 'Save and add another',
+  manageLabels: 'Manage your labels',
+  deleteLabelsTitle: 'Delete Labels',
+  deleteLabelsMessage: 'Are you sure you want to delete {number} label(s)?'
 }

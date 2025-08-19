@@ -1,19 +1,44 @@
 <template>
-  <form-create v-slot="slotProps" v-bind.sync="editedItem" :items="items">
-    <v-btn :disabled="!slotProps.valid" color="primary" class="text-capitalize" @click="save">
-      Save
-    </v-btn>
+  <v-container fluid class="pt-6">
+    <v-row justify="center">
+      <v-col cols="12">
+        <v-card class="elevation-8" :class="{ 'dark-mode-card': $vuetify.theme.dark }">
+          <v-toolbar color="primary" dark flat class="rounded-t-lg">
+            <v-toolbar-title>
+              {{ $t('labels.createLabelType') }}
+            </v-toolbar-title>
+          </v-toolbar>
+          
+          <v-card-text class="mt-5">
+            <form-create v-slot="slotProps" v-bind.sync="editedItem" :items="items">
+              <div class="d-flex flex-wrap">
+                <v-btn 
+                  :disabled="!slotProps.valid" 
+                  color="primary" 
+                  class="text-capitalize font-weight-medium mr-2 mb-2" 
+                  rounded
+                  @click="save"
+                >
+                  {{ $t('generic.save') }}
+                </v-btn>
 
-    <v-btn
-      :disabled="!slotProps.valid"
-      color="primary"
-      style="text-transform: none"
-      outlined
-      @click="saveAndAnother"
-    >
-      Save and add another
-    </v-btn>
-  </form-create>
+                <v-btn
+                  :disabled="!slotProps.valid"
+                  color="primary"
+                  class="text-capitalize font-weight-medium mr-2 mb-2"
+                  rounded
+                  outlined
+                  @click="saveAndAnother"
+                >
+                  {{ $t('labels.saveAndAddAnother') }}
+                </v-btn>
+              </div>
+            </form-create>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -97,3 +122,10 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style scoped>
+.dark-mode-card {
+  background-color: var(--card-bg) !important;
+  border: 2px solid var(--card-border) !important;
+}
+</style>

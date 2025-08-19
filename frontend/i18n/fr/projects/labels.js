@@ -1,4 +1,5 @@
 export default {
+  actions: 'Actions',
   labels: 'Étiquettes',
   shortkey: 'Raccourci clavier',
   color: 'Couleur',
@@ -16,5 +17,9 @@ export default {
   importTitle: "Télécharger l'étiquette",
   importMessage1: 'Exemple de format',
   importMessage2: 'Sélectionnez un fichier',
-  filePlaceholder: 'Saisir un fichier'
+  filePlaceholder: 'Saisir un fichier',
+  saveAndAddAnother: 'Enregistrer et ajouter un autre',
+  manageLabels: 'Gérer vos étiquettes',
+  deleteLabelsTitle: 'Supprimer les étiquettes',
+  deleteLabelsMessage: 'Êtes-vous sûr de vouloir supprimer {number} étiquette(s) ?'
 }

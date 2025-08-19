@@ -1,39 +1,35 @@
 <template>
-  <v-card>
-    <v-card-title v-text="$t('labels.importLabels')" />
-    <v-card-text>
-      <v-form ref="form" v-model="valid">
-        <h3>{{ $t('labels.importMessage1') }}</h3>
-        <v-sheet
-          v-if="exampleFormat"
-          :dark="!$vuetify.theme.dark"
-          :light="$vuetify.theme.dark"
-          class="mb-5 pa-5"
-        >
-          <pre>{{ exampleFormat }}</pre>
-        </v-sheet>
-        <v-file-input
-          v-model="file"
-          accept=".json"
-          :error-messages="errorMessage"
-          :label="$t('labels.filePlaceholder')"
-          :rules="uploadSingleFileRules($t('rules.uploadFileRules'))"
-          outlined
-          prepend-icon=""
-          @change="$emit('clear')"
-          @click:clear="$emit('clear')"
-        />
-        <v-btn
-          :disabled="!valid"
-          color="primary"
-          class="text-capitalize"
-          @click="$emit('upload', file)"
-        >
-          {{ $t('generic.import') }}
-        </v-btn>
-      </v-form>
-    </v-card-text>
-  </v-card>
+  <v-form ref="form" v-model="valid">
+    <h3 class="text-h6 mb-4">{{ $t('labels.importMessage1') }}</h3>
+    <v-sheet
+      v-if="exampleFormat"
+      :dark="!$vuetify.theme.dark"
+      :light="$vuetify.theme.dark"
+      class="mb-5 pa-5 rounded"
+    >
+      <pre>{{ exampleFormat }}</pre>
+    </v-sheet>
+    <v-file-input
+      v-model="file"
+      accept=".json"
+      :error-messages="errorMessage"
+      :label="$t('labels.filePlaceholder')"
+      :rules="uploadSingleFileRules($t('rules.uploadFileRules'))"
+      outlined
+      prepend-icon=""
+      @change="$emit('clear')"
+      @click:clear="$emit('clear')"
+    />
+    <v-btn
+      :disabled="!valid"
+      color="primary"
+      class="text-capitalize font-weight-medium"
+      rounded
+      @click="$emit('upload', file)"
+    >
+      {{ $t('generic.import') }}
+    </v-btn>
+  </v-form>
 </template>
 
 <script lang="ts">

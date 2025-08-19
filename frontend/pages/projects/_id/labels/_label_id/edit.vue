@@ -1,9 +1,31 @@
 <template>
-  <form-create v-slot="slotProps" v-bind.sync="editedItem" :items="items">
-    <v-btn :disabled="!slotProps.valid" color="primary" class="text-capitalize" @click="save">
-      Save
-    </v-btn>
-  </form-create>
+  <v-container fluid class="pt-6">
+    <v-row justify="center">
+      <v-col cols="12">
+        <v-card class="elevation-8" :class="{ 'dark-mode-card': $vuetify.theme.dark }">
+          <v-toolbar color="primary" dark flat class="rounded-t-lg">
+            <v-toolbar-title>
+              {{ $t('labels.editLabelType') }}
+            </v-toolbar-title>
+          </v-toolbar>
+          
+          <v-card-text class="mt-5">
+            <form-create v-slot="slotProps" v-bind.sync="editedItem" :items="items">
+              <v-btn 
+                :disabled="!slotProps.valid" 
+                color="primary" 
+                class="text-capitalize font-weight-medium" 
+                rounded
+                @click="save"
+              >
+                {{ $t('generic.save') }}
+              </v-btn>
+            </form-create>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -79,3 +101,10 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style scoped>
+.dark-mode-card {
+  background-color: var(--card-bg) !important;
+  border: 2px solid var(--card-border) !important;
+}
+</style>

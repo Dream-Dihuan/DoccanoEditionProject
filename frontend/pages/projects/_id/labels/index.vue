@@ -1,59 +1,119 @@
 <template>
-  <v-card>
-    <v-tabs v-if="hasMultiType" v-model="tab">
-      <template v-if="isIntentDetectionAndSlotFilling">
-        <v-tab class="text-capitalize">{{ $t('labels.category') }}</v-tab>
-        <v-tab class="text-capitalize">{{ $t('labels.span') }}</v-tab>
-      </template>
-      <template v-else>
-        <v-tab class="text-capitalize">{{ $t('labels.span') }}</v-tab>
-        <v-tab class="text-capitalize">{{ $t('labels.relation') }}</v-tab>
-      </template>
-    </v-tabs>
-    <v-card-title>
-      <action-menu
-        :add-only="canOnlyAdd"
-        @create="$router.push('labels/add?type=' + labelType)"
-        @upload="$router.push('labels/import?type=' + labelType)"
-        @download="download"
-      />
-      <v-btn
-        v-if="!canOnlyAdd"
-        class="text-capitalize ms-2"
-        :disabled="!canDelete"
-        outlined
-        @click.stop="dialogDelete = true"
-      >
-        {{ $t('generic.delete') }}
-      </v-btn>
-      <v-dialog v-model="dialogDelete">
-        <form-delete :selected="selected" @cancel="dialogDelete = false" @remove="remove" />
+  <div class="labels-page">
+    <v-container fluid class="py-8 px-4 px-sm-6">
+      <v-row class="mb-6">
+        <v-col cols="12">
+          <div class="d-flex align-center justify-space-between flex-wrap">
+            <div>
+              <h1 class="text-h4 font-weight-bold primary--text mb-2">
+                {{ $t('labels.labels') }}
+              </h1>
+              <p class="text--secondary mb-0">
+                {{ $t('labels.manageLabels') }}
+              </p>
+            </div>
+            
+            <div class="mt-4 mt-sm-0">
+              <action-menu
+                :add-only="canOnlyAdd"
+                @create="$router.push('labels/add?type=' + labelType)"
+                @upload="$router.push('labels/import?type=' + labelType)"
+                @download="download"
+              />
+              <v-btn
+                v-if="!canOnlyAdd"
+                :disabled="!canDelete"
+                class="text-capitalize font-weight-medium ms-2"
+                color="primary"
+                rounded
+                outlined
+                @click.stop="dialogDelete = true"
+              >
+                <v-icon left small>{{ mdiDelete }}</v-icon>
+                {{ $t('generic.delete') }}
+              </v-btn>
+            </div>
+          </div>
+        </v-col>
+      </v-row>
+
+      <v-tabs v-if="hasMultiType" v-model="tab" class="mb-6">
+        <template v-if="isIntentDetectionAndSlotFilling">
+          <v-tab class="text-capitalize">{{ $t('labels.category') }}</v-tab>
+          <v-tab class="text-capitalize">{{ $t('labels.span') }}</v-tab>
+        </template>
+        <template v-else>
+          <v-tab class="text-capitalize">{{ $t('labels.span') }}</v-tab>
+          <v-tab class="text-capitalize">{{ $t('labels.relation') }}</v-tab>
+        </template>
+      </v-tabs>
+
+      <v-row>
+        <v-col cols="12">
+          <base-card class="elevation-8">
+            <template #content>
+              <label-list
+                v-model="selected"
+                :items="items"
+                :is-loading="isLoading"
+                :disable-edit="canOnlyAdd"
+                @edit="editItem"
+              />
+            </template>
+          </base-card>
+        </v-col>
+      </v-row>
+      
+      <v-dialog v-model="dialogDelete" max-width="500">
+        <v-card elevation="8">
+          <v-toolbar flat dark color="primary">
+            <v-toolbar-title>{{ $t('labels.deleteLabelsTitle') }}</v-toolbar-title>
+          </v-toolbar>
+          <v-card-text class="pt-5">
+            <p>{{ $t('labels.deleteLabelsMessage', { number: selected.length }) }}</p>
+            <v-list v-if="selected.length > 0">
+              <v-list-item v-for="(selItem, i) in selected.slice(0, 10)" :key="i">
+                <v-list-item-content>
+                  <v-list-item-title>{{ selItem.text }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item v-if="selected.length > 10">
+                <v-list-item-content>
+                  <v-list-item-title>... and {{ selected.length - 10 }} more</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text @click="dialogDelete = false">
+              {{ $t('generic.cancel') }}
+            </v-btn>
+            <v-btn color="primary" @click="remove">
+              {{ $t('generic.yes') }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
       </v-dialog>
-    </v-card-title>
-    <label-list
-      v-model="selected"
-      :items="items"
-      :is-loading="isLoading"
-      :disable-edit="canOnlyAdd"
-      @edit="editItem"
-    />
-  </v-card>
+    </v-container>
+  </div>
 </template>
 
 <script lang="ts">
 import { mapGetters } from 'vuex'
 import Vue from 'vue'
+import { mdiDelete } from '@mdi/js'
 import ActionMenu from '@/components/label/ActionMenu.vue'
-import FormDelete from '@/components/label/FormDelete.vue'
 import LabelList from '@/components/label/LabelList.vue'
+import BaseCard from '@/components/utils/BaseCard.vue'
 import { LabelDTO } from '~/services/application/label/labelData'
 import { MemberItem } from '~/domain/models/member/member'
 
 export default Vue.extend({
   components: {
     ActionMenu,
-    FormDelete,
-    LabelList
+    LabelList,
+    BaseCard
   },
 
   layout: 'project',
@@ -83,7 +143,8 @@ export default Vue.extend({
       selected: [] as LabelDTO[],
       isLoading: false,
       tab: 0,
-      member: {} as MemberItem
+      member: {} as MemberItem,
+      mdiDelete
     }
   },
 
