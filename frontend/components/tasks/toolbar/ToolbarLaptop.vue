@@ -9,39 +9,74 @@
         <button-order :value="orderOption" @click:order="changeOrder" />
 
         <button-guideline @click:guideline="dialogGuideline = true" />
-        <v-dialog v-model="dialogGuideline">
-          <form-guideline :guideline-text="guidelineText" @click:close="dialogGuideline = false" />
+        <v-dialog v-model="dialogGuideline" max-width="800">
+          <v-card>
+            <v-toolbar color="primary" dark flat>
+              <v-toolbar-title class="white--text">
+                {{ $t('annotation.guidelinePopupTitle') }}
+              </v-toolbar-title>
+            </v-toolbar>
+            <form-guideline :guideline-text="guidelineText" @click:close="dialogGuideline = false" />
+          </v-card>
         </v-dialog>
 
         <button-comment @click:comment="dialogComment = true" />
-        <v-dialog v-model="dialogComment">
-          <form-comment :example-id="docId" @click:cancel="dialogComment = false" />
+        <v-dialog v-model="dialogComment" max-width="800">
+          <v-card>
+            <v-toolbar color="primary" dark flat>
+              <v-toolbar-title class="white--text">
+                {{ $t('comments.comments') }}
+              </v-toolbar-title>
+            </v-toolbar>
+            <form-comment :example-id="docId" @click:cancel="dialogComment = false" />
+          </v-card>
         </v-dialog>
 
         <button-auto-labeling @click:auto="dialogAutoLabeling = true" />
-        <v-dialog v-model="dialogAutoLabeling">
-          <form-auto-labeling
-            :is-enabled="enableAutoLabeling"
-            :error-message="errorMessage"
-            @click:cancel="dialogAutoLabeling = false"
-            @input="updateAutoLabeling"
-          />
+        <v-dialog v-model="dialogAutoLabeling" max-width="800">
+          <v-card>
+            <v-toolbar color="primary" dark flat>
+              <v-toolbar-title class="white--text">
+                {{ $t('generic.settings') }}
+              </v-toolbar-title>
+            </v-toolbar>
+            <form-auto-labeling
+              :is-enabled="enableAutoLabeling"
+              :error-message="errorMessage"
+              @click:cancel="dialogAutoLabeling = false"
+              @input="updateAutoLabeling"
+            />
+          </v-card>
         </v-dialog>
 
         <button-clear @click:clear="dialogClear = true" />
-        <v-dialog v-model="dialogClear">
-          <form-clear-label
-            @click:ok="
-              $emit('click:clear-label')
-              dialogClear = false
-            "
-            @click:cancel="dialogClear = false"
-          />
+        <v-dialog v-model="dialogClear" max-width="500">
+          <v-card>
+            <v-toolbar color="primary" dark flat>
+              <v-toolbar-title class="white--text">
+                {{ $t('annotation.clearAnnotationsTitle') }}
+              </v-toolbar-title>
+            </v-toolbar>
+            <form-clear-label
+              @click:ok="
+                $emit('click:clear-label')
+                dialogClear = false
+              "
+              @click:cancel="dialogClear = false"
+            />
+          </v-card>
         </v-dialog>
 
         <button-keyboard-shortcut @click:open="dialogShortcut = true" />
-        <v-dialog v-model="dialogShortcut">
-          <form-keyboard-shortcut @click:close="dialogShortcut = false" />
+        <v-dialog v-model="dialogShortcut" max-width="800">
+          <v-card>
+            <v-toolbar color="primary" dark flat>
+              <v-toolbar-title class="white--text">
+                {{ $t('generic.keyboardShortcut') }}
+              </v-toolbar-title>
+            </v-toolbar>
+            <form-keyboard-shortcut @click:close="dialogShortcut = false" />
+          </v-card>
         </v-dialog>
       </v-btn-toggle>
       <slot />
