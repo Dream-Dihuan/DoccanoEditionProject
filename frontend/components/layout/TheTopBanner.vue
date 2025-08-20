@@ -27,7 +27,7 @@
             </div>
           </v-col>
           <v-col cols="12" md="6" class="d-none d-md-block text-center">
-            <v-img :src="require('~/assets/icon.png')" alt="doccano" max-width="300" class="mx-auto" />
+            <v-img :src="require('~/assets/icon.png')" alt="成都大学标注平台" max-width="300" class="mx-auto" />
           </v-col>
         </v-row>
       </v-container>

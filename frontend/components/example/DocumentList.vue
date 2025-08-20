@@ -207,7 +207,7 @@ export default Vue.extend({
       if (removed.length > 0) {
         const assignment = item.assignments.find(
           (a) => a.assignee_id === removed[0].user
-        )?.assignment_id
+        )?.id
         if (assignment) {
           this.$emit('unassign', assignment)
         }
