@@ -1,6 +1,5 @@
 <template>
   <confirm-form
-    :title="$t('annotation.clearAnnotationsTitle')"
     :message="$t('annotation.clearAnnotationsMessage')"
     :button-true-text="$t('generic.yes')"
     :button-false-text="$t('generic.cancel')"

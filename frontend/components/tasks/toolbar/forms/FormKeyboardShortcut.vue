@@ -1,12 +1,12 @@
 <template>
-  <base-card title="Keyboard Shortcut" :cancel-text="$t('generic.close')" @cancel="close">
+  <base-card :cancel-text="$t('generic.close')" @cancel="close">
     <template #content>
       <v-simple-table>
         <template #default>
           <thead>
             <tr>
-              <th class="text-left">Action</th>
-              <th class="text-left">Key</th>
+              <th class="text-left">{{ $t('annotation.action') }}</th>
+              <th class="text-left">{{ $t('annotation.key') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -43,23 +43,23 @@ export default {
     return {
       items: [
         {
-          name: 'Jump to the first data',
+          name: this.$t('annotation.jumpToFirstData'),
           key: ['shift', '←']
         },
         {
-          name: 'Jump to the last data',
+          name: this.$t('annotation.jumpToLastData'),
           key: ['shift', '→']
         },
         {
-          name: 'Move to the previous data',
+          name: this.$t('annotation.moveToPreviousData'),
           key: ['←']
         },
         {
-          name: 'Move to the next data',
+          name: this.$t('annotation.moveToNextData'),
           key: ['→']
         },
         {
-          name: 'Confirm the data',
+          name: this.$t('annotation.confirmData'),
           key: ['enter']
         }
       ]

@@ -46,8 +46,8 @@ export default {
   data() {
     return {
       items: [
-        { title: 'Lowest score first', param: 'score' },
-        { title: 'Highest score first', param: '-score' }
+        { title: this.$t('annotation.lowestScoreFirst'), param: 'score' },
+        { title: this.$t('annotation.highestScoreFirst'), param: '-score' }
       ],
       mdiSort,
       mdiCheck

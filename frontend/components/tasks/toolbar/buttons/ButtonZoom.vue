@@ -6,7 +6,7 @@
           <v-icon>{{ mdiMagnifyMinusOutline }}</v-icon>
         </v-btn>
       </template>
-      <span>Zoom Out</span>
+      <span>{{ $t('annotation.zoomOutTooltip') }}</span>
     </v-tooltip>
     <v-tooltip bottom>
       <template #activator="{ on }" v-on="on">
@@ -14,7 +14,7 @@
           <v-icon>{{ mdiMagnifyPlusOutline }}</v-icon>
         </v-btn>
       </template>
-      <span>Zoom In</span>
+      <span>{{ $t('annotation.zoomInTooltip') }}</span>
     </v-tooltip>
   </v-btn-toggle>
 </template>

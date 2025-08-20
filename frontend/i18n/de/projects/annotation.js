@@ -10,5 +10,21 @@ export default {
   metadataDefaultMessage: 'Keine Daten verfügbar',
   key: 'Schlüssel',
   value: 'Wert',
-  newText: 'Neuer Text'
+  newText: 'Neuer Text',
+  clearLabelsTooltip: 'Labels löschen',
+  keyboardShortcutTooltip: 'Tastatürkürzel',
+  keyboardShortcutTitle: 'Tastatürkürzel',
+  action: 'Aktion',
+  jumpToFirstData: 'Zu den ersten Daten springen',
+  jumpToLastData: 'Zu den letzten Daten springen',
+  moveToPreviousData: 'Zu den vorherigen Daten wechseln',
+  moveToNextData: 'Zu den nächsten Daten wechseln',
+  confirmData: 'Daten bestätigen',
+  zoomOutTooltip: 'Verkleinern',
+  zoomInTooltip: 'Vergrößern',
+  lowestScoreFirst: 'Niedrigste Punktzahl zuerst',
+  highestScoreFirst: 'Höchste Punktzahl zuerst',
+  autoLabeling: 'Automatische Beschriftung',
+  autoLabelingDescription1: 'Mit der automatischen Beschriftung können Benutzer Daten automatisch annotieren. Dadurch wird die Datenannotation beschleunigt. Sie müssen nur Beschriftungen korrigieren, die vom System falsch beschriftet wurden, und Beschriftungen annotieren, die nicht vom System beschriftet wurden.',
+  autoLabelingDescription2: 'Beachten Sie, dass Sie diese Funktion nicht nutzen können, wenn die Projektadministratoren die automatische Beschriftung nicht konfiguriert haben. Je nach Konfiguration entstehen den Administratoren außerdem Kosten (z. B. bei der Konfiguration kostenpflichtiger Dienste wie AWS oder GCP).'
 }

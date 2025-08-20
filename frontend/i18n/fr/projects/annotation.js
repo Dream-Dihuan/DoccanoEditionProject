@@ -12,5 +12,21 @@ export default {
   metadataDefaultMessage: 'Aucune donnée disponible',
   key: 'Clé',
   value: 'Valeur',
-  newText: 'Nouveau texte'
+  newText: 'Nouveau texte',
+  clearLabelsTooltip: 'Effacer les étiquettes',
+  keyboardShortcutTooltip: 'Raccourci clavier',
+  keyboardShortcutTitle: 'Raccourci clavier',
+  action: 'Action',
+  jumpToFirstData: 'Aller aux premières données',
+  jumpToLastData: 'Aller aux dernières données',
+  moveToPreviousData: 'Aller aux données précédentes',
+  moveToNextData: 'Aller aux données suivantes',
+  confirmData: 'Confirmer les données',
+  zoomOutTooltip: 'Dézoomer',
+  zoomInTooltip: 'Zoomer',
+  lowestScoreFirst: 'Score le plus bas en premier',
+  highestScoreFirst: 'Score le plus élevé en premier',
+  autoLabeling: 'Étiquetage automatique',
+  autoLabelingDescription1: "L'étiquetage automatique permet aux utilisateurs d'annoter automatiquement les données. Cela leur permet d'accélérer l'annotation des données. Vous n'avez qu'à corriger les étiquettes mal étiquetées par le système et annoter les étiquettes qui ne sont pas étiquetées par celui-ci.",
+  autoLabelingDescription2: "Notez que vous ne pouvez pas utiliser cette fonctionnalité à moins que les administrateurs du projet ne configurent l'étiquetage automatique. En outre, selon la configuration, cela entraînera des coûts pour les administrateurs (par exemple, dans le cas de la configuration d'un service payant comme AWS ou GCP)."
 }

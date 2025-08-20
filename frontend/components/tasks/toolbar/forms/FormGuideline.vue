@@ -1,6 +1,5 @@
 <template>
   <base-card
-    :title="$t('annotation.guidelinePopupTitle')"
     :cancel-text="$t('generic.close')"
     @cancel="close"
   >

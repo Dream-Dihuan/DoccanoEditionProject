@@ -1,6 +1,5 @@
 <template>
   <base-card
-    :title="$t('comments.comments')"
     :cancel-text="$t('generic.close')"
     @cancel="$emit('click:cancel')"
   >
