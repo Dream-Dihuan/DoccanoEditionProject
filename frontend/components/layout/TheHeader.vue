@@ -7,7 +7,7 @@
     </nuxt-link>
     
     <v-toolbar-title v-if="!isAuthenticated" class="header-title ml-2 d-none d-sm-flex">
-      doccano
+      成都大学标注平台
     </v-toolbar-title>
     
     <v-btn
@@ -82,7 +82,7 @@
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title class="user-name">{{ getUsername }}</v-list-item-title>
-                <v-list-item-subtitle class="user-email">user@example.com</v-list-item-subtitle>
+                <!-- <v-list-item-subtitle class="user-email">user@example.com</v-list-item-subtitle> -->
               </v-list-item-content>
             </v-list-item>
             

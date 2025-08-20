@@ -133,17 +133,17 @@ export default Vue.extend({
     headers() {
       const headers = [
         {
-          text: 'Status',
+          text: this.$t('dataset.status'),
           value: 'isConfirmed',
           sortable: false
         },
         {
-          text: 'Image',
+          text: this.$t('dataset.image'),
           value: 'url',
           sortable: false
         },
         {
-          text: 'Filename',
+          text: this.$t('dataset.filename'),
           value: 'filename',
           sortable: false
         },
@@ -160,7 +160,7 @@ export default Vue.extend({
       ]
       if (this.isAdmin) {
         headers.splice(4, 0, {
-          text: 'Assignee',
+          text: this.$t('dataset.assignee'),
           value: 'assignee',
           sortable: false
         })
@@ -207,23 +207,22 @@ export default Vue.extend({
       return this.members.filter((member) => assigneeIds.includes(member.user))
     },
 
-    onAssignOrUnassign(item: ExampleDTO, newAssignees: MemberItem[]) {
-      const newAssigneeIds = newAssignees.map((assignee) => assignee.user)
-      const oldAssigneeIds = item.assignments.map((assignment) => assignment.assignee_id)
-      if (oldAssigneeIds.length > newAssigneeIds.length) {
-        // unassign
-        for (const assignment of item.assignments) {
-          if (!newAssigneeIds.includes(assignment.assignee_id)) {
-            this.$emit('unassign', assignment.id)
-          }
+    onAssignOrUnassign(item: ExampleDTO, selected: MemberItem[]) {
+      const before = this.toSelected(item)
+      const removed = before.filter((b) => !selected.includes(b))
+      const added = selected.filter((s) => !before.includes(s))
+
+      if (removed.length > 0) {
+        const assignment = item.assignments.find(
+          (a) => a.assignee_id === removed[0].user
+        )?.assignment_id
+        if (assignment) {
+          this.$emit('unassign', assignment)
         }
-      } else {
-        // assign
-        for (const newAssigneeId of newAssigneeIds) {
-          if (!oldAssigneeIds.includes(newAssigneeId)) {
-            this.$emit('assign', item.id, newAssigneeId)
-          }
-        }
+      }
+
+      if (added.length > 0) {
+        this.$emit('assign', item.id, added[0].user)
       }
     }
   }

@@ -24,12 +24,12 @@ export default Vue.extend({
     items() {
       return [
         {
-          title: this.$t('dataset.importDataset'),
+          title: this.$t('dataset.import'),
           icon: mdiUpload,
           event: 'upload'
         },
         {
-          title: this.$t('dataset.exportDataset'),
+          title: this.$t('dataset.export'),
           icon: mdiDownload,
           event: 'download'
         },
