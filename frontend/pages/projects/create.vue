@@ -64,13 +64,13 @@
                       <v-col cols="12" md="6">
                         <v-checkbox 
                           v-model="editedItem.allowOverlappingSpans" 
-                          :label="$t('projects.overview.allowOverlappingSpans')"
+                          :label="$t('overview.allowOverlappingSpans')"
                           hide-details
                           class="mb-2"
                         />
                         <v-checkbox 
                           v-model="editedItem.useRelation" 
-                          :label="$t('projects.overview.useRelationLabeling')"
+                          :label="$t('overview.useRelationLabeling')"
                           hide-details
                           class="mb-2"
                         />
@@ -87,12 +87,10 @@
                                     @click.stop
                                     v-on="on"
                                   >
-                                    grapheme clusters
                                   </a>
                                 </template>
                                 {{ $t('overview.graphemeClustersDesc') }}
                               </v-tooltip>
-                              as one character
                             </div>
                           </template>
                         </v-checkbox>

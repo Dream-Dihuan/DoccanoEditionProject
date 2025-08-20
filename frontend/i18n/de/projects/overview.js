@@ -11,6 +11,11 @@ export default {
   deleteProjectTitle: 'Lösche Projekt',
   deleteProjectMessage: 'Bist du dir sicher, dass du diese Projekte löschen willst?',
   allowSingleLabel: 'Nur ein Label erlauben',
+  allowMemberToCreateLabelType: 'Erlaube Projektmitgliedern das Erstellen von Label-Typen',
+  allowOverlappingSpans: 'Überlappende Bereiche erlauben',
+  useRelationLabeling: 'Relationslabeling verwenden',
+  countGraphemeClusters: 'Graphem-Cluster als ein Zeichen zählen',
+  graphemeClustersDesc: 'Wie Emoji(🌷, 💩, und 👍), CRLF(\\r\\n), und so weiter.',
   search: 'Suchen',
   projectTypes: [
     'Textklassifikation',
