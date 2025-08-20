@@ -10,13 +10,15 @@
       <the-side-bar :is-project-admin="isProjectAdmin" :project="currentProject" />
     </v-navigation-drawer>
 
-    <v-main>
-      <v-container fluid fill-height>
-        <v-layout justify-center>
-          <v-flex fill-height>
-            <nuxt />
-          </v-flex>
-        </v-layout>
+    <v-main class="pb-0">
+      <v-container fluid class="pa-0 fill-height">
+        <v-row no-gutters class="fill-height">
+          <v-col class="fill-height">
+            <div class="content-wrapper">
+              <nuxt />
+            </div>
+          </v-col>
+        </v-row>
       </v-container>
     </v-main>
   </v-app>
@@ -50,3 +52,23 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.content-wrapper {
+  padding: 20px;
+  height: 100%;
+  width: 100%;
+}
+
+@media (max-width: 960px) {
+  .content-wrapper {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .content-wrapper {
+    padding: 10px;
+  }
+}
+</style>

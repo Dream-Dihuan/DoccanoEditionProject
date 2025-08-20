@@ -1,28 +1,42 @@
 <template>
-  <v-list dense>
-    <v-btn color="ms-4 my-1 mb-2 primary text-capitalize" nuxt @click="toLabeling">
-      <v-icon left>
-        {{ mdiPlayCircleOutline }}
-      </v-icon>
-      {{ $t('home.startAnnotation') }}
-    </v-btn>
-    <v-list-item-group v-model="selected" mandatory>
-      <v-list-item
-        v-for="(item, i) in filteredItems"
-        :key="i"
-        @click="$router.push(localePath(`/projects/${$route.params.id}/${item.link}`))"
+  <v-list dense class="sidebar-wrapper">
+    <div class="annotation-section">
+      <v-btn 
+        color="primary" 
+        class="start-annotation-btn" 
+        depressed
+        block
+        large
+        @click="toLabeling"
       >
-        <v-list-item-action>
-          <v-icon>
-            {{ item.icon }}
-          </v-icon>
-        </v-list-item-action>
-        <v-list-item-content>
-          <v-list-item-title>
-            {{ item.text }}
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+        <v-icon left size="20">
+          {{ mdiPlayCircleOutline }}
+        </v-icon>
+        {{ $t('home.startAnnotation') }}
+      </v-btn>
+    </div>
+    
+    <v-list-item-group v-model="selected" mandatory class="menu-items-group">
+      <template v-for="(item, i) in filteredItems">
+        <v-list-item
+          :key="i"
+          @click="$router.push(localePath(`/projects/${$route.params.id}/${item.link}`))"
+          class="menu-item"
+          active-class="menu-item--active"
+        >
+          <v-list-item-icon class="menu-item__icon">
+            <v-icon :color="selected === i ? 'primary' : 'grey darken-1'">
+              {{ item.icon }}
+            </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title class="menu-item__title">
+              {{ item.text }}
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-divider v-if="item.text === $t('projectHome.home') || item.text === 'Relations'" :key="'divider-' + i" class="menu-divider"></v-divider>
+      </template>
     </v-list-item-group>
   </v-list>
 </template>
@@ -140,3 +154,94 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.sidebar-wrapper {
+  padding: 16px 0;
+  background-color: transparent;
+}
+
+.annotation-section {
+  padding: 0 16px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.theme--dark .annotation-section {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.start-annotation-btn {
+  border-radius: 24px !important;
+  text-transform: none;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  height: 48px !important;
+}
+
+.start-annotation-btn:hover {
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
+  transform: translateY(-1px);
+}
+
+.theme--dark .start-annotation-btn {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+.theme--dark .start-annotation-btn:hover {
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.5);
+}
+
+.menu-items-group {
+  padding-top: 12px;
+}
+
+.menu-item {
+  padding: 12px 24px;
+  margin: 0;
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.menu-item:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+  border-left: 3px solid #1976D2;
+}
+
+.theme--dark .menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.menu-item--active {
+  background-color: rgba(25, 118, 210, 0.08);
+  border-left: 3px solid #1976D2;
+}
+
+.theme--dark .menu-item--active {
+  background-color: rgba(25, 118, 210, 0.15);
+}
+
+.menu-item__icon {
+  margin-right: 20px;
+}
+
+.menu-item__title {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.theme--dark .menu-item__title {
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.menu-divider {
+  margin: 8px 0;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.theme--dark .menu-divider {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+</style>
