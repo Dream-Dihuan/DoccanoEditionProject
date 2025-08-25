@@ -23,7 +23,7 @@
         v-if="agreeText"
         :disabled="disabled"
         class="text-none base-card__btn base-card__btn--primary"
-        text
+        color="primary"
         data-test="delete-button"
         @click="agree"
       >
@@ -144,19 +144,44 @@ export default Vue.extend({
 }
 
 .base-card__btn--primary {
-  background: var(--primary);
+  background: var(--primary) !important;
   color: white !important;
   border: 1px solid var(--primary);
 }
 
 .base-card__btn--primary:hover {
-  background: var(--primary-dark);
+  background: var(--primary-dark) !important;
   border-color: var(--primary-dark);
 }
 
 .base-card__btn--primary:disabled {
-  background: var(--primary-light);
+  background: var(--primary-light) !important;
   border-color: var(--primary-light);
   opacity: 0.7;
 }
-</style>
+
+/* 修复白天模式下按钮透明的问题 */
+.base-card__btn--primary {
+  background-color: var(--primary) !important;
+  color: white !important;
+  border: 1px solid var(--primary) !important;
+}
+
+/* 确保在亮色主题下按钮样式正确 */
+.theme--light .base-card__btn--primary {
+  background-color: var(--primary) !important;
+  color: white !important;
+  border: 1px solid var(--primary) !important;
+}
+
+/* 确保在暗色主题下按钮样式正确 */
+.theme--dark .base-card__btn--primary {
+  background-color: var(--primary) !important;
+  color: white !important;
+  border: 1px solid var(--primary) !important;
+}
+
+/* 为按钮添加过渡效果 */
+.base-card__btn--primary {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
