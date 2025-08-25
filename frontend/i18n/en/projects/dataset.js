@@ -24,5 +24,12 @@ export default {
   download: 'Download',
   reset: 'Reset',
   resetConfirmation: 'Are you sure you want to reset all assignments?',
-  resetSuccess: 'Reset assignments successfully'
+  resetSuccess: 'Reset assignments successfully',
+  // 添加缺失的键值
+  importDataTitle: 'Import Dataset',
+  exportDataTitle: 'Export Dataset',
+  fileFormat: 'File format',
+  dropFilesHere: 'Drop files here...',
+  formatExample: 'For readability, the above format can be displayed as follows:',
+  exportApprovedOnly: 'Export only approved documents'
 }

@@ -24,5 +24,12 @@ export default {
   download: 'Télécharger',
   reset: 'Réinitialiser',
   resetConfirmation: 'Êtes-vous sûr de vouloir réinitialiser toutes les affectations ?',
-  resetSuccess: 'Réinitialisation des affectations réussie'
+  resetSuccess: 'Réinitialisation des affectations réussie',
+  // 添加缺失的键值
+  importDataTitle: 'Importer le jeu de données',
+  exportDataTitle: 'Exporter le jeu de données',
+  fileFormat: 'Format de fichier',
+  dropFilesHere: 'Déposez les fichiers ici...',
+  formatExample: 'Pour une meilleure lisibilité, le format ci-dessus peut être affiché comme suit :',
+  exportApprovedOnly: 'Exporter uniquement les documents approuvés'
 }

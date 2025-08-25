@@ -23,5 +23,12 @@ export default {
   download: '下载',
   reset: '重置',
   resetConfirmation: '确定要重置所有分配吗？',
-  resetSuccess: '重置分配成功'
+  resetSuccess: '重置分配成功',
+  // 添加缺失的键值
+  importDataTitle: '导入数据集',
+  exportDataTitle: '导出数据集',
+  fileFormat: '文件格式',
+  dropFilesHere: '拖拽文件到此处...',
+  formatExample: '为了提高可读性，上述格式可以显示如下：',
+  exportApprovedOnly: '仅导出已批准的文档'
 }

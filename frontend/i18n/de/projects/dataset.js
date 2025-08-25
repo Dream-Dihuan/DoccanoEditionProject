@@ -24,5 +24,12 @@ export default {
   download: 'Herunterladen',
   reset: 'Zurücksetzen',
   resetConfirmation: 'Sind Sie sicher, dass Sie alle Zuweisungen zurücksetzen möchten?',
-  resetSuccess: 'Zuweisungen erfolgreich zurückgesetzt'
+  resetSuccess: 'Zuweisungen erfolgreich zurückgesetzt',
+  // 添加缺失的键值
+  importDataTitle: 'Datensatz importieren',
+  exportDataTitle: 'Datensatz exportieren',
+  fileFormat: 'Dateiformat',
+  dropFilesHere: 'Dateien hier ablegen...',
+  formatExample: 'Zur besseren Lesbarkeit kann das obige Format wie folgt angezeigt werden:',
+  exportApprovedOnly: 'Nur genehmigte Dokumente exportieren'
 }
