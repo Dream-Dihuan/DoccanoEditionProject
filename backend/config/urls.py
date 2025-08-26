@@ -48,6 +48,15 @@ if settings.DEBUG or os.environ.get("STANDALONE", False):
     )
     # For showing favicon on the case of pip and Docker.
     urlpatterns.append(path("favicon.ico", serve, {"document_root": static_dir, "path": "favicon.ico"}))
+    
+    # Serve static files in standalone mode
+    urlpatterns.append(
+        re_path(
+            r"^%s(?P<path>.*)$" % re.escape(settings.STATIC_URL.lstrip("/")),
+            serve,
+            {"document_root": settings.STATIC_ROOT},
+        )
+    )
 
 urlpatterns += [
     path("admin/", admin.site.urls),
