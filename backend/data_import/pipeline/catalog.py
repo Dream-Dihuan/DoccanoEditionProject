@@ -169,7 +169,11 @@ class Excel(Format):
 
 class TextFile(Format):
     name = "TextFile"
-    accept_types = "text/*"
+    accept_types = "*"
+
+    def validate_mime(self, mime: str):
+        # 支持普通文本和markdown格式
+        return mime in ["text/plain", "text/markdown"] or mime.startswith("text/")
 
     @staticmethod
     def is_plain_text():
