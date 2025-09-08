@@ -7,7 +7,7 @@
           <v-col cols="12" sm="6">
             <v-text-field
               :value="text"
-              :counter="100"
+              :counter="9999"
               :label="$t('labels.labelName')"
               :rules="[rules.required, rules.counter, rules.nameDuplicated]"
               outlined
@@ -152,7 +152,7 @@ export default Vue.extend({
       ],
       rules: {
         required: (value: string) => !!value || this.$t('rules.requiredRules'),
-        counter: (value: string) => value.length <= 100 || this.$t('rules.counterRules'),
+        counter: (value: string) => value.length <= 9999 || this.$t('rules.counterRules'),
         nameDuplicated: (value: string) => {
           const isDuplicated = this.items.some((item) => item.text === value && item.id !== this.id)
           return !isDuplicated || this.$t('rules.nameDuplicatedRules')
