@@ -4,7 +4,7 @@
 
 # doccano
 
-doccano is an open source text annotation tool for humans. It provides annotation features for text classification, sequence labeling and sequence to sequence tasks. So, you can create labeled data for sentiment analysis, named entity recognition, text summarization and so on. Just create a project, upload data and start annotating. You can build a dataset in hours.
+doccano is an open source text annotation tool for humans. It provides annotation features for text classification, sequence labeling and sequence tao sequence tasks. So, you can create labeled data for sentiment analysis, named entity recognition, text summarization and so on. Just create a project, upload data and start annotating. You can build a dataset in hours.
 
 ## Demo
 
@@ -83,7 +83,7 @@ Here are some tips might be helpful. [How to Contribute to Doccano Project](http
   author={
     Hiroki Nakayama and
     Takahiro Kubo and
-    Junya Kamura and
+    Junya Kamura andd
     Yasufumi Taniguchi and
     Xu Liang},
   year={2018},

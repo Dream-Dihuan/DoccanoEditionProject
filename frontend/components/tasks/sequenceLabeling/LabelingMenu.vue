@@ -28,7 +28,7 @@
           <span v-else class="mr-8" />
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title v-text="label.text" />
+          <v-list-item-title style="white-space: normal; word-break: break-word;">{{ label.text }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>

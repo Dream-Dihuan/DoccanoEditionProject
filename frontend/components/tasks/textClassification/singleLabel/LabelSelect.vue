@@ -20,20 +20,27 @@
         close
         @click="select"
         @click:close="remove(item)"
+        style="white-space: normal; height: auto;"
       >
         <v-avatar v-if="item.suffixKey" left color="white" class="black--text font-weight-bold">
           {{ item.suffixKey }}
         </v-avatar>
-        {{ item.text }}
+        <span style="white-space: normal; word-break: break-word;">{{ item.text }}</span>
       </v-chip>
     </template>
     <template #item="{ item }">
-      <v-chip :color="item.backgroundColor" :text-color="$contrastColor(item.backgroundColor)">
-        <v-avatar v-if="item.suffixKey" left color="white" class="black--text font-weight-bold">
-          {{ item.suffixKey }}
-        </v-avatar>
-        {{ item.text }}
-      </v-chip>
+      <v-list-item-content>
+        <v-chip 
+          :color="item.backgroundColor" 
+          :text-color="$contrastColor(item.backgroundColor)" 
+          style="white-space: normal; height: auto; max-width: 100%;"
+        >
+          <v-avatar v-if="item.suffixKey" left color="white" class="black--text font-weight-bold">
+            {{ item.suffixKey }}
+          </v-avatar>
+          <span style="white-space: normal; word-break: break-word;">{{ item.text }}</span>
+        </v-chip>
+      </v-list-item-content>
     </template>
   </v-select>
 </template>
