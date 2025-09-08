@@ -130,6 +130,7 @@ export default Vue.extend({
 
   data() {
     return {
+      valid: false,
       selectedColorIndex: -1,
       mdiReload,
       predefinedColors: [
@@ -153,7 +154,7 @@ export default Vue.extend({
       rules: {
         required: (value: string) => !!value || this.$t('rules.requiredRules'),
         counter: (value: string) => value.length <= 9999 || this.$t('rules.counterRules'),
-        keyCounter: (value: string) => (value ? value.length <= 10 : true) || this.$t('rules.counterKeyRules'),
+        keyCounter: (value: string) => !value || value.length <= 10 || this.$t('rules.keyCounterRules'),
         nameDuplicated: (value: string) => {
           const isDuplicated = this.items.some((item) => item.text === value && item.id !== this.id)
           return !isDuplicated || this.$t('rules.nameDuplicatedRules')

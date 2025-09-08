@@ -42,10 +42,7 @@
     <template #sidebar>
       <annotation-progress :progress="progress" />
       <!-- 添加标签创建模块到侧边栏 -->
-      <v-card v-if="canAddLabel" class="mt-4">
-        <v-card-title>
-          <span class="headline">{{ $t('labels.createLabelType') }}</span>
-        </v-card-title>
+      <v-card v-if="canAddLabel" class="mt-4 create-label-card">
         <v-card-text>
           <form-create-label
             :items="allLabelTypes"
@@ -331,5 +328,11 @@ export default {
   line-height: 2rem;
   font-family: 'Roboto', sans-serif !important;
   opacity: 0.6;
+}
+
+.create-label-card {
+  position: sticky;
+  top: 80px;
+  z-index: 5; /* 修改z-index值为5，确保低于v-menu的z-index值200 */
 }
 </style>
