@@ -17,7 +17,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://prjlabel.scifn.co",
     "http://localhost",
     "http://127.0.0.1",
-    "http://10.7.123.158:3000"
+    "http://10.7.125.141:3000"
 ]
 
 # 添加静态文件配置

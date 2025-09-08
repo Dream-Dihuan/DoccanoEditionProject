@@ -41,6 +41,33 @@
     </template>
     <template #sidebar>
       <annotation-progress :progress="progress" />
+      <!-- 添加标签创建模块到侧边栏 -->
+      <v-card v-if="canAddLabel" class="mt-4">
+        <v-card-title>
+          <span class="headline">{{ $t('labels.createLabelType') }}</span>
+        </v-card-title>
+        <v-card-text>
+          <form-create-label
+            :items="allLabelTypes"
+            :text.sync="newLabel.text"
+            :suffix-key.sync="newLabel.suffixKey"
+            :background-color.sync="newLabel.backgroundColor"
+            @update:text="newLabel.text = $event"
+            @update:suffixKey="newLabel.suffixKey = $event"
+            @update:backgroundColor="newLabel.backgroundColor = $event"
+          >
+            <template #default="{ valid }">
+              <v-btn
+                :disabled="!valid || isCreatingLabel"
+                color="primary"
+                @click.prevent="createLabel"
+              >
+                {{ $t('labels.createLabel') }}
+              </v-btn>
+            </template>
+          </form-create-label>
+        </v-card-text>
+      </v-card>
       <list-metadata :metadata="doc.meta" class="mt-4" />
     </template>
   </layout-text>
@@ -54,6 +81,7 @@ import AnnotationProgress from '@/components/tasks/sidebar/AnnotationProgress.vu
 import LabelGroup from '@/components/tasks/textClassification/LabelGroup'
 import ToolbarLaptop from '@/components/tasks/toolbar/ToolbarLaptop'
 import ToolbarMobile from '@/components/tasks/toolbar/ToolbarMobile'
+import FormCreateLabel from '@/components/label/FormCreate.vue'
 import { Category } from '~/domain/models/tasks/category'
 
 export default {
@@ -64,7 +92,8 @@ export default {
     ListMetadata,
     LabelGroup,
     ToolbarLaptop,
-    ToolbarMobile
+    ToolbarMobile,
+    FormCreateLabel
   },
 
   layout: 'workspace',
@@ -83,7 +112,15 @@ export default {
       project: {},
       exclusive: false,
       enableAutoLabeling: false,
-      progress: {}
+      progress: {},
+      // 添加标签创建相关数据
+      newLabel: {
+        text: '',
+        suffixKey: null,
+        backgroundColor: '#73D8FF'
+      },
+      isCreatingLabel: false,
+      member: {}
     }
   },
 
@@ -121,6 +158,19 @@ export default {
       } else {
         return this.docs.items[0]
       }
+    },
+
+    // 合并所有标签类型，用于表单验证
+    allLabelTypes() {
+      return [...this.spanTypes, ...this.categoryTypes]
+    },
+
+    // 判断用户是否有权限创建标签
+    canAddLabel() {
+      if (this.member.isProjectAdmin) {
+        return true
+      }
+      return this.project.allowMemberToCreateLabelType
     }
   },
 
@@ -140,6 +190,7 @@ export default {
     this.categoryTypes = await this.$services.categoryType.list(this.projectId)
     this.project = await this.$services.project.findById(this.projectId)
     this.progress = await this.$repositories.metrics.fetchMyProgress(this.projectId)
+    this.member = await this.$repositories.member.fetchMyRole(this.projectId)
   },
 
   methods: {
@@ -222,6 +273,53 @@ export default {
       await this.$services.example.confirm(this.projectId, this.doc.id)
       await this.$fetch()
       this.updateProgress()
+    },
+
+    // 创建新标签的方法（只创建Span类型）
+    async createLabel(e) {
+      // 阻止表单默认提交行为
+      if (e) {
+        e.preventDefault()
+        e.stopPropagation()
+      }
+      
+      if (!this.newLabel.text) return
+      
+      this.isCreatingLabel = true
+      try {
+        // 只创建span type
+        const created = await this.$services.spanType.create(this.projectId, {
+          text: this.newLabel.text,
+          suffixKey: this.newLabel.suffixKey,
+          backgroundColor: this.newLabel.backgroundColor
+        })
+        this.spanTypes = [...this.spanTypes, created]
+        
+        // 重置表单
+        this.newLabel = {
+          text: '',
+          suffixKey: null,
+          backgroundColor: '#73D8FF'
+        }
+        
+        // 显示成功消息
+        if (this.$toast && this.$toast.success) {
+          this.$toast.success(this.$t('labels.createLabel'))
+        } else {
+          console.log(this.$t('labels.createLabel'))
+        }
+      } catch (error) {
+        console.error(error)
+        if (this.$toast && this.$toast.error) {
+          this.$toast.error(this.$t('labels.deleteMessage'))
+        } else {
+          console.error(this.$t('labels.deleteMessage'))
+        }
+      } finally {
+        this.isCreatingLabel = false
+      }
+      
+      return false
     }
   }
 }
