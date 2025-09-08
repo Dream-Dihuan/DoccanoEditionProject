@@ -12,7 +12,7 @@ def generate_random_hex_color():
 
 
 class LabelType(models.Model):
-    text = models.CharField(max_length=9999, db_index=True)
+    text = models.CharField(max_length=100, db_index=True)
     prefix_key = models.CharField(
         max_length=10,
         blank=True,
@@ -20,7 +20,7 @@ class LabelType(models.Model):
         choices=(("ctrl", "ctrl"), ("shift", "shift"), ("ctrl shift", "ctrl shift")),
     )
     suffix_key = models.CharField(
-        max_length=1, blank=True, null=True, choices=tuple((c, c) for c in string.digits + string.ascii_lowercase)
+        max_length=10, blank=True, null=True
     )
     project = models.ForeignKey(
         to=Project,

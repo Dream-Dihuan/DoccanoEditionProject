@@ -34,5 +34,11 @@ export default {
   passwordRules: {
     passwordRequired: '请输入密码',
     passwordLessThan30Chars: '密码必须小于30个字符'
-  }
+  },
+  counterRules: '文本必须少于9999个字符',
+  counterKeyRules: '键必须少于10个字符',
+  requiredRules: '此字段为必填项',
+  nameDuplicatedRules: '该名称已被使用',
+  keyDuplicatedRules: '该键已被使用',
+  validColorRules: '颜色代码无效。请使用十六进制颜色代码（例如 #FF0000）'
 }

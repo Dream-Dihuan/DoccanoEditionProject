@@ -16,11 +16,11 @@
             />
           </v-col>
           <v-col cols="12" sm="6">
-            <v-select
+            <v-text-field
               :value="suffixKey"
-              :items="availableSuffixKeys"
+              :counter="10"
               :label="$t('labels.key')"
-              :rules="[rules.keyDuplicated]"
+              :rules="[rules.keyCounter, rules.keyDuplicated]"
               outlined
               @input="$emit('update:suffixKey', $event)"
             />
@@ -153,6 +153,7 @@ export default Vue.extend({
       rules: {
         required: (value: string) => !!value || this.$t('rules.requiredRules'),
         counter: (value: string) => value.length <= 9999 || this.$t('rules.counterRules'),
+        keyCounter: (value: string) => (value ? value.length <= 10 : true) || this.$t('rules.counterKeyRules'),
         nameDuplicated: (value: string) => {
           const isDuplicated = this.items.some((item) => item.text === value && item.id !== this.id)
           return !isDuplicated || this.$t('rules.nameDuplicatedRules')

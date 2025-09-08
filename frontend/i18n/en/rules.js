@@ -34,5 +34,11 @@ export default {
   passwordRules: {
     passwordRequired: 'Password is required',
     passwordLessThan30Chars: 'Password must be less than 30 characters'
-  }
+  },
+  counterRules: 'Text must be less than 9999 characters',
+  counterKeyRules: 'Key must be less than 10 characters',
+  requiredRules: 'This field is required',
+  nameDuplicatedRules: 'This name is already used',
+  keyDuplicatedRules: 'This key is already used',
+  validColorRules: 'Color code is invalid. Please use hex color codes (e.g. #FF0000)'
 }
