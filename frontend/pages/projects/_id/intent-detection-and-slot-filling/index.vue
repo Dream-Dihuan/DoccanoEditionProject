@@ -45,6 +45,7 @@
       <v-card v-if="canAddLabel" class="mt-4 create-label-card">
         <v-card-text>
           <form-create-label
+            ref="formCreate"
             :items="allLabelTypes"
             :text.sync="newLabel.text"
             :suffix-key.sync="newLabel.suffixKey"
@@ -280,7 +281,11 @@ export default {
         e.stopPropagation()
       }
       
-      if (!this.newLabel.text) return
+      // 获取表单引用
+      const form = this.$refs.formCreate.$refs.form
+      // 验证表单
+      const isValid = form.validate()
+      if (!isValid) return
       
       this.isCreatingLabel = true
       try {
@@ -292,25 +297,29 @@ export default {
         })
         this.spanTypes = [...this.spanTypes, created]
         
+        // 显示成功消息
+        if (this.$toast && this.$toast.success) {
+          this.$toast.success(this.$t('labels.createLabelSuccess'))
+        } else {
+          console.log(this.$t('labels.createLabelSuccess'))
+        }
+        
         // 重置表单
         this.newLabel = {
           text: '',
           suffixKey: null,
           backgroundColor: '#73D8FF'
         }
-        
-        // 显示成功消息
-        if (this.$toast && this.$toast.success) {
-          this.$toast.success(this.$t('labels.createLabel'))
-        } else {
-          console.log(this.$t('labels.createLabel'))
-        }
+        // 重置表单验证状态
+        this.$nextTick(() => {
+          form.resetValidation()
+        })
       } catch (error) {
         console.error(error)
         if (this.$toast && this.$toast.error) {
-          this.$toast.error(this.$t('labels.deleteMessage'))
+          this.$toast.error(this.$t('labels.createLabelError'))
         } else {
-          console.error(this.$t('labels.deleteMessage'))
+          console.error(this.$t('labels.createLabelError'))
         }
       } finally {
         this.isCreatingLabel = false
