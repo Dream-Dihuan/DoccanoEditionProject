@@ -2,7 +2,7 @@ from dj_rest_auth.registration.serializers import RegisterSerializer
 from django.contrib.auth.models import User
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, generics, status, viewsets
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -54,17 +54,12 @@ class UserViewSet(viewsets.ModelViewSet):
     - 用户信息更新
     - 用户删除
     
-    权限要求：
-    - 列表获取：项目管理员或超级用户
-    - 用户创建/更新/删除：仅超级用户
-    
-    认证方式：
-    所有请求都需要在Authorization头中包含有效的认证令牌
-    示例：Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
+    注意：此接口无需认证和权限验证，任何可以访问该接口的用户都可以执行所有操作。
+    请确保该接口只能在受信任的网络环境中访问。
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated & IsAdminUser]
+    permission_classes = [AllowAny]
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
     search_fields = ("username",)
     

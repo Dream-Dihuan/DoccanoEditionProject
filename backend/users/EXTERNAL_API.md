@@ -1,35 +1,22 @@
-# 外部用户管理API文档
+# 外部用户管理API文档## 安全警告
+
+此API接口无需认证即可访问，因此：
+
+1. 请确保该接口只能在受信任的网络环境中访问
+2. 不要在公共网络或不安全的网络环境中暴露此接口
+3. 建议通过网络防火墙或反向代理限制对此接口的访问
+4. 生产环境中应考虑添加适当的认证和权限控制机制
 
 ## 概述
 
-本文档详细说明了doccano系统的外部用户管理API接口。这些接口允许外部系统通过RESTful API对doccano用户进行增删改查操作。
+本文档详细说明了doccano系统的外部用户管理API接口。这些接口允许通过RESTful API对doccano用户进行增删改查操作，无需认证和权限验证。
 
 ## 基础信息
 
 - **API版本**: v1
 - **基础URL**: `/v1/external/external-users/`
-- **认证方式**: Token认证
 - **数据格式**: JSON
-
-## 认证
-
-所有API请求都需要在HTTP头中包含有效的认证令牌：
-
-```
-Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
-```
-
-## 权限说明
-
-不同操作需要不同的权限：
-
-| 操作 | 权限要求 |
-|------|----------|
-| 获取用户列表 | 项目管理员或超级用户 |
-| 创建用户 | 超级用户 |
-| 获取用户详情 | 项目管理员或超级用户 |
-| 更新用户 | 超级用户 |
-| 删除用户 | 超级用户 |
+- **认证**: 无需认证（请确保只能在受信任的网络环境中访问）
 
 ## API接口详情
 
@@ -44,13 +31,10 @@ Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
 
 **响应状态码**:
 - 200: 成功
-- 401: 未认证
-- 403: 权限不足
 
 **请求示例**:
 ```bash
-curl -H "Authorization: Token YOUR_TOKEN" \
-     http://localhost:8000/v1/external/external-users/
+curl http://localhost:8000/v1/external/external-users/
 ```
 
 **响应示例**:
@@ -86,13 +70,10 @@ curl -H "Authorization: Token YOUR_TOKEN" \
 **响应状态码**:
 - 201: 创建成功
 - 400: 请求参数错误
-- 401: 未认证
-- 403: 权限不足
 
 **请求示例**:
 ```bash
 curl -X POST \
-     -H "Authorization: Token YOUR_TOKEN" \
      -H "Content-Type: application/json" \
      -d '{"username":"newuser", "password":"password123", "is_staff":true}' \
      http://localhost:8000/v1/external/external-users/
@@ -119,14 +100,11 @@ curl -X POST \
 
 **响应状态码**:
 - 200: 成功
-- 401: 未认证
-- 403: 权限不足
 - 404: 用户不存在
 
 **请求示例**:
 ```bash
-curl -H "Authorization: Token YOUR_TOKEN" \
-     http://localhost:8000/v1/external/external-users/1/
+curl http://localhost:8000/v1/external/external-users/1/
 ```
 
 **响应示例**:
@@ -157,14 +135,11 @@ curl -H "Authorization: Token YOUR_TOKEN" \
 **响应状态码**:
 - 200: 更新成功
 - 400: 请求参数错误
-- 401: 未认证
-- 403: 权限不足
 - 404: 用户不存在
 
 **请求示例**:
 ```bash
 curl -X PUT \
-     -H "Authorization: Token YOUR_TOKEN" \
      -H "Content-Type: application/json" \
      -d '{"username":"updated_admin", "is_staff":true}' \
      http://localhost:8000/v1/external/external-users/1/
@@ -198,14 +173,11 @@ curl -X PUT \
 **响应状态码**:
 - 200: 更新成功
 - 400: 请求参数错误
-- 401: 未认证
-- 403: 权限不足
 - 404: 用户不存在
 
 **请求示例**:
 ```bash
 curl -X PATCH \
-     -H "Authorization: Token YOUR_TOKEN" \
      -H "Content-Type: application/json" \
      -d '{"is_staff":false}' \
      http://localhost:8000/v1/external/external-users/1/
@@ -232,8 +204,6 @@ curl -X PATCH \
 
 **响应状态码**:
 - 204: 删除成功
-- 401: 未认证
-- 403: 权限不足
 - 404: 用户不存在
 
 **请求示例**:
@@ -250,14 +220,12 @@ API可能返回以下错误状态码：
 | 状态码 | 描述 |
 |--------|------|
 | 400 | 请求参数错误 |
-| 401 | 未认证 |
-| 403 | 权限不足 |
 | 404 | 资源不存在 |
 | 500 | 服务器内部错误 |
 
 错误响应格式示例：
 ```json
 {
-    "detail": "认证令牌无效。"
+    "detail": "用户不存在。"
 }
 ```
