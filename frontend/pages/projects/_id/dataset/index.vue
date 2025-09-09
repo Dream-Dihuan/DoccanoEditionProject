@@ -1,4 +1,34 @@
 <template>
+  <v-card class="document-tab" flat>
+    <v-card-title class="text-h6 font-weight-bold primary--text">
+      {{ document.text }}
+    </v-card-title>
+    <v-card-text>
+      <p class="mb-0">{{ document.content }}</p>
+    </v-card-text>
+  </v-card>
+</template>
+
+<script lang="ts">
+import Vue from 'vue'
+import { ExampleDTO } from '~/services/application/example/exampleData'
+
+export default Vue.extend({
+  props: {
+    document: {
+      type: Object as () => ExampleDTO,
+      required: true
+    }
+  }
+})
+</script>
+
+<style scoped>
+.document-tab {
+  background-color: transparent;
+}
+</style>
+<template>
   <div class="dataset-page">
     <v-container fluid class="py-8 px-4 px-sm-6">
       <v-row v-if="isProjectAdmin" class="mb-6">

@@ -97,11 +97,6 @@ export default Vue.extend({
       default: () => [],
       required: true
     },
-    value: {
-      type: Array as PropType<ExampleDTO[]>,
-      default: () => [],
-      required: true
-    },
     total: {
       type: Number,
       default: 0,
@@ -188,9 +183,20 @@ export default Vue.extend({
 
   methods: {
     toLabeling(item: ExampleDTO) {
+      // 正确的添加逻辑
       const index = this.items.indexOf(item)
       const offset = (this.options.page - 1) * this.options.itemsPerPage
       const page = (offset + index + 1).toString()
+      
+      // 创建一个自定义事件，通知侧边栏添加标签页
+      // const event = new CustomEvent('open-document-tab', {
+      //   detail: {
+      //     id: item.id,
+      //     text: item.text
+      //   }
+      // })
+      // window.dispatchEvent(event)
+      
       this.$emit('click:labeling', { page, q: this.search })
     },
 

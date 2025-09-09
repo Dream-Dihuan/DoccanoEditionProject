@@ -15,14 +15,22 @@
         {{ $t('home.startAnnotation') }}
       </v-btn>
     </div>
-    
+
+    <!-- DocumentTabs组件 -->
+    <document-tabs
+      v-if="project.id"
+      :project-id="project.id"
+      :current-document-id="currentDocumentId"
+      @switch-document="onSwitchDocument"
+    />
+
     <v-list-item-group v-model="selected" mandatory class="menu-items-group">
       <template v-for="(item, i) in filteredItems">
         <v-list-item
           :key="i"
-          @click="$router.push(localePath(`/projects/${$route.params.id}/${item.link}`))"
           class="menu-item"
           active-class="menu-item--active"
+          @click="$router.push(localePath(`/projects/${$route.params.id}/${item.link}`))"
         >
           <v-list-item-icon class="menu-item__icon">
             <v-icon :color="selected === i ? 'primary' : 'grey darken-1'">
@@ -53,9 +61,14 @@ import {
   mdiLabel,
   mdiPlayCircleOutline
 } from '@mdi/js'
-import { getLinkToAnnotationPage } from '~/presenter/linkToAnnotationPage'
+import DocumentTabs from './DocumentTabs.vue'
+// import { getLinkToAnnotationPage } from '~/presenter/linkToAnnotationPage'
 
 export default {
+  components: {
+    DocumentTabs
+  },
+
   props: {
     isProjectAdmin: {
       type: Boolean,
@@ -77,6 +90,10 @@ export default {
   },
 
   computed: {
+    currentDocumentId() {
+      return this.$route.query.page || null
+    },
+    
     filteredItems() {
       const items = [
         {
@@ -150,6 +167,12 @@ export default {
         path: this.localePath(link),
         query
       })
+    },
+    
+    onSwitchDocument(tab) {
+      // 处理文档切换事件
+      // 实际的路由跳转在DocumentTabs组件中处理
+      this.$emit('switch-document', tab)
     }
   }
 }
