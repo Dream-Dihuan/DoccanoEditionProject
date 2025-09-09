@@ -1,4 +1,246 @@
 """
+内部用户管理接口文档
+
+本模块提供了用于内部系统集成的用户管理API文档。
+这些接口只能通过在请求头中包含'dihuanKey: dihuan'来访问。
+"""
+
+# 接口文档
+INTERNAL_USER_API_DOCS = {
+    "title": "内部用户管理接口",
+    "version": "v1",
+    "description": "提供用户增删改查功能，仅供内部系统使用。所有请求必须在请求头中包含'dihuanKey: dihuan'",
+    "authentication": "在请求头中添加 'dihuanKey: dihuan'",
+    "endpoints": [
+        {
+            "method": "GET",
+            "url": "/v1/internal/users/",
+            "description": "获取用户列表",
+            "parameters": [],
+            "response": [
+                {
+                    "name": "id",
+                    "type": "integer",
+                    "description": "用户ID"
+                },
+                {
+                    "name": "username",
+                    "type": "string",
+                    "description": "用户名"
+                },
+                {
+                    "name": "is_superuser",
+                    "type": "boolean",
+                    "description": "是否为超级用户"
+                },
+                {
+                    "name": "is_staff",
+                    "type": "boolean",
+                    "description": "是否为工作人员"
+                }
+            ],
+            "example_request": "curl -H 'dihuanKey: dihuan' http://localhost:8000/v1/internal/users/",
+            "example_response": """[
+    {
+        "id": 1,
+        "username": "admin",
+        "is_superuser": true,
+        "is_staff": true
+    },
+    {
+        "id": 2,
+        "username": "testuser",
+        "is_superuser": false,
+        "is_staff": false
+    }
+]"""
+        },
+        {
+            "method": "POST",
+            "url": "/v1/internal/users/",
+            "description": "创建新用户",
+            "parameters": [
+                {
+                    "name": "username",
+                    "required": True,
+                    "type": "string",
+                    "description": "用户名"
+                },
+                {
+                    "name": "password",
+                    "required": True,
+                    "type": "string",
+                    "description": "密码"
+                },
+                {
+                    "name": "is_superuser",
+                    "required": False,
+                    "type": "boolean",
+                    "description": "是否为超级用户，默认为False"
+                },
+                {
+                    "name": "is_staff",
+                    "required": False,
+                    "type": "boolean",
+                    "description": "是否为工作人员，默认为False"
+                }
+            ],
+            "example_request": """curl -X POST -H "Content-Type: application/json" -H "dihuanKey: dihuan" \\
+-d '{"username": "newuser", "password": "password123", "is_superuser": false, "is_staff": false}' \\
+http://localhost:8000/v1/internal/users/""",
+            "example_response": """{
+    "id": 3,
+    "username": "newuser",
+    "is_superuser": false,
+    "is_staff": false
+}"""
+        },
+        {
+            "method": "GET",
+            "url": "/v1/internal/users/{id}/",
+            "description": "获取特定用户信息",
+            "parameters": [
+                {
+                    "name": "id",
+                    "required": True,
+                    "type": "integer",
+                    "description": "用户ID"
+                }
+            ],
+            "example_request": "curl -H 'dihuanKey: dihuan' http://localhost:8000/v1/internal/users/1/",
+            "example_response": """{
+    "id": 1,
+    "username": "admin",
+    "is_superuser": true,
+    "is_staff": true
+}"""
+        },
+        {
+            "method": "PUT",
+            "url": "/v1/internal/users/{id}/",
+            "description": "更新特定用户信息（全量更新）",
+            "parameters": [
+                {
+                    "name": "id",
+                    "required": True,
+                    "type": "integer",
+                    "description": "用户ID"
+                },
+                {
+                    "name": "username",
+                    "required": True,
+                    "type": "string",
+                    "description": "用户名"
+                },
+                {
+                    "name": "password",
+                    "required": False,
+                    "type": "string",
+                    "description": "密码"
+                },
+                {
+                    "name": "is_superuser",
+                    "required": False,
+                    "type": "boolean",
+                    "description": "是否为超级用户"
+                },
+                {
+                    "name": "is_staff",
+                    "required": False,
+                    "type": "boolean",
+                    "description": "是否为工作人员"
+                }
+            ],
+            "example_request": """curl -X PUT -H "Content-Type: application/json" -H "dihuanKey: dihuan" \\
+-d '{"username": "updateduser", "is_superuser": true, "is_staff": true}' \\
+http://localhost:8000/v1/internal/users/1/""",
+            "example_response": """{
+    "id": 1,
+    "username": "updateduser",
+    "is_superuser": true,
+    "is_staff": true
+}"""
+        },
+        {
+            "method": "PATCH",
+            "url": "/v1/internal/users/{id}/",
+            "description": "部分更新特定用户信息",
+            "parameters": [
+                {
+                    "name": "id",
+                    "required": True,
+                    "type": "integer",
+                    "description": "用户ID"
+                },
+                {
+                    "name": "username",
+                    "required": False,
+                    "type": "string",
+                    "description": "用户名"
+                },
+                {
+                    "name": "password",
+                    "required": False,
+                    "type": "string",
+                    "description": "密码"
+                },
+                {
+                    "name": "is_superuser",
+                    "required": False,
+                    "type": "boolean",
+                    "description": "是否为超级用户"
+                },
+                {
+                    "name": "is_staff",
+                    "required": False,
+                    "type": "boolean",
+                    "description": "是否为工作人员"
+                }
+            ],
+            "example_request": """curl -X PATCH -H "Content-Type: application/json" -H "dihuanKey: dihuan" \\
+-d '{"is_staff": true}' \\
+http://localhost:8000/v1/internal/users/1/""",
+            "example_response": """{
+    "id": 1,
+    "username": "updateduser",
+    "is_superuser": true,
+    "is_staff": true
+}"""
+        },
+        {
+            "method": "DELETE",
+            "url": "/v1/internal/users/{id}/",
+            "description": "删除特定用户",
+            "parameters": [
+                {
+                    "name": "id",
+                    "required": True,
+                    "type": "integer",
+                    "description": "用户ID"
+                }
+            ],
+            "example_request": "curl -X DELETE -H 'dihuanKey: dihuan' http://localhost:8000/v1/internal/users/1/",
+            "example_response": ""
+        }
+    ],
+    "error_responses": [
+        {
+            "status_code": 403,
+            "description": "未提供有效的dihuanKey",
+            "example_response": """{
+    "detail": "您没有执行该操作的权限。"
+}"""
+        },
+        {
+            "status_code": 404,
+            "description": "请求的用户不存在",
+            "example_response": """{
+    "detail": "未找到。"
+}"""
+        }
+    ]
+}
+"""
 用户管理API文档
 
 本模块提供外部系统管理doccano用户的API接口文档说明。
