@@ -10,7 +10,8 @@
       <v-card-text class="project-creation-content">
         <v-form ref="form" v-model="valid">
           <v-row>
-            <v-col cols="12">
+            <!-- 隐藏项目类型选项 -->
+            <v-col cols="12" style="display: none;">
               <div class="section-title">{{ $t('overview.projectType') }}</div>
               <project-type-field v-model="editedItem.projectType" />
             </v-col>
@@ -132,6 +133,7 @@ import {
   DocumentClassification,
   ImageClassification,
   SequenceLabeling,
+  IntentDetectionAndSlotFilling,
   canDefineLabel
 } from '~/domain/models/project/project'
 
@@ -139,7 +141,7 @@ const initializeProject = () => {
   return {
     name: '',
     description: '',
-    projectType: DocumentClassification,
+    projectType: IntentDetectionAndSlotFilling, // 将默认项目类型设置为"意图检测和槽位填充"
     enableRandomOrder: false,
     enableSharingMode: false,
     exclusiveCategories: false,

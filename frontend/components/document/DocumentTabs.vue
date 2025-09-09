@@ -84,7 +84,6 @@ export default Vue.extend({
   },
 
   mounted() {
-    this.loadTabsFromStorage()
     // 如果没有标签，但当前在标注页面，则添加当前文档标签
     // if (this.tabs.length === 0 && this.currentDocumentId) {
     //   this.addDocumentTab(String(this.currentDocumentId))
@@ -120,7 +119,6 @@ export default Vue.extend({
       
       this.tabs.push(newTab)
       this.activeTab = newTab.id
-      this.saveTabsToStorage()
       this.switchDocument(newTab)
     },
 
@@ -153,12 +151,10 @@ export default Vue.extend({
 
       // 从标签数组中移除
       this.tabs.splice(tabIndex, 1)
-      this.saveTabsToStorage()
     },
 
     switchDocument(tab: DocumentTab) {
       this.activeTab = tab.id
-      this.saveTabsToStorage()
       
       // 触发事件通知父组件切换文档
       this.$emit('switch-document', tab)
@@ -173,34 +169,10 @@ export default Vue.extend({
       }
     },
 
-    saveTabsToStorage() {
-      const key = `documentTabs_project_${this.projectId}`
-      localStorage.setItem(key, JSON.stringify({
-        tabs: this.tabs,
-        activeTab: this.activeTab
-      }))
-    },
-
-    loadTabsFromStorage() {
-      const key = `documentTabs_project_${this.projectId}`
-      const data = localStorage.getItem(key)
-      
-      if (data) {
-        try {
-          const parsed = JSON.parse(data)
-          this.tabs = parsed.tabs || []
-          this.activeTab = parsed.activeTab || null
-        } catch (e) {
-          console.error('Failed to parse tabs data from localStorage', e)
-        }
-      }
-    },
-
     updateTabTitle(tabId: string, title: string) {
       const tab = this.tabs.find(t => t.id === tabId)
       if (tab) {
         tab.title = title
-        this.saveTabsToStorage()
       }
     },
 
@@ -208,7 +180,6 @@ export default Vue.extend({
       const tab = this.tabs.find(t => t.id === tabId)
       if (tab) {
         tab.documentId = documentId
-        this.saveTabsToStorage()
       }
     }
   }

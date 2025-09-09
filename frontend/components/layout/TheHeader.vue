@@ -36,7 +36,7 @@
         {{ $t('header.projects') }}
       </v-btn>
       
-      <v-menu v-if="!isAuthenticated" open-on-hover offset-y>
+      <!-- <v-menu v-if="!isAuthenticated" open-on-hover offset-y>
         <template #activator="{ on }">
           <v-btn text class="header-nav-btn" v-on="on">
             {{ $t('home.demoDropDown') }}
@@ -53,7 +53,7 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
         </v-list>
-      </v-menu>
+      </v-menu> -->
       
       <v-btn 
         v-if="!isAuthenticated" 
