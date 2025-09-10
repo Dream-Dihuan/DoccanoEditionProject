@@ -65,6 +65,7 @@ export default {
   },
   
   mounted() {
+    this.loadTabsFromStorage()
     // 监听自定义事件，用于从其他组件添加标签页
     window.addEventListener('open-document-tab', this.onOpenDocumentTab)
   },
@@ -110,6 +111,7 @@ export default {
           }
           
           this.tabs.push(newTab)
+          this.saveTabsToStorage()
         }
       } catch (error) {
         console.error('Failed to fetch document info:', error)
@@ -121,6 +123,7 @@ export default {
         }
         
         this.tabs.push(newTab)
+        this.saveTabsToStorage()
       }
     },
     
@@ -152,12 +155,36 @@ export default {
         // 如果没有标签了，跳转到数据集页面
         this.goToDataset()
       }
+      
+      this.saveTabsToStorage()
     },
     
     goToDataset() {
       this.$router.push(this.localePath(`/projects/${this.projectId}/dataset`))
     },
     
+    saveTabsToStorage() {
+      try {
+        const key = `documentTabs_project_${this.projectId}`
+        localStorage.setItem(key, JSON.stringify(this.tabs))
+      } catch (e) {
+        console.error('Failed to save tabs to localStorage:', e)
+      }
+    },
+    
+    loadTabsFromStorage() {
+      try {
+        const key = `documentTabs_project_${this.projectId}`
+        const data = localStorage.getItem(key)
+        
+        if (data) {
+          this.tabs = JSON.parse(data)
+        }
+      } catch (e) {
+        console.error('Failed to load tabs from localStorage:', e)
+        this.tabs = []
+      }
+    },
     
     // 处理自定义事件，从其他组件添加标签页
     onOpenDocumentTab(event) {
@@ -179,6 +206,7 @@ export default {
       }
       
       this.tabs.push(newTab)
+      this.saveTabsToStorage()
     }
   }
 }
