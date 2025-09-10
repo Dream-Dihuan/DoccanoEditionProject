@@ -35,8 +35,8 @@
       </v-chip>
     </template>
     <template #[`item.text`]="{ item }">
-      <span class="d-flex d-sm-none">{{ item.text | truncate(50) }}</span>
-      <span class="d-none d-sm-flex">{{ item.text | truncate(200) }}</span>
+      <span class="d-flex d-sm-none">{{ item.filename | truncate(50) }}</span>
+      <span class="d-none d-sm-flex">{{ item.filename | truncate(200) }}</span>
     </template>
     <template #[`item.meta`]="{ item }">
       {{ JSON.stringify(item.meta, null, 4) }}
@@ -130,8 +130,8 @@ export default Vue.extend({
           sortable: false
         },
         {
-          text: this.$t('dataset.text'),
-          value: 'text',
+          text: this.$t('dataset.filename'),
+          value: 'filename',
           sortable: false
         },
         {

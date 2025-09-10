@@ -128,7 +128,10 @@ export default {
     },
     
     getDocumentTitle(doc) {
-      if (doc.text) {
+      // 优先使用文件名，如果不存在则使用文档内容
+      if (doc.filename) {
+        return doc.filename.length > 30 ? doc.filename.substring(0, 30) + '...' : doc.filename
+      } else if (doc.text) {
         // 使用文档的前30个字符作为标题
         return doc.text.length > 30 ? doc.text.substring(0, 30) + '...' : doc.text
       }
@@ -188,7 +191,7 @@ export default {
     
     // 处理自定义事件，从其他组件添加标签页
     onOpenDocumentTab(event) {
-      const { id, text } = event.detail
+      const { id, text, filename } = event.detail
       // 检查标签是否已存在
       const existingTab = this.tabs.find(tab => String(tab.documentId) === String(id))
       
@@ -198,10 +201,11 @@ export default {
         return
       }
       
-      // 创建新标签
+      // 创建新标签，优先使用文件名
+      const title = filename || (text ? (text.length > 30 ? text.substring(0, 30) + '...' : text) : `Document ${id}`)
       const newTab = {
         id: `tab_${Date.now()}`,
-        title: text ? (text.length > 30 ? text.substring(0, 30) + '...' : text) : `Document ${id}`,
+        title,
         documentId: id
       }
       
