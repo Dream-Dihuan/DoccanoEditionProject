@@ -37,7 +37,9 @@ def detect_encoding(filename: str, buffer_size: int = io.DEFAULT_BUFFER_SIZE) ->
     # For a small file.
     if os.path.getsize(filename) < buffer_size:
         detected = chardet.detect(open(filename, "rb").read())
-        return detected.get("encoding", "utf-8")
+        encoding = detected.get("encoding", "utf-8")
+        # 如果检测到的编码是None，则使用utf-8
+        return encoding if encoding else "utf-8"
 
     # For a large file, call the Universal Encoding Detector incrementally.
     # It will stop as soon as it is confident enough to report its results.
@@ -52,7 +54,8 @@ def detect_encoding(filename: str, buffer_size: int = io.DEFAULT_BUFFER_SIZE) ->
             if detector.done:
                 break
         if detector.done:
-            return detector.result["encoding"] or "utf-8"
+            encoding = detector.result["encoding"] or "utf-8"
+            return encoding if encoding else "utf-8"
         else:
             return "utf-8"
 
@@ -90,7 +93,8 @@ class LineReader:
 
     def __iter__(self) -> Iterator[str]:
         encoding = decide_encoding(self.filename, self.encoding)
-        with open(self.filename, encoding=encoding) as f:
+        # 添加错误处理参数，跳过无法解码的字符
+        with open(self.filename, encoding=encoding, errors="replace") as f:
             for line in f:
                 yield line.rstrip()
 
@@ -117,11 +121,22 @@ class LineParser(Parser):
 
     def __init__(self, encoding: str = DEFAULT_ENCODING, **kwargs):
         self.encoding = encoding
+        self._errors: List[FileParseException] = []
 
     def parse(self, filename: str) -> Iterator[Dict[Any, Any]]:
-        reader = LineReader(filename, self.encoding)
-        for line_num, line in enumerate(reader, start=1):
-            yield {DEFAULT_TEXT_COLUMN: line, LINE_NUMBER_COLUMN: line_num}
+        encoding = decide_encoding(filename, self.encoding)
+        try:
+            # 添加错误处理参数，跳过无法解码的字符
+            with open(filename, encoding=encoding, errors="replace") as f:
+                for line_num, line in enumerate(f, start=1):
+                    yield {DEFAULT_TEXT_COLUMN: line.rstrip(), LINE_NUMBER_COLUMN: line_num}
+        except UnicodeDecodeError as e:
+            error = FileParseException(filename, line_num=1, message=f"Unicode decode error: {str(e)}")
+            self._errors.append(error)
+            
+    @property
+    def errors(self) -> List[FileParseException]:
+        return self._errors
 
 
 class TextFileParser(Parser):
@@ -136,7 +151,8 @@ class TextFileParser(Parser):
 
     def parse(self, filename: str) -> Iterator[Dict[Any, Any]]:
         encoding = decide_encoding(filename, self.encoding)
-        with open(filename, encoding=encoding) as f:
+        # 添加错误处理参数，跳过无法解码的字符
+        with open(filename, encoding=encoding, errors="replace") as f:
             yield {DEFAULT_TEXT_COLUMN: f.read()}
 
 
@@ -154,7 +170,8 @@ class CSVParser(Parser):
 
     def parse(self, filename: str) -> Iterator[Dict[Any, Any]]:
         encoding = decide_encoding(filename, self.encoding)
-        with open(filename, encoding=encoding) as f:
+        # 添加错误处理参数，跳过无法解码的字符
+        with open(filename, encoding=encoding, errors="replace") as f:
             reader = csv.DictReader(f, delimiter=self.delimiter)
             for line_num, row in enumerate(reader, start=1):
                 yield {LINE_NUMBER_COLUMN: line_num, **row}
@@ -173,7 +190,8 @@ class JSONParser(Parser):
 
     def parse(self, filename: str) -> Iterator[Dict[Any, Any]]:
         encoding = decide_encoding(filename, self.encoding)
-        with open(filename, encoding=encoding) as f:
+        # 添加错误处理参数，跳过无法解码的字符
+        with open(filename, encoding=encoding, errors="replace") as f:
             try:
                 rows = json.load(f)
                 for row in rows:
@@ -194,15 +212,19 @@ class JSONLParser(Parser):
         encoding: The character encoding.
     """
 
-    def __init__(self, encoding: str = DEFAULT_ENCODING, **kwargs):
-        self.encoding = encoding
+    def __init__(self, **kwargs):
         self._errors: List[FileParseException] = []
 
     def parse(self, filename: str) -> Iterator[Dict[Any, Any]]:
-        reader = LineReader(filename, self.encoding)
+        reader = LineReader(filename, DEFAULT_ENCODING)
         for line_num, line in enumerate(reader, start=1):
             try:
-                row = json.loads(line)
+                try:
+                    row = json.loads(line)
+                except json.decoder.JSONDecodeError as e:
+                    error = FileParseException(filename, line_num, str(e))
+                    self._errors.append(error)
+                    continue  # Skip the problematic line
                 yield {LINE_NUMBER_COLUMN: line_num, **row}
             except json.decoder.JSONDecodeError as e:
                 error = FileParseException(filename, line_num, str(e))
@@ -238,7 +260,7 @@ class FastTextParser(Parser):
 
     The example format is as follows:
         __label__positive I really enjoyed this restaurant.
-    This format expects the category first, with the prefix ‘__label__’ before each category,
+    This format expects the category first, with the prefix '__label__' before each category,
     and then the input text, like so,
 
     Attributes:
@@ -311,24 +333,30 @@ class CoNLLParser(Parser):
             self._errors.append(error)
             return
 
-        reader = LineReader(filename, self.encoding)
-        words, tags = [], []
-        for line_num, line in enumerate(reader, start=1):
-            line = line.rstrip()
-            if line:
-                tokens = line.split("\t")
-                if len(tokens) != 2:
-                    message = "A line must be separated by tab and has two columns."
-                    self._errors.append(FileParseException(filename, line_num, message))
-                    return
-                word, tag = tokens
-                words.append(word)
-                tags.append(tag)
-            else:
-                yield self.create_record(tags, words)
+        try:
+            encoding = decide_encoding(filename, self.encoding)
+            # 使用指定编码打开文件，添加错误处理参数，跳过无法解码的字符
+            with open(filename, encoding=encoding, errors="replace") as f:
                 words, tags = [], []
-        if words:
-            yield self.create_record(tags, words)
+                for line_num, line in enumerate(f, start=1):
+                    line = line.rstrip()
+                    if line:
+                        tokens = line.split("\t")
+                        if len(tokens) != 2:
+                            message = "A line must be separated by tab and has two columns."
+                            self._errors.append(FileParseException(filename, line_num, message))
+                            return
+                        word, tag = tokens
+                        words.append(word)
+                        tags.append(tag)
+                    else:
+                        yield self.create_record(tags, words)
+                        words, tags = [], []
+                if words:
+                    yield self.create_record(tags, words)
+        except UnicodeDecodeError as e:
+            error = FileParseException(filename, line_num=1, message=f"Unicode decode error: {str(e)}")
+            self._errors.append(error)
 
     def create_record(self, tags, words):
         text = self.delimiter.join(words)
