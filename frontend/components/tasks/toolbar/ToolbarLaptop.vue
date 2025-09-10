@@ -67,6 +67,37 @@
           </v-card>
         </v-dialog>
 
+        <!-- 添加清除特定span标签的按钮 -->
+        <v-tooltip bottom>
+          <template #activator="{ on }">
+            <v-btn icon v-on="on" @click="dialogClearSpan = true">
+              <v-icon>
+                {{ mdiDelete }}
+              </v-icon>
+            </v-btn>
+          </template>
+          <span>{{ $t('labels.clearSpan') }}</span>
+        </v-tooltip>
+        <v-dialog v-model="dialogClearSpan" max-width="500">
+          <v-card>
+            <v-toolbar color="primary" dark flat>
+              <v-toolbar-title class="white--text">
+                {{ $t('labels.clearSpan') }}
+              </v-toolbar-title>
+            </v-toolbar>
+            <form-clear-span
+              :spans="spans"
+              :span-types="spanTypes"
+              @click:ok="
+                $emit('click:clear-span', $event)
+                dialogClearSpan = false
+              "
+              @click:cancel="dialogClearSpan = false"
+            />
+          </v-card>
+        </v-dialog>
+        <!-- 结束清除特定span标签的按钮 -->
+
         <button-keyboard-shortcut @click:open="dialogShortcut = true" />
         <v-dialog v-model="dialogShortcut" max-width="800">
           <v-card>
@@ -96,6 +127,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { mdiDelete } from '@mdi/js'
 import ButtonAutoLabeling from './buttons/ButtonAutoLabeling.vue'
 import ButtonClear from './buttons/ButtonClear.vue'
 import ButtonComment from './buttons/ButtonComment.vue'
@@ -107,6 +139,7 @@ import ButtonReview from './buttons/ButtonReview.vue'
 import ButtonKeyboardShortcut from './buttons/ButtonKeyboardShortcut.vue'
 import FormAutoLabeling from './forms/FormAutoLabeling.vue'
 import FormClearLabel from './forms/FormClearLabel.vue'
+import FormClearSpan from './forms/FormClearSpan.vue'
 import FormComment from './forms/FormComment.vue'
 import FormGuideline from './forms/FormGuideline.vue'
 import FormKeyboardShortcut from './forms/FormKeyboardShortcut.vue'
@@ -124,6 +157,7 @@ export default Vue.extend({
     ButtonReview,
     FormAutoLabeling,
     FormClearLabel,
+    FormClearSpan,
     FormComment,
     FormGuideline,
     FormKeyboardShortcut
@@ -148,6 +182,14 @@ export default Vue.extend({
       type: Boolean,
       default: false
     },
+    spans: {
+      type: Array,
+      default: () => []
+    },
+    spanTypes: {
+      type: Array,
+      default: () => []
+    },
     total: {
       type: Number,
       default: 1
@@ -158,10 +200,12 @@ export default Vue.extend({
     return {
       dialogAutoLabeling: false,
       dialogClear: false,
+      dialogClearSpan: false,
       dialogComment: false,
       dialogGuideline: false,
       dialogShortcut: false,
-      errorMessage: ''
+      errorMessage: '',
+      mdiDelete
     }
   },
 

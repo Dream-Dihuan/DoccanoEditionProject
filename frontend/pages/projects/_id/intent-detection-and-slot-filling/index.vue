@@ -7,8 +7,11 @@
         :guideline-text="project.guideline"
         :is-reviewd="doc.isConfirmed"
         :total="docs.count"
+        :spans="spans"
+        :span-types="spanTypes"
         class="d-none d-sm-block"
         @click:clear-label="clear"
+        @click:clear-span="clearSpan"
         @click:review="confirm"
       />
       <toolbar-mobile :total="docs.count" class="d-flex d-sm-none" />
@@ -253,6 +256,16 @@ export default {
       await this.$services.sequenceLabeling.clear(this.projectId, this.doc.id)
       await this.listSpan(this.doc.id)
       await this.listCategory(this.doc.id)
+    },
+
+    // 添加清除特定span标签的方法
+    async clearSpan(labelId) {
+      // 只删除指定标签类型的spans
+      const spansToDelete = this.spans.filter(span => span.label === labelId)
+      for (const span of spansToDelete) {
+        await this.$services.sequenceLabeling.delete(this.projectId, this.doc.id, span.id)
+      }
+      await this.listSpan(this.doc.id)
     },
 
     async autoLabel(docId) {

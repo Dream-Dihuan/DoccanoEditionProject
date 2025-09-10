@@ -28,5 +28,8 @@ export default {
   saveAndAddAnother: 'Save and add another',
   manageLabels: 'Manage your labels',
   deleteLabelsTitle: 'Delete Labels',
-  deleteLabelsMessage: 'Are you sure you want to delete {number} label(s)?'
+  deleteLabelsMessage: 'Are you sure you want to delete {number} label(s)?',
+  clearSpan: 'Clear Span by Type',
+  clearSpanMessage: 'Select a span type to clear all spans of that type from this document',
+  selectSpanType: 'Select span type'
 }
