@@ -28,9 +28,5 @@ export default {
   saveAndAddAnother: 'Save and add another',
   manageLabels: 'Manage your labels',
   deleteLabelsTitle: 'Delete Labels',
-  deleteLabelsMessage: 'Are you sure you want to delete {number} label(s)?',
-  clearCategory: 'Clear Category Labels',
-  clearCategoryMessage: 'Select a category to clear all labels of that type',
-  clearSpan: 'Clear Span Labels',
-  clearSpanMessage: 'Select a span label to clear all instances of that type'
+  deleteLabelsMessage: 'Are you sure you want to delete {number} label(s)?'
 }

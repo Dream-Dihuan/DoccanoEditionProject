@@ -28,9 +28,5 @@ export default {
   saveAndAddAnother: '保存并添加另一个',
   manageLabels: '管理你的标签',
   deleteLabelsTitle: '删除标签',
-  deleteLabelsMessage: '你确定要删除 {number} 个标签吗？',
-  clearCategory: '清除分类标签',
-  clearCategoryMessage: '选择要清除的分类',
-  clearSpan: '清除跨度标签',
-  clearSpanMessage: '选择要清除的跨度标签类型'
+  deleteLabelsMessage: '你确定要删除 {number} 个标签吗？'
 }
