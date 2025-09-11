@@ -133,7 +133,7 @@ export default Vue.extend({
           </v-toolbar>
           <v-card-text class="pt-5">
             <p>{{ $t('dataset.deleteDocumentsMessage', { number: selected.length }) }}</p>
-            <v-list v-if="selected.length > 0">
+            <!-- <v-list v-if="selected.length > 0">
               <v-list-item v-for="(selItem, i) in selected.slice(0, 10)" :key="i">
                 <v-list-item-content>
                   <v-list-item-title>{{ selItem[itemKey] }}</v-list-item-title>
@@ -144,7 +144,7 @@ export default Vue.extend({
                   <v-list-item-title>... and {{ selected.length - 10 }} more</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-            </v-list>
+            </v-list> -->
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>

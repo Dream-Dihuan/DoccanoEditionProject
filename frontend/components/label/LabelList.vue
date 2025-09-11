@@ -3,7 +3,7 @@
     <v-data-table
       :value="value"
       :headers="headers"
-      :items="items"
+      :items="sortedItems"
       :search="search"
       :loading="isLoading"
       :loading-text="$t('generic.loading')"
@@ -40,6 +40,22 @@
         </v-chip>
       </template>
       <template #[`item.actions`]="{ item }">
+        <v-tooltip bottom>
+          <template #activator="{ on, attrs }">
+            <v-btn
+              icon
+              small
+              v-bind="attrs"
+              v-on="on"
+              @click="$emit('toggle-favorite', item)"
+            >
+              <v-icon :color="isFavorite(item) ? 'yellow' : 'grey'">
+                {{ isFavorite(item) ? mdiStar : mdiStarOutline }}
+              </v-icon>
+            </v-btn>
+          </template>
+          <span>{{ isFavorite(item) ? '取消置顶' : '置顶标签' }}</span>
+        </v-tooltip>
         <v-icon 
           v-if="!disableEdit"
           small 
@@ -53,7 +69,7 @@
 </template>
 
 <script lang="ts">
-import { mdiMagnify, mdiPencil } from '@mdi/js'
+import { mdiMagnify, mdiPencil, mdiStar, mdiStarOutline } from '@mdi/js'
 import type { PropType } from 'vue'
 import Vue from 'vue'
 import { LabelDTO } from '~/services/application/label/labelData'
@@ -78,6 +94,11 @@ export default Vue.extend({
     disableEdit: {
       type: Boolean,
       default: false
+    },
+    favoriteLabels: {
+      type: Array as PropType<number[]>,
+      default: () => [],
+      required: false
     }
   },
 
@@ -85,7 +106,9 @@ export default Vue.extend({
     return {
       search: '',
       mdiPencil,
-      mdiMagnify
+      mdiMagnify,
+      mdiStar,
+      mdiStarOutline
     }
   },
 
@@ -100,6 +123,21 @@ export default Vue.extend({
         headers.push({ text: this.$t('generic.actions'), value: 'actions', sortable: false })
       }
       return headers
+    },
+
+    sortedItems(): LabelDTO[] {
+      // 将置顶标签排在前面
+      return [...this.items].sort((a, b) => {
+        const aIsFavorite = this.isFavorite(a) ? 1 : 0
+        const bIsFavorite = this.isFavorite(b) ? 1 : 0
+        return bIsFavorite - aIsFavorite
+      })
+    }
+  },
+
+  methods: {
+    isFavorite(item: LabelDTO): boolean {
+      return this.favoriteLabels.includes(item.id)
     }
   }
 })

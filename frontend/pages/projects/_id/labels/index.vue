@@ -57,7 +57,9 @@
                 :items="items"
                 :is-loading="isLoading"
                 :disable-edit="canOnlyAdd"
+                :favorite-labels="favoriteLabels"
                 @edit="editItem"
+                @toggle-favorite="toggleFavorite"
               />
             </template>
           </base-card>
@@ -144,7 +146,8 @@ export default Vue.extend({
       isLoading: false,
       tab: 0,
       member: {} as MemberItem,
-      mdiDelete
+      mdiDelete,
+      favoriteLabels: [] as number[]
     }
   },
 
@@ -213,12 +216,25 @@ export default Vue.extend({
   watch: {
     tab() {
       this.list()
+      // 当标签类型切换时，重新加载该类型的置顶标签
+      this.loadFavoriteLabels()
+    },
+    
+    // 监听labelType变化，确保在计算属性更新后重新加载置顶标签
+    labelType: {
+      handler() {
+        this.$nextTick(() => {
+          this.loadFavoriteLabels()
+        })
+      },
+      immediate: true
     }
   },
 
   async created() {
     this.member = await this.$repositories.member.fetchMyRole(this.projectId)
     await this.list()
+    this.loadFavoriteLabels()
   },
 
   methods: {
@@ -241,6 +257,44 @@ export default Vue.extend({
 
     editItem(item: LabelDTO) {
       this.$router.push(`labels/${item.id}/edit?type=${this.labelType}`)
+    },
+
+    toggleFavorite(item: LabelDTO) {
+      const index = this.favoriteLabels.indexOf(item.id)
+      if (index > -1) {
+        // 取消置顶
+        this.favoriteLabels.splice(index, 1)
+      } else {
+        // 置顶标签
+        this.favoriteLabels.push(item.id)
+      }
+      this.saveFavoriteLabels()
+    },
+
+    loadFavoriteLabels() {
+      try {
+        const saved = localStorage.getItem(`favoriteLabels_${this.projectId}_${this.labelType}`)
+        if (saved) {
+          this.favoriteLabels = JSON.parse(saved)
+        } else {
+          // 如果没有保存的数据，则初始化为空数组
+          this.favoriteLabels = []
+        }
+      } catch (e) {
+        console.warn('Failed to load favorite labels from localStorage', e)
+        this.favoriteLabels = []
+      }
+    },
+
+    saveFavoriteLabels() {
+      try {
+        localStorage.setItem(
+          `favoriteLabels_${this.projectId}_${this.labelType}`, 
+          JSON.stringify(this.favoriteLabels)
+        )
+      } catch (e) {
+        console.warn('Failed to save favorite labels to localStorage', e)
+      }
     }
   }
 })
