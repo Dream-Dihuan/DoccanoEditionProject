@@ -161,7 +161,7 @@ export default Vue.extend({
       
       // 如果标签有关联的文档ID，则跳转到该文档
       if (tab.documentId) {
-        const query: any = this.$services.option.findOption(this.projectId)
+        const query: any = this.$services.option.findOption(String(this.projectId))
         query.page = String(tab.documentId)
         this.$router.push({
           query

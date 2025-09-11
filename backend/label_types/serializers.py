@@ -17,26 +17,7 @@ class LabelSerializer(serializers.ModelSerializer):
         if prefix_key and not suffix_key:
             raise ValidationError("Shortcut key may not have a suffix key.")
 
-        # Don't allow to save same shortcut key when prefix_key is null.
-        try:
-            context = self.context["request"].parser_context
-            project_id = context["kwargs"]["project_id"]
-            label_id = context["kwargs"].get("label_id")
-        except (AttributeError, KeyError):
-            pass  # unit tests don't always have the correct context set up
-        else:
-            conflicting_labels = self.Meta.model.objects.filter(
-                suffix_key=suffix_key,
-                prefix_key=prefix_key,
-                project=project_id,
-            )
-
-            if label_id is not None:
-                conflicting_labels = conflicting_labels.exclude(id=label_id)
-
-            if conflicting_labels.exists():
-                raise ValidationError("Duplicate shortcut key.")
-
+        # Allow duplicate shortcut keys - removed the validation that was preventing duplicates
         return super().validate(attrs)
 
     class Meta:

@@ -10,6 +10,7 @@ export default {
   importLabels: 'Import Labels',
   exportLabels: 'Export Labels',
   labelName: 'Label name',
+  source: 'Source',
   labelMessage: 'Label name is required',
   createLink: 'Create Link',
   linkName: 'Link name',
@@ -29,7 +30,5 @@ export default {
   manageLabels: 'Manage your labels',
   deleteLabelsTitle: 'Delete Labels',
   deleteLabelsMessage: 'Are you sure you want to delete {number} label(s)?',
-  clearSpan: 'Clear Span by Type',
-  clearSpanMessage: 'Select a span type to clear all spans of that type from this document',
-  selectSpanType: 'Select span type'
+  sourceMessage: 'Source is required'
 }

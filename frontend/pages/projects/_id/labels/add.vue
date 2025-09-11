@@ -71,18 +71,20 @@ export default Vue.extend({
     return {
       editedItem: {
         text: '',
+        source: '',
         prefixKey: null,
         suffixKey: null,
         backgroundColor: '#73D8FF',
         textColor: '#ffffff'
-      } as LabelDTO,
+      } as LabelDTO & { source: string },
       defaultItem: {
         text: '',
+        source: '',
         prefixKey: null,
         suffixKey: null,
         backgroundColor: '#73D8FF',
         textColor: '#ffffff'
-      } as LabelDTO,
+      } as LabelDTO & { source: string },
       items: [] as LabelDTO[]
     }
   },
@@ -109,13 +111,25 @@ export default Vue.extend({
   },
 
   methods: {
+    prepareLabelData() {
+      const labelData = { ...this.editedItem }
+      if (labelData.source) {
+        labelData.text = `${labelData.source} - ${labelData.text}`
+      }
+      // 删除source属性，因为它不是LabelDTO的一部分
+      delete (labelData as any).source
+      return labelData
+    },
+
     async save() {
-      await this.service.create(this.projectId, this.editedItem)
+      const labelData = this.prepareLabelData()
+      await this.service.create(this.projectId, labelData)
       this.$router.push(`/projects/${this.projectId}/labels`)
     },
 
     async saveAndAnother() {
-      await this.service.create(this.projectId, this.editedItem)
+      const labelData = this.prepareLabelData()
+      await this.service.create(this.projectId, labelData)
       this.editedItem = Object.assign({}, this.defaultItem)
       this.items = await this.service.list(this.projectId)
     }

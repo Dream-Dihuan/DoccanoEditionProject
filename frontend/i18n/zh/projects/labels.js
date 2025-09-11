@@ -10,6 +10,7 @@ export default {
   importLabels: '导入标签',
   exportLabels: '导出标签',
   labelName: '标签名称',
+  source: '内容来源',
   labelMessage: '需要标签名称',
   createLink: '创建链接',
   linkName: '链接名称',
@@ -29,7 +30,5 @@ export default {
   manageLabels: '管理您的标签',
   deleteLabelsTitle: '删除标签',
   deleteLabelsMessage: '您确定要删除 {number} 个标签吗？',
-  clearSpan: '按类型清除跨度',
-  clearSpanMessage: '选择一个跨度类型以从此文档中清除该类型的所有跨度',
-  selectSpanType: '选择跨度类型'
+  sourceMessage: '需要内容来源'
 }

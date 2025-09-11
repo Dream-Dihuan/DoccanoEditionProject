@@ -15,6 +15,14 @@
               @input="$emit('update:text', $event)"
             />
           </v-col>
+          <v-col v-if="source !== undefined" cols="12" sm="6">
+            <v-text-field
+              :value="source"
+              :label="$t('labels.source')"
+              outlined
+              @input="$emit('update:source', $event)"
+            />
+          </v-col>
           <v-col cols="12" sm="6">
             <v-text-field
               :value="suffixKey"
@@ -110,6 +118,10 @@ export default Vue.extend({
       type: String,
       default: ''
     },
+    source: {
+      type: String,
+      default: undefined
+    },
     prefixKey: {
       type: String as PropType<string | null>,
       default: null
@@ -159,11 +171,9 @@ export default Vue.extend({
           const isDuplicated = this.items.some((item) => item.text === value && item.id !== this.id)
           return !isDuplicated || this.$t('rules.nameDuplicatedRules')
         },
-        keyDuplicated: (value: string) => {
-          const isDuplicated = this.items.some(
-            (item) => item.suffixKey === value && item.id !== this.id
-          )
-          return !isDuplicated || this.$t('rules.keyDuplicatedRules')
+        keyDuplicated: () => {
+          // 移除快捷键重复检查，始终返回true表示验证通过
+          return true
         },
         validColor: (value: string) => {
           const isHex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value)
