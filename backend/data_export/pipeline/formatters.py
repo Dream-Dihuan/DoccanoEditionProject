@@ -60,7 +60,7 @@ class FastTextCategoryFormatter(Formatter):
 
 class TupledSpanFormatter(Formatter):
     def apply(self, dataset: pd.DataFrame) -> pd.DataFrame:
-        """Format the span column to `(start_offset, end_offset, label)` format"""
+        """Format the span column to `(start_offset, end_offset, label, label_id)` format"""
         dataset[self.target_column] = dataset[self.target_column].apply(
             lambda spans: sorted(span.to_tuple() for span in spans)
         )

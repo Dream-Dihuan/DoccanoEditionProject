@@ -54,12 +54,13 @@ class ExportedSpan(Span):
         return {
             "id": self.id,
             "label": self.label.text,
+            "label_id": self.label.id,
             "start_offset": self.start_offset,
             "end_offset": self.end_offset,
         }
 
     def to_tuple(self):
-        return self.start_offset, self.end_offset, self.label.text
+        return self.start_offset, self.end_offset, self.label.text, self.label.suffix_key
 
     class Meta:
         proxy = True
@@ -67,7 +68,16 @@ class ExportedSpan(Span):
 
 class ExportedRelation(Relation):
     def to_dict(self):
-        return {"id": self.id, "from_id": self.from_id.id, "to_id": self.to_id.id, "type": self.type.text}
+        return {
+            "id": self.id, 
+            "from_id": self.from_id.id, 
+            "to_id": self.to_id.id, 
+            "type": self.type.text,
+            "from_start_offset": self.from_id.start_offset,
+            "from_end_offset": self.from_id.end_offset,
+            "to_start_offset": self.to_id.start_offset,
+            "to_end_offset": self.to_id.end_offset
+        }
 
     class Meta:
         proxy = True
