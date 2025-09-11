@@ -33,6 +33,7 @@
                 outlined
                 @input="$emit('update:suffixKey', $event)"
                 ref="suffixKeyField"
+                style="min-width: 200px;"
               />
               <v-btn
                 small
@@ -90,9 +91,9 @@
             <div class="title black--text mb-2">{{ $t('labels.preview') }}</div>
             <v-chip :color="backgroundColor" :text-color="textColor">
               {{ text }}
-              <v-avatar v-if="suffixKey" right color="white" class="black--text font-weight-bold">
+              <!-- <v-avatar v-if="suffixKey" right color="white" class="black--text font-weight-bold">
                 {{ suffixKey }}
-              </v-avatar>
+              </v-avatar> -->
             </v-chip>
           </v-col>
         </v-row>

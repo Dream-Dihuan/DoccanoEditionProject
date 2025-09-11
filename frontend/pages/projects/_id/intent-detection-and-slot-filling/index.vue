@@ -51,9 +51,11 @@
             ref="formCreate"
             :items="allLabelTypes"
             :text.sync="newLabel.text"
+            :source.sync="newLabel.source"
             :suffix-key.sync="newLabel.suffixKey"
             :background-color.sync="newLabel.backgroundColor"
             @update:text="newLabel.text = $event"
+            @update:source="newLabel.source = $event"
             @update:suffixKey="newLabel.suffixKey = $event"
             @update:backgroundColor="newLabel.backgroundColor = $event"
           >
@@ -61,6 +63,8 @@
               <v-btn
                 :disabled="!valid || isCreatingLabel"
                 color="primary"
+                small
+                block
                 @click.prevent="createLabel"
               >
                 {{ $t('labels.createLabel') }}
@@ -117,6 +121,7 @@ export default {
       // 添加标签创建相关数据
       newLabel: {
         text: '',
+        source: '',
         suffixKey: null,
         backgroundColor: '#73D8FF'
       },
@@ -302,13 +307,38 @@ export default {
       
       this.isCreatingLabel = true
       try {
-        // 只创建span type
-        const created = await this.$services.spanType.create(this.projectId, {
-          text: this.newLabel.text,
-          suffixKey: this.newLabel.suffixKey,
-          backgroundColor: this.newLabel.backgroundColor
-        })
-        this.spanTypes = [...this.spanTypes, created]
+        // 检查suffixKey是否为"真假值"
+        if (this.newLabel.suffixKey === this.$t('labels.booleanValue')) {
+          // 构建标签文本，如果提供了source则使用"source - text"格式
+          let labelText = this.newLabel.text;
+          if (this.newLabel.source) {
+            labelText = `${this.newLabel.source} - ${this.newLabel.text}`;
+          }
+          
+          // 创建"真"标签
+          const trueLabel = await this.$services.spanType.create(this.projectId, {
+            text: `${labelText}(${this.$t('labels.true')})`,
+            suffixKey: '真',
+            backgroundColor: this.newLabel.backgroundColor
+          })
+          this.spanTypes = [...this.spanTypes, trueLabel]
+          
+          // 创建"假"标签
+          const falseLabel = await this.$services.spanType.create(this.projectId, {
+            text: `${labelText}(${this.$t('labels.false')})`,
+            suffixKey: '假',
+            backgroundColor: this.newLabel.backgroundColor
+          })
+          this.spanTypes = [...this.spanTypes, falseLabel]
+        } else {
+          // 正常创建标签
+          const created = await this.$services.spanType.create(this.projectId, {
+            text: this.newLabel.source ? `${this.newLabel.source} - ${this.newLabel.text}` : this.newLabel.text,
+            suffixKey: this.newLabel.suffixKey,
+            backgroundColor: this.newLabel.backgroundColor
+          })
+          this.spanTypes = [...this.spanTypes, created]
+        }
         
         // 显示成功消息
         if (this.$toast && this.$toast.success) {
@@ -320,6 +350,7 @@ export default {
         // 重置表单
         this.newLabel = {
           text: '',
+          source: '',
           suffixKey: null,
           backgroundColor: '#73D8FF'
         }
