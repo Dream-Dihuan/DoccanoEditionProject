@@ -30,5 +30,8 @@ export default {
   manageLabels: 'Manage your labels',
   deleteLabelsTitle: 'Delete Labels',
   deleteLabelsMessage: 'Are you sure you want to delete {number} label(s)?',
-  sourceMessage: 'Source is required'
+  sourceMessage: 'Source is required',
+  booleanValue: 'Boolean Value',
+  true: 'True',
+  false: 'False'
 }

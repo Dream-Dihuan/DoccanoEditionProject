@@ -24,14 +24,24 @@
             />
           </v-col>
           <v-col cols="12" sm="6">
-            <v-text-field
-              :value="suffixKey"
-              :counter="10"
-              :label="$t('labels.key')"
-              :rules="[rules.keyCounter, rules.keyDuplicated]"
-              outlined
-              @input="$emit('update:suffixKey', $event)"
-            />
+            <div class="d-flex align-center">
+              <v-text-field
+                :value="suffixKey"
+                :counter="10"
+                :label="$t('labels.key')"
+                :rules="[rules.keyCounter]"
+                outlined
+                @input="$emit('update:suffixKey', $event)"
+                ref="suffixKeyField"
+              />
+              <v-btn
+                small
+                class="ml-2"
+                @click="fillSuffixKeyWithBoolean"
+              >
+                {{ $t('labels.booleanValue') }}
+              </v-btn>
+            </div>
           </v-col>
         </v-row>
 
@@ -171,10 +181,6 @@ export default Vue.extend({
           const isDuplicated = this.items.some((item) => item.text === value && item.id !== this.id)
           return !isDuplicated || this.$t('rules.nameDuplicatedRules')
         },
-        keyDuplicated: () => {
-          // 移除快捷键重复检查，始终返回true表示验证通过
-          return true
-        },
         validColor: (value: string) => {
           const isHex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value)
           return isHex || this.$t('rules.validColorRules')
@@ -194,6 +200,14 @@ export default Vue.extend({
       if (index !== -1) {
         this.$emit('update:backgroundColor', this.predefinedColors[index])
       }
+    },
+
+    fillSuffixKeyWithBoolean() {
+      this.$emit('update:suffixKey', this.$t('labels.booleanValue'))
+    },
+
+    isBooleanValue() {
+      return this.suffixKey === this.$t('labels.booleanValue')
     }
   }
 })

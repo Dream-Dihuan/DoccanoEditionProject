@@ -10,7 +10,7 @@
           </v-toolbar>
           
           <v-card-text class="mt-5">
-            <form-create v-slot="slotProps" v-bind.sync="editedItem" :items="items">
+            <form-create v-slot="slotProps" v-bind.sync="editedItem" :items="items" ref="formCreate">
               <div class="d-flex flex-wrap">
                 <v-btn 
                   :disabled="!slotProps.valid" 
@@ -111,9 +111,16 @@ export default Vue.extend({
   },
 
   methods: {
-    prepareLabelData() {
+    prepareLabelData(suffixKeyValue: string | null = null, textValue: string | null = null) {
       const labelData = { ...this.editedItem }
-      if (labelData.source) {
+      // 如果传入了suffixKeyValue参数，则使用该值
+      if (suffixKeyValue !== null) {
+        labelData.suffixKey = suffixKeyValue
+      }
+      // 如果传入了textValue参数，则使用该值
+      if (textValue !== null) {
+        labelData.text = textValue
+      } else if (labelData.source) {
         labelData.text = `${labelData.source} - ${labelData.text}`
       }
       // 删除source属性，因为它不是LabelDTO的一部分
@@ -122,14 +129,56 @@ export default Vue.extend({
     },
 
     async save() {
-      const labelData = this.prepareLabelData()
-      await this.service.create(this.projectId, labelData)
+      // 检查suffixKey是否为"真假值"
+      if (this.editedItem.suffixKey === this.$t('labels.booleanValue')) {
+        // 创建"真"标签，保持"内容来源 - 标签名称"格式
+        let trueText = this.editedItem.text;
+        if (this.editedItem.source) {
+          trueText = `${this.editedItem.source} - ${this.editedItem.text}`
+        }
+        const trueLabelData = this.prepareLabelData('真', `${trueText}(${this.$t('labels.true')})`)
+        await this.service.create(this.projectId, trueLabelData)
+        
+        // 创建"假"标签，保持"内容来源 - 标签名称"格式
+        let falseText = this.editedItem.text;
+        if (this.editedItem.source) {
+          falseText = `${this.editedItem.source} - ${this.editedItem.text}`
+        }
+        const falseLabelData = this.prepareLabelData('假', `${falseText}(${this.$t('labels.false')})`)
+        await this.service.create(this.projectId, falseLabelData)
+      } else {
+        // 正常创建标签
+        const labelData = this.prepareLabelData()
+        await this.service.create(this.projectId, labelData)
+      }
+      
       this.$router.push(`/projects/${this.projectId}/labels`)
     },
 
     async saveAndAnother() {
-      const labelData = this.prepareLabelData()
-      await this.service.create(this.projectId, labelData)
+      // 检查suffixKey是否为"真假值"
+      if (this.editedItem.suffixKey === this.$t('labels.booleanValue')) {
+        // 创建"真"标签，保持"内容来源 - 标签名称"格式
+        let trueText = this.editedItem.text;
+        if (this.editedItem.source) {
+          trueText = `${this.editedItem.source} - ${this.editedItem.text}`
+        }
+        const trueLabelData = this.prepareLabelData('真', `${trueText}(${this.$t('labels.true')})`)
+        await this.service.create(this.projectId, trueLabelData)
+        
+        // 创建"假"标签，保持"内容来源 - 标签名称"格式
+        let falseText = this.editedItem.text;
+        if (this.editedItem.source) {
+          falseText = `${this.editedItem.source} - ${this.editedItem.text}`
+        }
+        const falseLabelData = this.prepareLabelData('假', `${falseText}(${this.$t('labels.false')})`)
+        await this.service.create(this.projectId, falseLabelData)
+      } else {
+        // 正常创建标签
+        const labelData = this.prepareLabelData()
+        await this.service.create(this.projectId, labelData)
+      }
+      
       this.editedItem = Object.assign({}, this.defaultItem)
       this.items = await this.service.list(this.projectId)
     }

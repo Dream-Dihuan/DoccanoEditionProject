@@ -30,5 +30,8 @@ export default {
   manageLabels: '管理您的标签',
   deleteLabelsTitle: '删除标签',
   deleteLabelsMessage: '您确定要删除 {number} 个标签吗？',
-  sourceMessage: '需要内容来源'
+  sourceMessage: '需要内容来源',
+  booleanValue: '真假值',
+  true: '真',
+  false: '假'
 }
