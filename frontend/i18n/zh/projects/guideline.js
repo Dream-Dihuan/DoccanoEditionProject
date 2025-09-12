@@ -1,4 +1,4 @@
 export default {
-  guideline: '指南',
-  writeGuidelinePrompt: '请写入标注指南'
+  guideline: '公告',
+  writeGuidelinePrompt: '请写入标注公告'
 }

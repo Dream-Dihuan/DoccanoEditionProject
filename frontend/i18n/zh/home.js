@@ -3,7 +3,7 @@ export default {
   subtitle: '专为团队和企业打造的专业文本标注工具',
   getStarted: '快速开始',
   getStartedToday: '立即开始',
-  startAnnotation: '开始标注',
+  startAnnotation: '从第一页开始标注',
   featuresTitle: '核心功能',
   featuresTitle1: '团队协作',
   featuresText1: '与团队成员实时协作标注',

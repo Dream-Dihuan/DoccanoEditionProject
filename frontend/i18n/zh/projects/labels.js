@@ -1,9 +1,9 @@
 export default {
   actions: '操作',
   category: '分类',
-  span: '跨度',
+  span: '标签',
   relation: '关系',
-  labels: '标签',
+  labels: '标签集',
   shortkey: '快捷键',
   color: '颜色',
   createLabel: '创建标签',

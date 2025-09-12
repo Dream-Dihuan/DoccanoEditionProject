@@ -6,10 +6,10 @@
         class="start-annotation-btn" 
         depressed
         block
-        large
+        small
         @click="toLabeling"
       >
-        <v-icon left size="20">
+        <v-icon left size="16">
           {{ mdiPlayCircleOutline }}
         </v-icon>
         {{ $t('home.startAnnotation') }}
@@ -55,9 +55,9 @@ import {
   mdiBookOpenOutline,
   mdiChartBar,
   mdiCog,
-  mdiCommentAccountOutline,
+  // mdiCommentAccountOutline,
   mdiDatabase,
-  mdiHome,
+  // mdiHome,
   mdiLabel,
   mdiPlayCircleOutline
 } from '@mdi/js'
@@ -96,12 +96,12 @@ export default {
     
     filteredItems() {
       const items = [
-        {
-          icon: mdiHome,
-          text: this.$t('projectHome.home'),
-          link: '',
-          isVisible: true
-        },
+        // {
+        //   icon: mdiHome,
+        //   text: this.$t('projectHome.home'),
+        //   link: '',
+        //   isVisible: true
+        // },
         {
           icon: mdiDatabase,
           text: this.$t('dataset.dataset'),
@@ -130,12 +130,12 @@ export default {
           link: 'members',
           isVisible: this.isProjectAdmin
         },
-        {
-          icon: mdiCommentAccountOutline,
-          text: this.$t('comments.comments'),
-          link: 'comments',
-          isVisible: this.isProjectAdmin
-        },
+        // {
+        //   icon: mdiCommentAccountOutline,
+        //   text: this.$t('comments.comments'),
+        //   link: 'comments',
+        //   isVisible: this.isProjectAdmin
+        // },
         {
           icon: mdiBookOpenOutline,
           text: this.$t('guideline.guideline'),
@@ -200,7 +200,7 @@ export default {
   letter-spacing: 0.5px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  height: 48px !important;
+  height: 24px !important;
 }
 
 .start-annotation-btn:hover {

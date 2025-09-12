@@ -5,7 +5,7 @@ export default {
   userStats: '用户统计',
   memberProgress: '成员进度',
   categoryDistribution: '分类分布',
-  spanDistribution: '跨度分布',
+  spanDistribution: '标签分布',
   relationDistribution: '关系分布',
   title: '项目指标',
   description: '查看项目统计和成员进度'

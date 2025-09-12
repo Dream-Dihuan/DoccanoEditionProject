@@ -39,7 +39,7 @@
       </template>
       
       <template #[`item.name`]="{ item }">
-        <nuxt-link :to="localePath(`/projects/${item.id}`)" class="project-link">
+        <nuxt-link :to="localePath(`/projects/${item.id}/dataset?limit=10&offset=0`)" class="project-link">
           <div class="d-flex align-center">
             <v-avatar size="40" class="mr-3" color="primary lighten-1">
               <span class="white--text text-h6">{{ item.name.charAt(0).toUpperCase() }}</span>
