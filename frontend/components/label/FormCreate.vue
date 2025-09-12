@@ -6,21 +6,24 @@
         <v-row>
           <v-col cols="12" sm="6">
             <v-text-field
+              :value="source"
+              :counter="999"
+              :label="$t('labels.source')"
+              outlined
+              required
+              @input="$emit('update:source', $event)"
+            />
+          </v-col>
+          <v-col v-if="source !== undefined" cols="12" sm="6">
+
+           <v-text-field
               :value="text"
-              :counter="9999"
+              :counter="9000"
               :label="$t('labels.labelName')"
               :rules="[rules.required, rules.counter, rules.nameDuplicated]"
               outlined
               required
               @input="$emit('update:text', $event)"
-            />
-          </v-col>
-          <v-col v-if="source !== undefined" cols="12" sm="6">
-            <v-text-field
-              :value="source"
-              :label="$t('labels.source')"
-              outlined
-              @input="$emit('update:source', $event)"
             />
           </v-col>
           <v-col cols="12" sm="6">
@@ -33,7 +36,7 @@
                 outlined
                 @input="$emit('update:suffixKey', $event)"
                 ref="suffixKeyField"
-                style="min-width: 200px;"
+                style="min-width: 160px;"
               />
               <v-btn
                 class="ml-2"
@@ -89,10 +92,11 @@
           <v-col>
             <div class="title black--text mb-2">{{ $t('labels.preview') }}</div>
             <v-chip :color="backgroundColor" :text-color="textColor">
-              {{ text }}
-              <v-avatar v-if="suffixKey" right color="white" class="black--text font-weight-bold">
+              {{ source +" - "+text }}
+              <!-- <v-avatar v-if="suffixKey" right color="white" class="black--text font-weight-bold">
                 {{ suffixKey }}
-              </v-avatar>
+                
+              </v-avatar> -->
             </v-chip>
           </v-col>
         </v-row>

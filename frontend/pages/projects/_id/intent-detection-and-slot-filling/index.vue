@@ -39,7 +39,7 @@
             @click:entity="updateSpan"
             @contextmenu:entity="deleteSpan"
           />
-        </div>hen
+        </div>
       </v-card>
     </template>
     <template #sidebar>

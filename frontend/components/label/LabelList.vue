@@ -40,7 +40,8 @@
         </v-chip>
       </template>
       <template #[`item.actions`]="{ item }">
-        <v-tooltip bottom>
+        
+        <div style="min-width: 100px;display: flex;align-items: center;"><v-tooltip bottom>
           <template #activator="{ on, attrs }">
             <v-btn
               icon
@@ -62,7 +63,7 @@
           @click="$emit('edit', item)"
         >
           {{ mdiPencil }}
-        </v-icon>
+        </v-icon></div>
       </template>
     </v-data-table>
   </div>
