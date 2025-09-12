@@ -28,7 +28,7 @@
           <span v-else class="mr-8" />
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title style="white-space: normal; word-break: break-word;">{{ label.text }}</v-list-item-title>
+          <v-list-item-title style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ label.text }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -147,10 +147,6 @@ export default Vue.extend({
     // 组件挂载时加载置顶标签和使用历史
     this.loadFavoriteLabels()
     this.loadLabelUsageHistory()
-    
-    // 调试信息
-    console.log('Mounted - Favorite labels:', this.favoriteLabels)
-    console.log('Mounted - Label usage history:', this.labelUsageHistory)
   },
 
   methods: {
