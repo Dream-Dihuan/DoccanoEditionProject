@@ -73,7 +73,8 @@ export default Vue.extend({
       entity: null as any,
       fromEntity: null as any,
       toEntity: null as any,
-      favoriteLabels: [] as number[]
+      favoriteLabels: [] as number[],
+      labelUsageHistory: [] as number[]
     }
   },
 
@@ -92,26 +93,64 @@ export default Vue.extend({
     },
 
     sortedLabels() {
-      // 将置顶标签排在前面
-      console.log('Labels:', this.labels);
-      console.log('Favorite labels:', this.favoriteLabels);
+      // 获取标签使用频率和最近使用位置
+      const usageCount: {[key: number]: number} = {}
+      const lastUsedIndex: {[key: number]: number} = {}
       
-      const sorted = [...this.labels].sort((a: any, b: any) => {
-        const aIsFavorite = this.favoriteLabels.includes(a.id) ? 1 : 0;
-        const bIsFavorite = this.favoriteLabels.includes(b.id) ? 1 : 0;
-        // 置顶标签排在前面
-        console.log(`Comparing ${a.text} (favorite: ${aIsFavorite}) with ${b.text} (favorite: ${bIsFavorite})`);
-        return bIsFavorite - aIsFavorite;
-      });
+      this.labelUsageHistory.forEach((id, index) => {
+        usageCount[id] = (usageCount[id] || 0) + 1
+        // 记录最后一次使用的位置（索引越小表示越近）
+        if (lastUsedIndex[id] === undefined || index < lastUsedIndex[id]) {
+          lastUsedIndex[id] = index
+        }
+      })
       
-      console.log('Sorted labels:', sorted);
-      return sorted;
+      // 分别收集三类标签
+      const favoriteLabels: any[] = [] // 置顶标签
+      const usedLabels: any[] = []     // 使用过的非置顶标签
+      const unusedLabels: any[] = []   // 未使用过的标签
+      
+      // 将标签分类
+      this.labels.forEach((label: any) => {
+        if (this.favoriteLabels.includes(label.id)) {
+          favoriteLabels.push(label)
+        } else if (usageCount[label.id] > 0) {
+          usedLabels.push(label)
+        } else {
+          unusedLabels.push(label)
+        }
+      })
+      
+      // 对使用过的标签按频率和最近使用时间排序
+      usedLabels.sort((a: any, b: any) => {
+        const aUsageCount = usageCount[a.id] || 0
+        const bUsageCount = usageCount[b.id] || 0
+        
+        // 使用频率不同，频率高的排在前面
+        if (aUsageCount > bUsageCount) return -1
+        if (aUsageCount < bUsageCount) return 1
+        
+        // 使用频率相同，最近使用的排在前面
+        const aLastUsed = lastUsedIndex[a.id] !== undefined ? lastUsedIndex[a.id] : Infinity
+        const bLastUsed = lastUsedIndex[b.id] !== undefined ? lastUsedIndex[b.id] : Infinity
+        return aLastUsed - bLastUsed
+      })
+      
+      // 合并三类标签：置顶标签 + 使用过的标签 + 未使用过的标签
+      const result = [...favoriteLabels, ...usedLabels, ...unusedLabels]
+      
+      return result
     }
   },
 
   mounted() {
-    // 组件挂载时加载置顶标签
-    this.loadFavoriteLabels();
+    // 组件挂载时加载置顶标签和使用历史
+    this.loadFavoriteLabels()
+    this.loadLabelUsageHistory()
+    
+    // 调试信息
+    console.log('Mounted - Favorite labels:', this.favoriteLabels)
+    console.log('Mounted - Label usage history:', this.labelUsageHistory)
   },
 
   methods: {
@@ -127,36 +166,99 @@ export default Vue.extend({
     },
 
     onLabelSelected(labelId: number) {
+      // 记录标签使用历史
+      this.recordLabelUsage(labelId)
       this.$emit('click:label', labelId)
       this.close()
+    },
+    
+    // 记录标签使用历史
+    recordLabelUsage(labelId: number) {
+      // 添加到历史记录开头
+      this.labelUsageHistory.unshift(labelId)
+      
+      // 保持最多30条记录
+      if (this.labelUsageHistory.length > 30) {
+        this.labelUsageHistory = this.labelUsageHistory.slice(0, 30)
+      }
+      
+      // 保存到localStorage
+      const projectId = (this.$route as any)?.params?.id
+      if (projectId) {
+        try {
+          let storageKey = ''
+          if (this.labels && this.labels.length > 0) {
+            const firstLabel: any = this.labels[0]
+            if (Object.prototype.hasOwnProperty.call(firstLabel, 'prefixKey') && 
+                Object.prototype.hasOwnProperty.call(firstLabel, 'suffixKey')) {
+              // 关系标签
+              storageKey = `labelUsageHistory_${projectId}_relation`
+            } else {
+              // 实体标签（默认）
+              storageKey = `labelUsageHistory_${projectId}_span`
+            }
+          }
+          
+          localStorage.setItem(storageKey, JSON.stringify(this.labelUsageHistory))
+        } catch (e) {
+          console.warn('Failed to save label usage history to localStorage', e)
+        }
+      }
+    },
+    
+    // 加载标签使用历史
+    loadLabelUsageHistory() {
+      const projectId = (this.$route as any)?.params?.id
+      if (!projectId) return
+      
+      try {
+        let storageKey = ''
+        if (this.labels && this.labels.length > 0) {
+          const firstLabel: any = this.labels[0]
+          if (Object.prototype.hasOwnProperty.call(firstLabel, 'prefixKey') && 
+              Object.prototype.hasOwnProperty.call(firstLabel, 'suffixKey')) {
+            // 关系标签
+            storageKey = `labelUsageHistory_${projectId}_relation`
+          } else {
+            // 实体标签（默认）
+            storageKey = `labelUsageHistory_${projectId}_span`
+          }
+        }
+        
+        const saved = localStorage.getItem(storageKey)
+        if (saved) {
+          this.labelUsageHistory = JSON.parse(saved)
+        }
+      } catch (e) {
+        console.warn('Failed to load label usage history from localStorage', e)
+        this.labelUsageHistory = []
+      }
     },
     
     // 加载置顶标签
     loadFavoriteLabels() {
       // 从路由参数中获取项目ID
-      const projectId = (this.$route as any)?.params?.id;
-      console.log('Project ID:', projectId);
-      
-      if (!projectId) return;
+      const projectId = (this.$route as any)?.params?.id
+      if (!projectId) return
       
       try {
         // 根据标签类型确定存储键名
-        let storageKey = '';
+        let storageKey = ''
         if (this.labels && this.labels.length > 0) {
             // 实体标签（默认）
-            storageKey = `favoriteLabels_${projectId}_span`;
+            storageKey = `favoriteLabels_${projectId}_span`
         }
         
-        // storageKey = "favoriteLabels_4_span"
-        console.log('Storage key:', storageKey);
-        const saved = localStorage.getItem(storageKey);
-        console.log('Saved favorite labels:', saved);
+        console.log('Loading favorite labels from storage key:', storageKey)
+        const saved = localStorage.getItem(storageKey)
+        console.log('Favorite labels from localStorage:', saved)
         if (saved) {
-          this.favoriteLabels = JSON.parse(saved);
+          this.favoriteLabels = JSON.parse(saved)
         }
+        console.log('Favorite labels loaded:', this.favoriteLabels)
       } catch (e) {
-        console.warn('Failed to load favorite labels from localStorage', e);
-        this.favoriteLabels = [];
+        console.warn('Failed to load favorite labels from localStorage', e)
+        this.favoriteLabels = []
       }
     }
   }
