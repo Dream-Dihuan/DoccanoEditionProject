@@ -38,7 +38,7 @@
                 ref="suffixKeyField"
                 outlined
                 dense
-                style="min-width: 120px;"
+                style="min-width: 150px;"
                 @input="$emit('update:suffixKey', $event)"
               />
               <v-btn
