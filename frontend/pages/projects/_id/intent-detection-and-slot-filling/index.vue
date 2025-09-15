@@ -73,14 +73,14 @@
           </form-create-label>
         </v-card-text>
       </v-card>
-      <list-metadata :metadata="doc.meta" class="mt-4" />
+      <!-- <list-metadata :metadata="doc.meta" class="mt-4" /> -->
     </template>
   </layout-text>
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import LayoutText from '@/components/tasks/layout/LayoutText'
-import ListMetadata from '@/components/tasks/metadata/ListMetadata'
+// import ListMetadata from '@/components/tasks/metadata/ListMetadata'
 import EntityEditor from '@/components/tasks/sequenceLabeling/EntityEditor.vue'
 import AnnotationProgress from '@/components/tasks/sidebar/AnnotationProgress.vue'
 import LabelGroup from '@/components/tasks/textClassification/LabelGroup'
@@ -94,7 +94,7 @@ export default {
     AnnotationProgress,
     EntityEditor,
     LayoutText,
-    ListMetadata,
+    // ListMetadata,
     LabelGroup,
     ToolbarLaptop,
     ToolbarMobile,
