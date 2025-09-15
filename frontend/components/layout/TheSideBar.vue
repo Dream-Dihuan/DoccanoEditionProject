@@ -62,7 +62,7 @@ import {
   mdiPlayCircleOutline
 } from '@mdi/js'
 import DocumentTabs from './DocumentTabs.vue'
-// import { getLinkToAnnotationPage } from '~/presenter/linkToAnnotationPage'
+import { getLinkToAnnotationPage } from '~/presenter/linkToAnnotationPage'
 
 export default {
   components: {

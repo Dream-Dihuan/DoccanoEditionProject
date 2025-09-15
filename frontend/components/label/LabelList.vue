@@ -40,10 +40,11 @@
         </v-chip>
       </template>
       <template #[`item.actions`]="{ item }">
-        
-        <div style="min-width: 100px;display: flex;align-items: center;"><v-tooltip bottom>
+        <div style="display: flex; align-items: center; justify-content: space-around; min-width: 60px;">
+                  <v-tooltip bottom>
           <template #activator="{ on, attrs }">
             <v-btn
+              v-if="isSpanType"
               icon
               small
               v-bind="attrs"
@@ -63,7 +64,8 @@
           @click="$emit('edit', item)"
         >
           {{ mdiPencil }}
-        </v-icon></div>
+        </v-icon>
+        </div>
       </template>
     </v-data-table>
   </div>
@@ -100,6 +102,10 @@ export default Vue.extend({
       type: Array as PropType<number[]>,
       default: () => [],
       required: false
+    },
+    labelType: {
+      type: String,
+      default: 'span'
     }
   },
 
@@ -116,7 +122,7 @@ export default Vue.extend({
   computed: {
     headers() {
       const headers = [
-        { text: this.$t('generic.name'), value: 'text', sortable: true },
+        { text: this.$t('generic.name'), value: 'text', sortable: true, width: '600px' },
         { text: this.$t('labels.shortkey'), value: 'suffixKey', sortable: true },
         { text: this.$t('labels.color'), value: 'backgroundColor', sortable: true }
       ]
@@ -133,6 +139,10 @@ export default Vue.extend({
         const bIsFavorite = this.isFavorite(b) ? 1 : 0
         return bIsFavorite - aIsFavorite
       })
+    },
+    
+    isSpanType(): boolean {
+      return this.labelType === 'span'
     }
   },
 

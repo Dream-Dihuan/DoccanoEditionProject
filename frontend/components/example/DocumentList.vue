@@ -134,11 +134,12 @@ export default Vue.extend({
           value: 'filename',
           sortable: false
         },
-        {
-          text: this.$t('dataset.metadata'),
-          value: 'meta',
-          sortable: false
-        },
+        // 元数据隐藏
+        // {
+        //   text: this.$t('dataset.metadata'),
+        //   value: 'meta',
+        //   sortable: false
+        // },
         {
           text: this.$t('dataset.action'),
           value: 'action',

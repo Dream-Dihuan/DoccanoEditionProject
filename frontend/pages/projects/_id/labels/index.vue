@@ -58,6 +58,7 @@
                 :is-loading="isLoading"
                 :disable-edit="canOnlyAdd"
                 :favorite-labels="favoriteLabels"
+                :label-type="labelType"
                 @edit="editItem"
                 @toggle-favorite="toggleFavorite"
               />
@@ -158,7 +159,8 @@ export default Vue.extend({
       if (this.member.isProjectAdmin) {
         return false
       }
-      return this.project.allowMemberToCreateLabelType
+      const project = this.$store.getters['projects/project']
+      return project.allowMemberToCreateLabelType
     },
 
     canDelete(): boolean {
@@ -170,25 +172,28 @@ export default Vue.extend({
     },
 
     hasMultiType(): boolean {
-      if ('projectType' in this.project) {
-        return this.isIntentDetectionAndSlotFilling || !!this.project.useRelation
+      const project = this.$store.getters['projects/project']
+      if ('projectType' in project) {
+        return this.isIntentDetectionAndSlotFilling || !!project.useRelation
       } else {
         return false
       }
     },
 
     isIntentDetectionAndSlotFilling(): boolean {
-      return this.project.projectType === 'IntentDetectionAndSlotFilling'
+      const project = this.$store.getters['projects/project']
+      return project.projectType === 'IntentDetectionAndSlotFilling'
     },
 
     labelType(): string {
+      const project = this.$store.getters['projects/project']
       if (this.hasMultiType) {
         if (this.isIntentDetectionAndSlotFilling) {
           return ['category', 'span'][this.tab!]
         } else {
           return ['span', 'relation'][this.tab!]
         }
-      } else if (this.project.canDefineCategory) {
+      } else if (project.canDefineCategory) {
         return 'category'
       } else {
         return 'span'
@@ -196,7 +201,8 @@ export default Vue.extend({
     },
 
     service(): any {
-      if (!('projectType' in this.project)) {
+      const project = this.$store.getters['projects/project']
+      if (!('projectType' in project)) {
         return
       }
       if (this.hasMultiType) {
@@ -205,7 +211,7 @@ export default Vue.extend({
         } else {
           return [this.$services.spanType, this.$services.relationType][this.tab!]
         }
-      } else if (this.project.canDefineCategory) {
+      } else if (project.canDefineCategory) {
         return this.$services.categoryType
       } else {
         return this.$services.spanType
