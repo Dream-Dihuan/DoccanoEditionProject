@@ -59,7 +59,7 @@
           <span>{{ isFavorite(item) ? '取消置顶' : '置顶标签' }}</span>
         </v-tooltip>
         <v-icon 
-          v-if="!disableEdit"
+          v-if="canEditStatus"
           small 
           @click="$emit('edit', item)"
         >
@@ -79,6 +79,11 @@ import { LabelDTO } from '~/services/application/label/labelData'
 
 export default Vue.extend({
   props: {
+    canEditStatus: {
+      type: Boolean,
+      default: false,
+      required: false
+    },
     isLoading: {
       type: Boolean,
       default: false,
@@ -118,7 +123,6 @@ export default Vue.extend({
       mdiStarOutline
     }
   },
-
   computed: {
     headers() {
       const headers = [
@@ -132,7 +136,12 @@ export default Vue.extend({
       
       headers.push({ text: this.$t('labels.color'), value: 'backgroundColor', sortable: true, width: '150px' })
       
-      if (!this.disableEdit) {
+      // 当用户可以编辑时，始终显示操作列
+      // 当用户不能编辑时，仅在labelType为span时显示操作列（用于收藏功能）
+      if (this.canEditStatus || (!this.canEditStatus && this.labelType === 'span')) {
+        console.log("迪幻disableEdit= "+ this.disableEdit)
+        console.log("迪幻labelType= "+ this.labelType)
+        console.log("迪幻can= "+ this.canEditStatus)
         headers.push({ text: this.$t('generic.actions'), value: 'actions', sortable: false, width: '100px' })
       }
       return headers
@@ -153,6 +162,7 @@ export default Vue.extend({
   },
 
   methods: {
+  
     isFavorite(item: LabelDTO): boolean {
       return this.favoriteLabels.includes(item.id)
     }

@@ -113,7 +113,6 @@ export default {
           text: this.$t('labels.labels'),
           link: 'labels',
           isVisible:
-            (this.isProjectAdmin || this.project.allowMemberToCreateLabelType) &&
             this.project.canDefineLabel
         },
         {

@@ -13,7 +13,7 @@
               </p>
             </div>
             
-            <div class="mt-4 mt-sm-0">
+            <div v-if="canEdit" class="mt-4 mt-sm-0">
               <action-menu
                 :add-only="canOnlyAdd"
                 @create="$router.push('labels/add?type=' + labelType)"
@@ -59,6 +59,7 @@
                 :disable-edit="canOnlyAdd"
                 :favorite-labels="favoriteLabels"
                 :label-type="labelType"
+                :canEditStatus="canEdit"
                 @edit="editItem"
                 @toggle-favorite="toggleFavorite"
               />
@@ -123,18 +124,13 @@ export default Vue.extend({
 
   middleware: ['check-auth', 'auth', 'setCurrentProject'],
 
-  validate({ params, app, store }) {
+  validate({ params, store }) {
     if (/^\d+$/.test(params.id)) {
       const project = store.getters['projects/project']
       if (!project.canDefineLabel) {
         return false
       }
-      return app.$repositories.member.fetchMyRole(params.id).then((member: MemberItem) => {
-        if (member.isProjectAdmin) {
-          return true
-        }
-        return project.allowMemberToCreateLabelType
-      })
+      return true
     }
     return false
   },
@@ -161,6 +157,11 @@ export default Vue.extend({
       }
       const project = this.$store.getters['projects/project']
       return project.allowMemberToCreateLabelType
+    },
+    
+    canEdit(): boolean {
+      // 项目管理员或者允许成员创建标签类型的用户可以编辑
+      return this.member.isProjectAdmin || this.$store.getters['projects/project'].allowMemberToCreateLabelType
     },
 
     canDelete(): boolean {
