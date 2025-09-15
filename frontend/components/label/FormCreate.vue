@@ -1,9 +1,9 @@
 <template>
-  <v-card>
-    <v-card-title>{{ $t('labels.createLabelType') }}</v-card-title>
-    <v-card-text>
+  <v-card dense>
+    <v-card-title class="subtitle-1">{{ $t('labels.createLabelType') }}</v-card-title>
+    <v-card-text class="pa-2">
       <v-form ref="form" v-model="valid">
-        <v-row>
+        <v-row dense>
           <v-col cols="12" sm="6">
             <v-text-field
               :value="source"
@@ -11,6 +11,7 @@
               :label="$t('labels.source')"
               outlined
               required
+              dense
               @input="$emit('update:source', $event)"
             />
           </v-col>
@@ -23,23 +24,27 @@
               :rules="[rules.required, rules.counter, rules.nameDuplicated]"
               outlined
               required
+              dense
               @input="$emit('update:text', $event)"
             />
           </v-col>
-          <v-col cols="12" sm="6">
+          <v-col v-if="type !== 'category'" cols="12" sm="6">
             <div class="d-flex align-center">
               <v-text-field
                 :value="suffixKey"
                 :counter="10"
                 :label="$t('labels.key')"
                 :rules="[rules.keyCounter]"
-                outlined
-                @input="$emit('update:suffixKey', $event)"
                 ref="suffixKeyField"
-                style="min-width: 160px;"
+                outlined
+                dense
+                style="min-width: 120px;"
+                @input="$emit('update:suffixKey', $event)"
               />
               <v-btn
+                ref="booleanButton"
                 class="ml-2"
+                small
                 @click="fillSuffixKeyWithBoolean"
               >
                 {{ $t('labels.booleanValue') }}
@@ -48,8 +53,8 @@
           </v-col>
         </v-row>
 
-        <v-row>
-          <v-col cols="12" sm="12">
+        <v-row dense>
+          <v-col cols="12" sm="12" class="py-1">
             <v-text-field
               :value="backgroundColor"
               :rules="[rules.validColor]"
@@ -57,6 +62,7 @@
               hide-details="auto"
               outlined
               required
+              dense
               @input="$emit('update:backgroundColor', $event)"
             />
             <v-chip-group v-model="selectedColorIndex" column mandatory @change="onColorSelect">
@@ -67,18 +73,20 @@
                 filter
                 label
                 class="ma-1"
-                style="height: 32px; width: 32px"
+                small
+                style="height: 24px; width: 24px"
               />
               <v-tooltip bottom>
                 <template #activator="{ on, attrs }">
                   <v-chip 
                     label 
                     class="ma-1" 
+                    small
                     v-bind="attrs" 
                     v-on="on" 
                     @click="setRandomColor"
                   >
-                    <v-icon small>{{ mdiReload }}</v-icon>
+                    <v-icon x-small>{{ mdiReload }}</v-icon>
                     {{ $t('labels.randomColor') }}
                   </v-chip>
                 </template>
@@ -90,8 +98,8 @@
 
         <v-row>
           <v-col>
-            <div class="title black--text mb-2">{{ $t('labels.preview') }}</div>
-            <v-chip :color="backgroundColor" :text-color="textColor">
+            <div class="subtitle-2 black--text mb-1">{{ $t('labels.preview') }}</div>
+            <v-chip :color="backgroundColor" :text-color="textColor" small>
               {{ source +" - "+text }}
               <!-- <v-avatar v-if="suffixKey" right color="white" class="black--text font-weight-bold">
                 {{ suffixKey }}
@@ -151,6 +159,10 @@ export default Vue.extend({
     textColor: {
       type: String,
       default: '#ffffff'
+    },
+    type: {
+      type: String,
+      default: 'span' // 默认为span类型，这样不会影响现有功能
     }
   },
 

@@ -10,7 +10,7 @@
           </v-toolbar>
           
           <v-card-text class="mt-5">
-            <form-create v-slot="slotProps" v-bind.sync="editedItem" :items="items" ref="formCreate">
+            <form-create v-slot="slotProps" v-bind.sync="editedItem" :items="items" :type="labelType" ref="formCreate">
               <div class="d-flex flex-wrap">
                 <v-btn 
                   :disabled="!slotProps.valid" 
@@ -92,6 +92,10 @@ export default Vue.extend({
   computed: {
     projectId(): string {
       return this.$route.params.id
+    },
+
+    labelType(): string {
+      return this.$route.query.type as string
     },
 
     service(): any {

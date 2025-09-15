@@ -122,12 +122,18 @@ export default Vue.extend({
   computed: {
     headers() {
       const headers = [
-        { text: this.$t('generic.name'), value: 'text', sortable: true, width: '600px' },
-        { text: this.$t('labels.shortkey'), value: 'suffixKey', sortable: true },
-        { text: this.$t('labels.color'), value: 'backgroundColor', sortable: true }
+        { text: this.$t('generic.name'), value: 'text', sortable: true, width: '600px' }
       ]
+      
+      // 只有当标签类型不是category时才显示shortkey列
+      if (this.labelType !== 'category') {
+        headers.push({ text: this.$t('labels.shortkey'), value: 'suffixKey', sortable: true, width: '150px' })
+      }
+      
+      headers.push({ text: this.$t('labels.color'), value: 'backgroundColor', sortable: true, width: '150px' })
+      
       if (!this.disableEdit) {
-        headers.push({ text: this.$t('generic.actions'), value: 'actions', sortable: false })
+        headers.push({ text: this.$t('generic.actions'), value: 'actions', sortable: false, width: '100px' })
       }
       return headers
     },

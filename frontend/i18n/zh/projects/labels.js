@@ -4,7 +4,7 @@ export default {
   span: '标签',
   relation: '关系',
   labels: '标签集',
-  shortkey: '来源',
+  shortkey: '值',
   color: '颜色',
   createLabel: '创建标签',
   importLabels: '导入标签',
