@@ -33,5 +33,8 @@ export default {
   sourceMessage: '需要内容来源',
   booleanValue: '真假值',
   true: '真',
-  false: '假'
+  false: '假',
+  clearSpan: '清除标签',
+  clearSpanMessage: '选择您想要清除的标签类型',
+  selectSpanType: '选择标签类型'
 }

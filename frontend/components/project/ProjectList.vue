@@ -137,7 +137,7 @@ export default Vue.extend({
       return [
         { text: this.$t('generic.name'), value: 'name' },
         { text: this.$t('generic.description'), value: 'description', sortable: false },
-        { text: this.$t('generic.type'), value: 'projectType' },
+        // { text: this.$t('generic.type'), value: 'projectType' },
         { text: this.$t('projects.created'), value: 'createdAt' },
         { text: this.$t('projects.author'), value: 'author' },
         { text: this.$t('projects.tags'), value: 'tags', sortable: false }

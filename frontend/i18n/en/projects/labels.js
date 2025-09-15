@@ -33,5 +33,8 @@ export default {
   sourceMessage: 'Source is required',
   booleanValue: 'Boolean Value',
   true: 'True',
-  false: 'False'
+  false: 'False',
+  clearSpan: 'Clear Span',
+  clearSpanMessage: 'Select the span type you want to clear',
+  selectSpanType: 'Select span type'
 }
