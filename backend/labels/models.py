@@ -52,27 +52,9 @@ class Span(Label):
         return f"({text}, {self.start_offset}, {self.end_offset}, {self.label.text})"
 
     def validate_unique(self, exclude=None):
-        allow_overlapping = getattr(self.example.project, "allow_overlapping", False)
-        is_collaborative = self.example.project.collaborative_annotation
-        if allow_overlapping:
-            super().validate_unique(exclude=exclude)
-            return
-
-        overlapping_span = (
-            Span.objects.exclude(id=self.id)
-            .filter(example=self.example)
-            .filter(
-                models.Q(start_offset__gte=self.start_offset, start_offset__lt=self.end_offset)
-                | models.Q(end_offset__gt=self.start_offset, end_offset__lte=self.end_offset)
-                | models.Q(start_offset__lte=self.start_offset, end_offset__gte=self.end_offset)
-            )
-        )
-        if is_collaborative:
-            if overlapping_span.exists():
-                raise ValidationError("This overlapping is not allowed in this project.")
-        else:
-            if overlapping_span.filter(user=self.user).exists():
-                raise ValidationError("This overlapping is not allowed in this project.")
+        # 始终允许重叠标注，直接调用父类方法
+        super().validate_unique(exclude=exclude)
+        return
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.full_clean()

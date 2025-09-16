@@ -8,7 +8,7 @@
       :entity-labels="entityLabels"
       :relations="relations"
       :relation-labels="relationLabels"
-      :allow-overlapping="allowOverlapping"
+      :allow-overlapping=true
       :grapheme-mode="graphemeMode"
       :selected-entities="selectedEntities"
       @add:entity="handleAddEvent"

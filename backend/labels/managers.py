@@ -57,13 +57,7 @@ class CategoryManager(LabelManager):
 
 class SpanManager(LabelManager):
     def can_annotate(self, label, project) -> bool:
-        overlapping = getattr(project, "allow_overlapping", False)
-        spans = self.get_labels(label, project)
-        if overlapping:
-            return True
-        for span in spans:
-            if span.is_overlapping(label):
-                return False
+        # 始终允许重叠标注
         return True
 
 
