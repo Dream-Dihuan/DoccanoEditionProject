@@ -1,6 +1,7 @@
 <template>
   <div class="document-tabs">
-    <h4 style="text-align: center; margin-bottom: 30px;">跨文档快捷切换栏</h4>
+    <h4 style="text-align: center; margin-bottom: 20px;">跨文档快捷切换栏</h4>
+    <h6 style="text-align: center; margin-bottom: 10px; color: gray;">在标记页面快速切换文档</h6>
     <div class="document-tabs__container">
       <div 
         v-for="(tab, index) in tabs" 
@@ -24,7 +25,7 @@
         @click="goToDataset"
       >
         <div>
-          <span class="document-tab__title" style="font-style: italic;">添加文档</span>
+          <span class="document-tab__title" style="font-style: italic;">添加快捷文档</span>
           <v-icon small>{{ mdiPlus }}</v-icon>
         </div>
         

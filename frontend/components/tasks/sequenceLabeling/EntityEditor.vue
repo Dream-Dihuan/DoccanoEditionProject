@@ -277,3 +277,63 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style scoped>
+.editor {
+  line-height: 3rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  opacity: 0.9;
+  /* 添加以下样式确保文本和注释线完整显示 */
+  padding-bottom: 1rem;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+}
+
+.editor.dark {
+  background-color: #424242;
+}
+
+.entity {
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 2px 4px;
+  position: relative;
+}
+
+.entity:hover {
+  filter: brightness(90%);
+}
+
+.status-indicator {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+  z-index: 1; /* 确保状态指示器在顶层显示 */
+}
+
+.status-indicator.true {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status-indicator.false {
+  background-color: #f44336;
+  color: white;
+}
+
+.status-indicator.custom {
+  background-color: #ff9800;
+  color: white;
+}
+</style>

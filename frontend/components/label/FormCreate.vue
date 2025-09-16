@@ -28,8 +28,8 @@
               @input="$emit('update:text', $event)"
             />
           </v-col>
-          <v-col v-if="type !== 'category'" cols="12" sm="6">
-            <div class="d-flex align-center">
+          <v-col v-if="type !== 'category'" cols="24" sm="12">
+            <div class="d-flex align-center" style="width: 100%;">
               <v-text-field
                 :value="suffixKey"
                 :counter="10"
@@ -38,7 +38,7 @@
                 ref="suffixKeyField"
                 outlined
                 dense
-                style="min-width: 150px;"
+                style="width: 90%;"
                 @input="$emit('update:suffixKey', $event)"
               />
               <v-btn

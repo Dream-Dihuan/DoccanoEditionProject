@@ -31,5 +31,6 @@ export default {
   fileFormat: 'File format',
   dropFilesHere: 'Drop files here...',
   formatExample: 'For readability, the above format can be displayed as follows:',
-  exportApprovedOnly: 'Export only approved documents'
+  exportApprovedOnly: 'Export only approved documents',
+  editText: 'Edit Text'
 }

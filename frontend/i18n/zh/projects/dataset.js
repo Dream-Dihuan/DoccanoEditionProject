@@ -30,5 +30,6 @@ export default {
   fileFormat: '文件格式',
   dropFilesHere: '拖拽文件到此处...',
   formatExample: '为了提高可读性，上述格式可以显示如下：',
-  exportApprovedOnly: '仅导出已批准的文档'
+  exportApprovedOnly: '仅导出已批准的文档',
+  editText: '编辑文本'
 }

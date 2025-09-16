@@ -4,9 +4,9 @@
       <v-btn-toggle>
         <button-review :is-reviewd="isReviewd" @click:review="$emit('click:review')" />
 
-        <button-filter :value="filterOption" @click:filter="changeFilter" />
+        <!-- <button-filter :value="filterOption" @click:filter="changeFilter" /> -->
 
-        <button-order :value="orderOption" @click:order="changeOrder" />
+        <!-- <button-order :value="orderOption" @click:order="changeOrder" /> -->
 
         <button-guideline @click:guideline="dialogGuideline = true" />
         <v-dialog v-model="dialogGuideline" max-width="800">
@@ -20,7 +20,7 @@
           </v-card>
         </v-dialog>
 
-        <button-comment @click:comment="dialogComment = true" />
+        <!-- <button-comment @click:comment="dialogComment = true" /> -->
         <v-dialog v-model="dialogComment" max-width="800">
           <v-card>
             <v-toolbar color="primary" dark flat>
@@ -32,7 +32,7 @@
           </v-card>
         </v-dialog>
 
-        <button-auto-labeling @click:auto="dialogAutoLabeling = true" />
+        <!-- <button-auto-labeling @click:auto="dialogAutoLabeling = true" /> -->
         <v-dialog v-model="dialogAutoLabeling" max-width="800">
           <v-card>
             <v-toolbar color="primary" dark flat>
@@ -128,16 +128,16 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mdiDelete } from '@mdi/js'
-import ButtonAutoLabeling from './buttons/ButtonAutoLabeling.vue'
+// import ButtonAutoLabeling from './buttons/ButtonAutoLabeling.vue'
 import ButtonClear from './buttons/ButtonClear.vue'
-import ButtonComment from './buttons/ButtonComment.vue'
-import ButtonFilter from './buttons/ButtonFilter.vue'
+// import ButtonComment from './buttons/ButtonComment.vue'
+// import ButtonFilter from './buttons/ButtonFilter.vue'
 import ButtonGuideline from './buttons/ButtonGuideline.vue'
-import ButtonOrder from './buttons/ButtonOrder.vue'
+// import ButtonOrder from './buttons/ButtonOrder.vue'
 import ButtonPagination from './buttons/ButtonPagination.vue'
 import ButtonReview from './buttons/ButtonReview.vue'
 import ButtonKeyboardShortcut from './buttons/ButtonKeyboardShortcut.vue'
-import FormAutoLabeling from './forms/FormAutoLabeling.vue'
+// import FormAutoLabeling from './forms/FormAutoLabeling.vue'
 import FormClearLabel from './forms/FormClearLabel.vue'
 import FormClearSpan from './forms/FormClearSpan.vue'
 import FormComment from './forms/FormComment.vue'
@@ -146,16 +146,16 @@ import FormKeyboardShortcut from './forms/FormKeyboardShortcut.vue'
 
 export default Vue.extend({
   components: {
-    ButtonAutoLabeling,
+    // ButtonAutoLabeling,
     ButtonClear,
-    ButtonComment,
-    ButtonFilter,
+    // ButtonComment,
+    // ButtonFilter,
     ButtonGuideline,
-    ButtonOrder,
+    // ButtonOrder,
     ButtonKeyboardShortcut,
     ButtonPagination,
     ButtonReview,
-    FormAutoLabeling,
+    // FormAutoLabeling,
     FormClearLabel,
     FormClearSpan,
     FormComment,

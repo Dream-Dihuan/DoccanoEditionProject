@@ -17,7 +17,7 @@
       <toolbar-mobile :total="docs.count" class="d-flex d-sm-none" />
     </template>
     <template #content>
-      <v-card v-shortkey="shortKeys" @shortkey="addOrRemoveCategory">
+      <v-card class="annotation-card" v-shortkey="shortKeys" @shortkey="addOrRemoveCategory">
         <v-card-title>
           <label-group
             :labels="categoryTypes"
@@ -375,12 +375,15 @@ export default {
 }
 </script>
 <style scoped>
+.annotation-card {
+  /* 确保卡片有足够空间显示内容 */
+  min-height: 70vh;
+}
+
 .annotation-text {
-  font-size: 1.25rem !important;
-  font-weight: 500;
-  line-height: 2rem;
-  font-family: 'Roboto', sans-serif !important;
-  opacity: 0.6;
+  /* 为注释线和状态指示器留出空间 */
+  padding: 1rem 1rem 2rem 1rem !important;
+  position: relative;
 }
 
 .create-label-card {
