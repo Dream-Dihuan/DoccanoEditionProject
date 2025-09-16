@@ -6,19 +6,24 @@ from rest_framework.response import Response
 
 from examples.filters import ExampleFilter
 from examples.models import Example
-from examples.serializers import ExampleSerializer
+from examples.serializers import ExampleSerializer, ExampleListSerializer
 from projects.models import Member, Project
 from projects.permissions import IsProjectAdmin, IsProjectStaffAndReadOnly
 
 
 class ExampleList(generics.ListCreateAPIView):
-    serializer_class = ExampleSerializer
     permission_classes = [IsAuthenticated & (IsProjectAdmin | IsProjectStaffAndReadOnly)]
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     ordering_fields = ("created_at", "updated_at", "score")
     search_fields = ("text", "filename")
     model = Example
     filterset_class = ExampleFilter
+
+    def get_serializer_class(self):
+        # 如果请求中包含list参数，则使用轻量级序列化器
+        if self.request.query_params.get('view') == 'list':
+            return ExampleListSerializer
+        return ExampleSerializer
 
     @property
     def project(self):
