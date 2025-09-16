@@ -244,7 +244,11 @@ export default Vue.extend({
 
   async fetch() {
     this.isLoading = true
-    this.item = await this.$services.example.list(this.projectId, this.$route.query)
+    // 使用轻量级接口获取数据
+    this.item = await this.$services.exampleLite.listLite(this.projectId, this.$route.query)
+    console.log("迪幻lite");
+    console.log(JSON.parse(JSON.stringify(this.item)));
+    console.log(this.item)
     this.user = await this.$repositories.member.fetchMyRole(this.projectId)
     if (this.user.isProjectAdmin) {
       this.members = await this.$repositories.member.list(this.projectId)

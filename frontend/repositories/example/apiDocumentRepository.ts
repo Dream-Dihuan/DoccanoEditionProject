@@ -16,6 +16,21 @@ function toModel(item: { [key: string]: any }): ExampleItem {
   )
 }
 
+function toListModel(item: { [key: string]: any }): ExampleItem {
+  // 轻量级模型，不包含text字段以提高性能
+  return new ExampleItem(
+    item.id,
+    '', // 空的text字段
+    item.meta,
+    null, // 不包含annotation_approver
+    item.comment_count,
+    item.filename,
+    item.is_confirmed,
+    item.upload_name,
+    item.assignments
+  )
+}
+
 function toPayload(item: ExampleItem): { [key: string]: any } {
   return {
     id: item.id,
@@ -49,13 +64,15 @@ function buildQueryParams(
   offset: string,
   q: string,
   isChecked: string,
-  ordering: string
+  ordering: string,
+  view: string
 ): string {
   const params = new URLSearchParams()
   params.append('limit', limit)
   params.append('offset', offset)
   params.append('confirmed', isChecked)
   params.append('ordering', ordering)
+  params.append('view', view) // 添加view参数
 
   const customParams = ['label', 'assignee']
   let updatedQuery: string = q
@@ -79,7 +96,7 @@ export class APIExampleRepository implements ExampleRepository {
     { limit = '10', offset = '0', q = '', isChecked = '', ordering = '' }: SearchOption
   ): Promise<ExampleItemList> {
     // @ts-ignore
-    const params = buildQueryParams(limit, offset, q, isChecked, ordering)
+    const params = buildQueryParams(limit, offset, q, isChecked, ordering, '')
     const url = `/projects/${projectId}/examples?${params}`
     const response = await this.request.get(url)
     return new ExampleItemList(
@@ -87,6 +104,23 @@ export class APIExampleRepository implements ExampleRepository {
       response.data.next,
       response.data.previous,
       response.data.results.map((item: { [key: string]: any }) => toModel(item))
+    )
+  }
+
+  // 新增轻量级列表方法
+  async listLite(
+    projectId: string,
+    { limit = '10', offset = '0', q = '', isChecked = '', ordering = '' }: SearchOption
+  ): Promise<ExampleItemList> {
+    // @ts-ignore
+    const params = buildQueryParams(limit, offset, q, isChecked, ordering, 'list')
+    const url = `/projects/${projectId}/examples?${params}`
+    const response = await this.request.get(url)
+    return new ExampleItemList(
+      response.data.count,
+      response.data.next,
+      response.data.previous,
+      response.data.results.map((item: { [key: string]: any }) => toListModel(item))
     )
   }
 

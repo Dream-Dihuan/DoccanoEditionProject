@@ -15,6 +15,7 @@ export interface Services {
   relationType: LabelApplicationService
   project: ProjectApplicationService
   example: ExampleApplicationService
+  exampleLite: ExampleApplicationService // 添加轻量级服务
   sequenceLabeling: SequenceLabelingApplicationService
   option: OptionApplicationService
   tag: TagApplicationService
@@ -35,6 +36,7 @@ const plugin: Plugin = (_, inject) => {
     relationType: new LabelApplicationService(repositories.relationType),
     project: new ProjectApplicationService(repositories.project),
     example: new ExampleApplicationService(repositories.example),
+    exampleLite: new ExampleApplicationService(repositories.example), // 注入轻量级服务
     sequenceLabeling: new SequenceLabelingApplicationService(
       repositories.span,
       repositories.relation

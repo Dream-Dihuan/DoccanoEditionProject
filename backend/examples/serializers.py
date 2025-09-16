@@ -69,6 +69,43 @@ class ExampleSerializer(serializers.ModelSerializer):
         read_only_fields = ["filename", "is_confirmed", "upload_name", "assignments"]
 
 
+class ExampleListSerializer(serializers.ModelSerializer):
+    is_confirmed = serializers.SerializerMethodField()
+    assignments = serializers.SerializerMethodField()
+
+    def get_is_confirmed(self, instance):
+        user = self.context.get("request").user
+        if instance.project.collaborative_annotation:
+            states = instance.states.all()
+        else:
+            states = instance.states.filter(confirmed_by_id=user.id)
+        return states.count() > 0
+
+    def get_assignments(self, instance):
+        return [
+            {
+                "id": assignment.id,
+                "assignee": assignment.assignee.username,
+                "assignee_id": assignment.assignee.id,
+            }
+            for assignment in instance.assignments.all()
+        ]
+
+    class Meta:
+        model = Example
+        fields = [
+            "id",
+            "filename",
+            "meta",
+            "comment_count",
+            "is_confirmed",
+            "upload_name",
+            "score",
+            "assignments",
+        ]
+        read_only_fields = ["filename", "is_confirmed", "upload_name", "assignments"]
+
+
 class ExampleStateSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExampleState

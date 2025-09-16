@@ -15,6 +15,16 @@ export class ExampleApplicationService {
     }
   }
 
+  // 新增轻量级列表方法
+  public async listLite(projectId: string, options: SearchOption): Promise<ExampleListDTO> {
+    try {
+      const item = await this.repository.listLite(projectId, options)
+      return new ExampleListDTO(item)
+    } catch (e: any) {
+      throw new Error(e.response.data.detail)
+    }
+  }
+
   public async fetchOne(
     projectId: string,
     page: string,
