@@ -1,7 +1,7 @@
 <template>
   <v-list dense class="sidebar-wrapper">
     <div class="annotation-section">
-      <v-btn 
+      <!-- <v-btn 
         color="primary" 
         class="start-annotation-btn" 
         depressed
@@ -13,7 +13,7 @@
           {{ mdiPlayCircleOutline }}
         </v-icon>
         {{ $t('home.startAnnotation') }}
-      </v-btn>
+      </v-btn> -->
     </div>
 
     <!-- DocumentTabs组件 -->
@@ -171,7 +171,8 @@ export default {
     onSwitchDocument(tab) {
       // 处理文档切换事件
       // 实际的路由跳转在DocumentTabs组件中处理
-      this.$emit('switch-document', tab)
+      // 不再触发alert，避免重复处理
+      console.log("Document switch triggered", tab);
     }
   }
 }

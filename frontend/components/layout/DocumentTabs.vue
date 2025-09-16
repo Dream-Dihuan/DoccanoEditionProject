@@ -23,8 +23,11 @@
         class="document-tab document-tab--add"
         @click="goToDataset"
       >
-        <span class="document-tab__title">添加文档</span>
-        <v-icon small>{{ mdiPlus }}</v-icon>
+        <div>
+          <span class="document-tab__title" style="font-style: italic;">添加文档</span>
+          <v-icon small>{{ mdiPlus }}</v-icon>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -141,9 +144,10 @@ export default {
     },
     
     switchToTab(tab) {
+      // alert("switchToTab")
       // 触发事件通知父组件切换文档
       this.$emit('switch-document', tab)
-      
+      // console.log("迪幻tab= "+ tab);
       // 跳转到文档页面
       const query = { ...this.$route.query, page: String(tab.documentId) }
       this.$router.push({ query })
