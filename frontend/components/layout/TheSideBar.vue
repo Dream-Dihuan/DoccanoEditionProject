@@ -171,8 +171,10 @@ export default {
     onSwitchDocument(tab) {
       // 处理文档切换事件
       // 实际的路由跳转在DocumentTabs组件中处理
-      // 不再触发alert，避免重复处理
-      console.log("Document switch triggered", tab);
+      alert("开始加载渲染文档"+ tab.documentId +"，请耐心等待")
+      // this.$emit('switch-document', tab)
+      console.log(tab);
+      
     }
   }
 }

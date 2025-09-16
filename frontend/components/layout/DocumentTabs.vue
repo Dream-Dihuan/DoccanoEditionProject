@@ -96,7 +96,7 @@ export default {
       
       if (existingTab) {
         // 如果标签已存在，激活它
-        this.switchToTab(existingTab)
+        // this.switchToTab(existingTab)
         return
       }
       
