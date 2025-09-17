@@ -16,6 +16,8 @@ export default {
   importMessage1: 'Beispielformat',
   importMessage2: 'Wähle eine Datei',
   filePlaceholder: 'Eingabe einer Datei',
+  createLabelType: 'Erstelle einen Label-Typ',
+  editLabelType: 'Bearbeite einen Label-Typ',
   saveAndAddAnother: 'Speichern und weitere hinzufügen',
   manageLabels: 'Verwalten Sie Ihre Labels',
   deleteLabelsTitle: 'Labels löschen',

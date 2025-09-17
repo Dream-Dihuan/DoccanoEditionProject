@@ -18,6 +18,8 @@ export default {
   importMessage1: 'Exemple de format',
   importMessage2: 'Sélectionnez un fichier',
   filePlaceholder: 'Saisir un fichier',
+  createLabelType: 'Créer un type d\'étiquette',
+  editLabelType: 'Modifier un type d\'étiquette',
   saveAndAddAnother: 'Enregistrer et ajouter un autre',
   manageLabels: 'Gérer vos étiquettes',
   deleteLabelsTitle: 'Supprimer les étiquettes',

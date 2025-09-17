@@ -23,6 +23,7 @@ export default {
   importMessage2: 'Select a file',
   filePlaceholder: 'File input',
   createLabelType: 'Create a Label Type',
+  editLabelType: 'Edit a Label Type',
   randomColor: 'Random color',
   randomColorTooltip: 'Random color',
   preview: 'Preview',

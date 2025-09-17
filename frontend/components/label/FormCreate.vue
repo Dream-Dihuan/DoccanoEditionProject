@@ -1,10 +1,10 @@
 <template>
   <v-card dense>
-    <v-card-title class="subtitle-1">{{ $t('labels.createLabelType') }}</v-card-title>
+    <!-- <v-card-title class="subtitle-1">{{ isEditMode ? $t('labels.editLabelType') : $t('labels.createLabelType') }}</v-card-title> -->
     <v-card-text class="pa-2">
       <v-form ref="form" v-model="valid">
         <v-row dense>
-          <v-col v-if="type !== 'category'" cols="12" sm="6">
+          <v-col v-if="type !== 'category' && source !== undefined" cols="12" sm="6">
             <v-text-field
               :value="source"
               :counter="999"
@@ -15,11 +15,11 @@
               @input="$emit('update:source', $event)"
             />
           </v-col>
-          <v-col v-if="source !== undefined" :cols="type === 'category' ? 12 : 6">
+          <v-col :cols="type === 'category' || source === undefined ? 12 : 6">
 
            <v-text-field
               :value="text"
-              :counter="9000"
+              :counter="maxTextLength"
               :label="$t('labels.labelName')"
               :rules="[rules.required, rules.counter, rules.nameDuplicated]"
               outlined
@@ -163,7 +163,11 @@ export default Vue.extend({
     },
     type: {
       type: String,
-      default: 'span' // 默认为span类型，这样不会影响现有功能
+      default: 'span'
+    },
+    isEditMode: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -189,10 +193,18 @@ export default Vue.extend({
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
         'u', 'v', 'w', 'x', 'y', 'z'
-      ],
-      rules: {
+      ]
+    }
+  },
+
+  computed: {
+    maxTextLength(): number {
+      return this.isEditMode ? 9999 : 9000
+    },
+    rules() {
+      return {
         required: (value: string) => !!value || this.$t('rules.requiredRules'),
-        counter: (value: string) => value.length <= 9999 || this.$t('rules.counterRules'),
+        counter: (value: string) => value.length <= this.maxTextLength || this.$t('rules.counterRules'),
         keyCounter: (value: string) => !value || value.length <= 10 || this.$t('rules.keyCounterRules'),
         nameDuplicated: (value: string) => {
           const isDuplicated = this.items.some((item) => item.text === value && item.id !== this.id)

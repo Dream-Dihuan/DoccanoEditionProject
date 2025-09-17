@@ -23,6 +23,7 @@ export default {
   importMessage2: '选择文件',
   filePlaceholder: '文件输入',
   createLabelType: '创建新标签',
+  editLabelType: '编辑标签',
   randomColor: '随机颜色',
   randomColorTooltip: '随机颜色',
   preview: '预览',

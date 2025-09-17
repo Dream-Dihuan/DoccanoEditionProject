@@ -10,7 +10,7 @@
           </v-toolbar>
           
           <v-card-text class="mt-5">
-            <form-create v-slot="slotProps" v-bind.sync="editedItem" :items="items">
+            <form-create v-slot="slotProps" v-bind.sync="editedItem" :items="items" :type="labelType" :is-edit-mode="true">
               <v-btn 
                 :disabled="!slotProps.valid" 
                 color="primary" 
@@ -74,6 +74,10 @@ export default Vue.extend({
 
     labelId(): string {
       return this.$route.params.label_id
+    },
+    
+    labelType(): string {
+      return this.$route.query.type as string
     },
 
     service(): any {
