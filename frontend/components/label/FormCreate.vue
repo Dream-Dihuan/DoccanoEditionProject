@@ -4,7 +4,7 @@
     <v-card-text class="pa-2">
       <v-form ref="form" v-model="valid">
         <v-row dense>
-          <v-col cols="12" sm="6">
+          <v-col v-if="type !== 'category'" cols="12" sm="6">
             <v-text-field
               :value="source"
               :counter="999"
@@ -15,7 +15,7 @@
               @input="$emit('update:source', $event)"
             />
           </v-col>
-          <v-col v-if="source !== undefined" cols="12" sm="6">
+          <v-col v-if="source !== undefined" :cols="type === 'category' ? 12 : 6">
 
            <v-text-field
               :value="text"
@@ -28,7 +28,7 @@
               @input="$emit('update:text', $event)"
             />
           </v-col>
-          <v-col v-if="type !== 'category'" cols="24" sm="12">
+          <v-col v-if="type !== 'category'" cols="12" sm="12">
             <div class="d-flex align-center" style="width: 100%;">
               <v-text-field
                 :value="suffixKey"
@@ -100,7 +100,8 @@
           <v-col>
             <div class="subtitle-2 black--text mb-1">{{ $t('labels.preview') }}</div>
             <v-chip :color="backgroundColor" :text-color="textColor" small>
-              {{ source +" - "+text }}
+              <span v-if="source && text">{{ source }} - {{ text }}</span>
+              <span v-else>{{ source || text }}</span>
               <!-- <v-avatar v-if="suffixKey" right color="white" class="black--text font-weight-bold">
                 {{ suffixKey }}
                 

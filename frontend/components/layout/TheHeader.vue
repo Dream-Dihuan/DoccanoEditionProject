@@ -7,7 +7,7 @@
     </nuxt-link>
     
     <v-toolbar-title v-if="!isAuthenticated" class="header-title ml-2 d-none d-sm-flex">
-      成都大学标注平台
+      跨文档关联标注工具
     </v-toolbar-title>
     
     <v-btn

@@ -34,5 +34,12 @@ export default {
   passwordRules: {
     passwordRequired: 'Le mot de passe est obligatoire',
     passwordLessThan30Chars: 'Le mot de passe doit comporter moins de 30 caractères'
-  }
+  },
+  counterRules: 'Le texte doit comporter moins de 9999 caractères',
+  counterKeyRules: 'La clé doit comporter moins de 10 caractères',
+  keyCounterRules: 'La clé doit comporter moins de 10 caractères',
+  requiredRules: 'Ce champ est obligatoire',
+  nameDuplicatedRules: 'Ce nom est déjà utilisé',
+  keyDuplicatedRules: 'Cette clé est déjà utilisée',
+  validColorRules: 'Le code couleur est invalide. Veuillez utiliser un code couleur hexadécimal (ex: #FF0000)'
 }

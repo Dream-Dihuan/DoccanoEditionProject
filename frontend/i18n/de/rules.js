@@ -6,6 +6,9 @@ export default {
     labelRequired: 'Labelname wird benötigt',
     labelLessThan100Chars: 'Labelname muss kürzer als 100 Zeichen sein'
   },
+  keyNameRules: {
+    duplicated: 'Der Schlüssel wird bereits verwendet.'
+  },
   userNameRules: {
     userNameRequired: 'Benutzername wird benötigt',
     userNameLessThan30Chars: 'Benutzername muss kürzer als 30 Zeichen sein'
@@ -30,5 +33,12 @@ export default {
   passwordRules: {
     passwordRequired: 'Passwort wird benötigt',
     passwordLessThan30Chars: 'Passwort muss kürzer als 30 Zeichen sein'
-  }
+  },
+  counterRules: 'Text muss kürzer als 9999 Zeichen sein',
+  counterKeyRules: 'Schlüssel muss kürzer als 10 Zeichen sein',
+  keyCounterRules: 'Schlüssel muss kürzer als 10 Zeichen sein',
+  requiredRules: 'Dieses Feld wird benötigt',
+  nameDuplicatedRules: 'Dieser Name wird bereits verwendet',
+  keyDuplicatedRules: 'Dieser Schlüssel wird bereits verwendet',
+  validColorRules: 'Farbcode ist ungültig. Bitte verwenden Sie einen Hex-Farbcode (z. B. #FF0000)'
 }

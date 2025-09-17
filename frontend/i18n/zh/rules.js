@@ -37,6 +37,7 @@ export default {
   },
   counterRules: '文本必须少于9999个字符',
   counterKeyRules: '键必须少于10个字符',
+  keyCounterRules: '键必须少于10个字符',
   requiredRules: '此字段为必填项',
   nameDuplicatedRules: '该名称已被使用',
   keyDuplicatedRules: '该键已被使用',

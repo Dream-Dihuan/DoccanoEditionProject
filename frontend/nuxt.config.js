@@ -8,9 +8,9 @@ export default {
    */
   head: {
     // titleTemplate: '%s - ' + process.env.npm_package_name,
-    titleTemplate: "成都大学文本标注平台",
+    titleTemplate: "跨文档关联标注工具",
     // title: process.env.npm_package_name || '',
-    title: "成都大学文本标注平台",
+    title: "跨文档关联标注工具",
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },

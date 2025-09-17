@@ -2,7 +2,7 @@
   <v-footer color="primary lighten-1" padless>
     <v-layout justify-center wrap>
       <v-flex black lighten-2 py-4 text-center white--text xs12>
-        &copy; {{ new Date().getFullYear() }} 成都大学标注平台
+        &copy; {{ new Date().getFullYear() }} 跨文档关联标注工具
       </v-flex>
     </v-layout>
   </v-footer>

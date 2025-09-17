@@ -140,7 +140,7 @@ export default Vue.extend({
         if (this.editedItem.source) {
           trueText = `${this.editedItem.source} - ${this.editedItem.text}`
         }
-        const trueLabelData = this.prepareLabelData('真', `${trueText}(${this.$t('labels.true')})`)
+        const trueLabelData = this.prepareLabelData('真', `(${this.$t('labels.true')})${trueText}`)
         await this.service.create(this.projectId, trueLabelData)
         
         // 创建"假"标签，保持"内容来源 - 标签名称"格式
@@ -148,7 +148,7 @@ export default Vue.extend({
         if (this.editedItem.source) {
           falseText = `${this.editedItem.source} - ${this.editedItem.text}`
         }
-        const falseLabelData = this.prepareLabelData('假', `${falseText}(${this.$t('labels.false')})`)
+        const falseLabelData = this.prepareLabelData('假', `(${this.$t('labels.false')})${falseText}`)
         await this.service.create(this.projectId, falseLabelData)
       } else {
         // 正常创建标签
