@@ -47,6 +47,7 @@
       <!-- 添加标签创建模块到侧边栏 -->
       <v-card v-if="canAddLabel" class="mt-4 create-label-card">
         <v-card-text>
+          <h4>添加标签</h4>
           <form-create-label
             ref="formCreate"
             :items="allLabelTypes"

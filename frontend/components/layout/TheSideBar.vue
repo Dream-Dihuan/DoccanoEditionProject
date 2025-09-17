@@ -84,12 +84,30 @@ export default {
 
   data() {
     return {
-      selected: 0,
       mdiPlayCircleOutline
     }
   },
 
   computed: {
+    selected: {
+      get() {
+        // 根据当前路由计算选中的菜单项
+        const currentPath = this.$route.path
+        const projectId = this.$route.params.id
+        
+        // 查找匹配的菜单项索引
+        for (let i = 0; i < this.filteredItems.length; i++) {
+          const item = this.filteredItems[i]
+          if (currentPath.includes(`/${projectId}/${item.link}`)) {
+            return i
+          }
+        }
+        
+        // 如果没有匹配项，默认选中第一个
+        return 0
+      }
+    },
+    
     currentDocumentId() {
       return this.$route.query.page || null
     },
